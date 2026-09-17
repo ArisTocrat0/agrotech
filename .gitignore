@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+artifacts/*.pt
+outputs/
+pseudo_dataset/
+data/**
+!data/**/
+!data/**/.gitkeep
+*.DS_Store

@@ -1,0 +1,35 @@
+model:
+  name: facebook/dinov2-small
+  batch_size: 16
+tiling:
+  tile_size: 1024
+  overlap: 0.20
+vegetation:
+  method: combined
+  hsv:
+    lower_h: 25
+    lower_s: 35
+    lower_v: 25
+    upper_h: 100
+    upper_s: 255
+    upper_v: 255
+  exg:
+    threshold: 20
+  morphology:
+    open_kernel: 3
+    close_kernel: 7
+  components:
+    min_area: 150
+    max_area_ratio: 0.35
+    min_width: 8
+    min_height: 8
+    min_fill_ratio: 0.10
+classification:
+  top_k: 5
+  similarity_threshold: 0.55
+  crop_padding: 0.10
+nms:
+  iou_threshold: 0.40
+debug:
+  max_tiles: 10
+  max_crops: 50
