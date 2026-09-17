@@ -1,23 +1,2 @@
-from dataclasses import dataclass
-
-
-@dataclass
-class DetectionCandidate:
-    x1: int
-    y1: int
-    x2: int
-    y2: int
-    tile_id: int = 0
-    source: str = "vegetation"
-
-
-@dataclass
-class WeedDetection:
-    id: int
-    species: str
-    stage: str
-    similarity_score: float
-    x1: int
-    y1: int
-    x2: int
-    y2: int
+"""Compatibility imports; implementation lives in src.domain.types."""
+from .domain.types import *  # noqa: F401,F403

@@ -28,6 +28,8 @@ def export_dataset(results_path: Path, images: Path, output: Path, min_similarit
             raise ValueError(f"EXIF-oriented dimensions do not match: {source}")
         labels = []
         for d in result["detections"]:
+            if d.get("kind", "weed") != "weed":
+                continue
             if "unknown" in (d["species"], d["stage"]) or not math.isfinite(d["similarity_score"]) or d["similarity_score"] < min_similarity:
                 continue
             key = f'{d["species"]}__{d["stage"]}'

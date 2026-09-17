@@ -46,10 +46,7 @@ function renderResults() {
   $('image-grid').innerHTML = results.length ? results.map((row,i) => `<button class="image-card" data-image="${i}"><img loading="lazy" src="/api/jobs/${selected}/image/${i}" alt="${escapeHTML(row.image)} — ${t("найденные объекты")}"><div><strong>${escapeHTML(row.image)}</strong><p>${number(row.total_weeds)} ${t("предполагаемых сорняков")} · ${number(row.unknown_count)} ${t("неизвестных")}</p></div></button>`).join('') : `<div class="empty-state"><span>⌖</span><h3>${t("Здесь начинается наблюдение")}</h3><p>${t("Добавьте первый снимок поля — результаты появятся здесь.")}</p><button class="secondary" id="empty-upload">${t("Загрузить снимки")}</button></div>`;
   $('empty-upload')?.addEventListener('click', () => tab('analysis'));
   document.querySelectorAll('[data-image]').forEach(button => button.addEventListener('click', () => {
-    const i = Number(button.dataset.image);
-    $('dialog-title').textContent = results[i].image;
-    $('dialog-image').src = `/api/jobs/${selected}/image/${i}`;
-    $('image-dialog').showModal();
+    openReview(Number(button.dataset.image));
   }));
   const job = jobs.find(job => job.id === selected);
   $('export-description').textContent = results.length ? `${(job ? jobName(job) : t('Анализ'))} · ${number(results.length)} ${t("снимков")} · ${job ? date(job.created) : ''}` : t('Сначала запустите анализ или выберите готовый на странице обзора.');
@@ -144,10 +141,12 @@ document.querySelectorAll('[data-language]').forEach(button => button.addEventLi
   renderCheck();
   renderReferenceStatus();
   renderTraining();
+  if ($('image-dialog').open) renderReview();
+  renderCropImport();
 }));
 let references = [], checkState = {status:'idle', log:''}, referenceMessage = '', logSelection = '', logVersion = 0;
 function renderReferences() {
-  $('reference-body').innerHTML = references.length ? references.map(row => `<tr><td>${escapeHTML(row.species)}</td><td>${escapeHTML(row.stage)}</td><td>${number(row.count)}</td></tr>`).join('') : `<tr><td colspan="3">${t('Пока нет эталонов. Добавьте фотографии выше.')}</td></tr>`;
+  $('reference-body').innerHTML = references.length ? references.map(row => `<tr><td>${escapeHTML(row.species)}</td><td>${escapeHTML(row.stage)}</td><td>${t(row.kind === 'crop' ? 'Культура' : 'Сорняк')}</td><td>${number(row.count)}</td></tr>`).join('') : `<tr><td colspan="3">${t('Пока нет эталонов. Добавьте фотографии выше.')}</td></tr>`;
 }
 function renderReferenceStatus() { $('reference-status').textContent = translateMessage(referenceMessage); }
 function renderCheck() {

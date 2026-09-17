@@ -110,7 +110,7 @@ class JobTests(unittest.TestCase):
             app = Dashboard(Path(folder))
             image = self.photo()
             rows = app.add_references('Бодяк', 'Розетка', [('same.png', image)])
-            self.assertEqual(rows, [{'species':'Бодяк', 'stage':'Розетка', 'count':1}])
+            self.assertEqual(rows, [{'species':'Бодяк', 'stage':'Розетка', 'kind':'weed', 'count':1}])
             app.add_references('Бодяк', 'Розетка', [('same.png', image)])
             self.assertEqual(app.references()[0]['count'], 2)
             for species in ['../escape', '..', 'bad/name', 'bad\\name', '']:

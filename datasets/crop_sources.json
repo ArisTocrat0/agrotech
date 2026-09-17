@@ -1,0 +1,14 @@
+{
+  "purpose": "Starter reference photos; not drone detection ground truth. Field validation required.",
+  "sources": [
+    {"species":"Пшеница","stage":"Всходы","title":"File:Blat tres fulles.JPG"},
+    {"species":"Пшеница","stage":"Всходы","title":"File:Triticum aestivum seedlings (1).jpg"},
+    {"species":"Пшеница","stage":"Всходы","title":"File:Triticum aestivum seedlings (2).jpg"},
+    {"species":"Ячмень","stage":"Всходы","title":"File:Hordeum vulgare six-row winter barley, zesrijige wintergerst (1).jpg"},
+    {"species":"Ячмень","stage":"Всходы","title":"File:Hordeum vulgare six-row winter barley, zesrijige wintergerst (2).jpg"},
+    {"species":"Ячмень","stage":"Всходы","title":"File:Hordeum vulgare six-row winter barley, zesrijige wintergerst (3).jpg"},
+    {"species":"Подсолнечник","stage":"Всходы","title":"File:Sunflower seedlings.jpg"},
+    {"species":"Подсолнечник","stage":"Всходы","title":"File:Dwarf sunflower seedling.jpg"},
+    {"species":"Подсолнечник","stage":"Всходы","title":"File:A sunflower seed growing.jpg"}
+  ]
+}

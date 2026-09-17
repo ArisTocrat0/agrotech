@@ -16,10 +16,13 @@ def main() -> None:
     parser.add_argument("--overlap", type=float)
     parser.add_argument("--similarity-threshold", type=float)
     parser.add_argument("--batch-size", type=int)
+    parser.add_argument("--gsd-cm", type=float)
+    parser.add_argument("--online", action="store_true", help="Allow the initial model download")
     parser.add_argument("--debug", action="store_true")
     args = parser.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
     config = load_config(args.config)
+    config["gsd_cm"] = args.gsd_cm
     for key, value in [("tile_size", args.tile_size), ("overlap", args.overlap)]:
         if value is not None:
             config["tiling"][key] = value
@@ -36,9 +39,9 @@ def main() -> None:
     from src.classifier import ReferenceClassifier
     from src.inference import run_inference
     m = config["model"]
-    model = DinoEmbeddingModel(m["name"], args.device, m["batch_size"])
+    model = DinoEmbeddingModel(m["name"], args.device, m["batch_size"], offline=not args.online)
     index = build_reference_index(args.references, Path("artifacts/reference_index.pt"),
-                                  m["name"], args.device, m["batch_size"], model=model)
+                                  m["name"], args.device, m["batch_size"], model=model, crop_references=Path("data/Культуры"))
     classifier = ReferenceClassifier(index, config["classification"]["top_k"], config["classification"]["similarity_threshold"])
     run_inference(args.input, args.output, config, model, classifier, args.debug)
 

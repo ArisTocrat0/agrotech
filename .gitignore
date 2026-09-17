@@ -13,3 +13,4 @@ data/**
 
 yolo_dataset/
 runs/
+artifacts/native/
