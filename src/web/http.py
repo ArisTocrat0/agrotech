@@ -141,8 +141,9 @@ def make_handler(app: Dashboard):
 
         def do_POST(self):
             path = urlparse(self.path).path
+            is_dataset = bool(re.fullmatch(r'/api/jobs/[a-f0-9]{32}/dataset', path))
             is_review = bool(re.fullmatch(r'/api/jobs/(?:[a-f0-9]{32}|cli)/(?:review|geometry)',path))
-            if not is_review and path not in {'/api/analyze', '/api/references', '/api/check', '/api/training', '/api/training/full', '/api/crop-import'}:
+            if not is_review and not is_dataset and path not in {'/api/analyze', '/api/references', '/api/check', '/api/training', '/api/training/full', '/api/crop-import'}:
                 self.json(404, {'error': 'Не найдено'})
                 return
             # Only the local dashboard can submit work; reject cross-origin forms.
@@ -151,6 +152,13 @@ def make_handler(app: Dashboard):
                 self.json(403, {'error': 'Запрос с другого сайта запрещён'})
                 return
             try:
+                if is_dataset:
+                    from scripts.train_yolo import prepare_verified_dataset
+                    with app.lock:
+                        job_id = path.split('/')[3]
+                        summary = prepare_verified_dataset(app.directory(job_id), job_id)
+                    self.json(201, summary)
+                    return
                 if path == '/api/crop-import':
                     self.json(202,app.start_import())
                     return

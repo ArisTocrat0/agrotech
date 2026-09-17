@@ -88,7 +88,7 @@ function renderTraining() {
   $('training-progress').max = trainingState.epochs || 1;
   $('training-progress').value = trainingState.epoch || 0;
   trainingReadiness.className=`readiness ${trainingState.full_ready?'ready':'waiting'}`;
-  trainingReadiness.innerHTML=trainingState.full_ready?`<b>${t('✓ Датасет готов')}</b><span>${t('Train/val проверены · H100 · 150 эпох · AMP')}</span>`:`<b>${t('○ Нужна проверенная разметка')}</b><span>${t('Завершите проверку и создайте')} yolo_dataset/verified/dataset.yaml</span>`;
+  trainingReadiness.innerHTML=trainingState.full_ready?`<b>${t('✓ Датасет готов')}</b><span>${t('Train/val проверены · H100 · 150 эпох · AMP')}</span>`:`<b>${t('○ Нужна проверенная разметка')}</b><span>${t('После проверки нажмите «Подготовить датасет для обучения» в разделе «Проверка».')}</span>`;
   $('training-log').hidden = !trainingState.log && !trainingState.error;
   $('training-log').textContent = trainingState.log || translateMessage(trainingState.error || '');
 }

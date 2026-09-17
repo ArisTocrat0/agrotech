@@ -1086,6 +1086,66 @@ Object.assign(translations, {
     "kk": "Агрономиялық класы жоқ арамшөптер"
   }
 });
+Object.assign(translations, {
+  "Подготовить датасет для обучения": {
+    "en": "Prepare training dataset",
+    "kk": "Оқыту деректерін дайындау"
+  },
+  "Подготовка датасета…": {
+    "en": "Preparing dataset…",
+    "kk": "Деректер жиыны дайындалуда…"
+  },
+  "Датасет подготовлен.": {
+    "en": "Dataset prepared.",
+    "kk": "Деректер жиыны дайындалды."
+  },
+  "Обучающие снимки": {
+    "en": "Training images",
+    "kk": "Оқыту суреттері"
+  },
+  "Проверочные снимки": {
+    "en": "Validation images",
+    "kk": "Тексеру суреттері"
+  },
+  "Класс: сорняк. Теперь можно запустить полное обучение.": {
+    "en": "Class: weed. You can now start full training.",
+    "kk": "Класс: арамшөп. Енді толық оқытуды бастауға болады."
+  },
+  "После проверки нажмите «Подготовить датасет для обучения» в разделе «Проверка».": {
+    "en": "After review, click “Prepare training dataset” in Review.",
+    "kk": "Тексеруден кейін «Тексеру» бөліміндегі «Оқыту деректерін дайындау» батырмасын басыңыз."
+  },
+  "Сначала проверьте все объекты, включая «Не уверен».": {
+    "en": "Review every object first, including uncertain decisions.",
+    "kk": "Алдымен барлық нысандарды, соның ішінде күмәнді шешімдерді тексеріңіз."
+  },
+  "Исходные снимки недоступны для подготовки датасета.": {
+    "en": "Source images are unavailable for dataset preparation.",
+    "kk": "Деректерді дайындауға бастапқы суреттер қолжетімсіз."
+  },
+  "Размер исходного снимка не совпадает с разметкой.": {
+    "en": "Source image dimensions do not match annotations.",
+    "kk": "Бастапқы суреттің өлшемі белгілеуге сәйкес келмейді."
+  },
+  "Некорректная рамка в проверенной разметке.": {
+    "en": "Invalid bounding box in reviewed annotations.",
+    "kk": "Тексерілген белгілеуде қате жиектеме бар."
+  },
+  "Одинаковые снимки имеют разную разметку.": {
+    "en": "Identical images have conflicting annotations.",
+    "kk": "Бірдей суреттердің белгілеулері әртүрлі."
+  },
+  "Нужны минимум два разных снимка с подтверждёнными сорняками.": {
+    "en": "At least two distinct images with confirmed weeds are required.",
+    "kk": "Расталған арамшөптері бар кемінде екі түрлі сурет қажет."
+  }
+});
+Object.assign(translations, {
+  'Один класс «сорняк». Минимум два разных снимка с подтверждёнными сорняками.': {
+    en: 'One class: weed. At least two distinct images with confirmed weeds.',
+    kk: 'Бір класс: арамшөп. Расталған арамшөптері бар кемінде екі түрлі сурет қажет.'
+  }
+});
 let language = 'ru';
 try { language = localStorage.getItem('olzha-language') || 'ru'; } catch (_) {}
 if (!['ru', 'en', 'kk'].includes(language)) language = 'ru';

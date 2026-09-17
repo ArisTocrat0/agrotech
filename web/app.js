@@ -4,6 +4,7 @@ let jobs = [], selected = null, results = [], files = [], busy = false, uploadin
 const escapeHTML = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const number = value => Number(value || 0).toLocaleString(locale());
 const date = value => new Date(value).toLocaleString(locale(), {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+let datasetPreparing = false;
 let currentNotice = '';
 function showError(details) {
   notice(t('Не удалось выполнить действие.'));
@@ -100,7 +101,7 @@ function showMetricDetails(metric) {
 }
 function firstPending(){return pendingTarget(results);}
 function continueReview(){const target=firstPending();if(!target){notice(t('Все объекты этого анализа проверены.'));return;}openReview(target.image);reviewDetection=target.detection;renderReview();}
-function renderReviewQueue(pending,reviewed,total){if(!results.length){$('review-queue').textContent=t('Сначала выберите завершённый анализ.');dashboardReview.replaceChildren();return;}const complete=results.length>0&&pending===0;const content=`<article class="panel review-cta ${complete?'complete':''}"><div><span class="eyebrow">${t('ТЕКУЩИЙ АНАЛИЗ')}</span><h2>${complete?t('✓ Проверка завершена'):`${number(pending)} ${t('объектов ждут проверки')}`}</h2><p>${number(reviewed)} ${t('из')} ${number(total)} ${t('объектов уже проверено')}</p></div>${complete?'':`<button class="primary continue-review">${t('Продолжить проверку')} →</button>`}</article>`;$('review-queue').innerHTML=content;dashboardReview.innerHTML=results.length?content:'';document.querySelectorAll('.continue-review').forEach(button=>button.addEventListener('click',continueReview));}
+function renderReviewQueue(pending,reviewed,total){if(!results.length){$('review-queue').textContent=t('Сначала выберите завершённый анализ.');dashboardReview.replaceChildren();return;}const complete=results.length>0&&pending===0;const content=`<article class="panel review-cta ${complete?'complete':''}"><div><span class="eyebrow">${t('ТЕКУЩИЙ АНАЛИЗ')}</span><h2>${complete?t('✓ Проверка завершена'):`${number(pending)} ${t('объектов ждут проверки')}`}</h2><p>${number(reviewed)} ${t('из')} ${number(total)} ${t('объектов уже проверено')}</p>${complete?`<p>${t('Один класс «сорняк». Минимум два разных снимка с подтверждёнными сорняками.')}</p>`:''}</div>${complete?`<button class="primary prepare-dataset" ${selected==='cli'?'disabled':''}>${t('Подготовить датасет для обучения')}</button>`:`<button class="primary continue-review">${t('Продолжить проверку')} →</button>`}</article>`;$('review-queue').innerHTML=content;dashboardReview.innerHTML=results.length?content:'';document.querySelectorAll('.continue-review').forEach(button=>button.addEventListener('click',continueReview));document.querySelectorAll('.prepare-dataset').forEach(button=>{button.disabled=datasetPreparing||selected==='cli';button.addEventListener('click',prepareDataset);});}
 function renderJobs() {
     $('history').innerHTML = jobs.length ? jobs.slice(0,5).map(job => `<button class="history-row" data-job="${job.id}"><span class="history-icon">▧</span><span><strong>${escapeHTML(jobName(job))}</strong><small>${date(job.created)}</small></span><span class="badge ${job.status === 'error' ? 'error-badge' : ''}">${{done:t('Готово'),running:t('В работе'),error:t('Ошибка')}[job.status]}</span></button>`).join('') : t('Вы ещё не запускали анализ.');
     document.querySelectorAll('[data-job]').forEach(button => button.addEventListener('click', () => {
@@ -208,3 +209,18 @@ technicalSection('ДЛЯ РАЗРАБОТЧИКОВ / ML',[developerPanel]);
 window.addEventListener('DOMContentLoaded',()=>{tab(location.hash.slice(1));renderResults();refresh();}, {once:true});
 
 window.addEventListener('focus',refresh);
+
+async function prepareDataset() {
+  if(datasetPreparing || !selected || selected==='cli') return;
+  const job=selected;
+  datasetPreparing=true;renderResults();notice(t('Подготовка датасета…'));
+  try {
+    const summary=await api(`/api/jobs/${job}/dataset`,{method:'POST'});
+    tab('setup');
+    trainingPanel.parentElement.open=true;
+    await refreshTraining();
+    notice(`${t('Датасет подготовлен.')} ${t('Обучающие снимки')}: ${summary.train_images}; ${t('Проверочные снимки')}: ${summary.val_images}. ${t('Класс: сорняк. Теперь можно запустить полное обучение.')}`);
+    fullTraining.focus();
+  } catch(error) { showError(translateMessage(error.message)); }
+  finally { datasetPreparing=false;renderResults(); }
+}

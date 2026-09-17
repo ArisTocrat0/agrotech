@@ -7,6 +7,7 @@ from pathlib import Path
 import subprocess
 import sys
 import uuid
+import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 TRAINING = ROOT / 'outputs' / 'yolo_training'
@@ -19,10 +20,30 @@ def save_status(state):
     temporary.replace(STATUS)
 
 
+def dataset_ready():
+    from scripts.train_yolo_full import validate_dataset
+    try:
+        validate_dataset(ROOT / 'yolo_dataset/verified/dataset.yaml')
+        return True
+    except (ValueError, OSError, TypeError, KeyError, yaml.YAMLError):
+        return False
+
+
+def prepare_verified_dataset(folder, job_id):
+    from src.application.dataset import prepare_dataset
+    TRAINING.mkdir(parents=True, exist_ok=True)
+    with (TRAINING / 'training.lock').open('a') as lock:
+        try:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError as exc:
+            raise ValueError('Обучение уже выполняется.') from exc
+        return prepare_dataset(folder, ROOT / 'yolo_dataset/verified', job_id)
+
+
 def training_status():
     if not STATUS.exists():
         return {'status': 'idle', 'epoch': 0, 'epochs': 5,
-                'full_ready': (ROOT/'yolo_dataset/verified/dataset.yaml').exists()}
+                'full_ready': dataset_ready()}
     state = json.loads(STATUS.read_text(encoding='utf-8'))
     if state['status'] == 'running':
         # The lock survives parent/server restarts and does not depend on PID namespaces.
@@ -44,7 +65,7 @@ def training_status():
             state['log'] = re.sub(r'\x1b\[[0-?]*[ -/]*[@-~]', '', state['log']).replace('\r', '\n')
     state['weights_ready'] = state['status'] == 'done' and (TRAINING / state['run'] / 'weights' / 'best.pt').exists()
     state['percent'] = round(100 * state.get('epoch', 0) / max(1, state.get('epochs', 1)))
-    state['full_ready'] = (ROOT/'yolo_dataset/verified/dataset.yaml').exists()
+    state['full_ready'] = dataset_ready()
     return state
 
 
@@ -88,6 +109,8 @@ def start_full_training():
             fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError as exc:
             raise ValueError('Обучение уже выполняется.') from exc
+        # Revalidate under the same lock used by dataset publication.
+        validate_dataset(dataset)
         run='full_'+uuid.uuid4().hex[:12]
         folder=TRAINING/run
         folder.mkdir()
