@@ -55,27 +55,27 @@
       "max_crops": 50
     }
   },
-  "model_startup_seconds": 5.407545079997362,
-  "cold_batch_seconds": 0.15565760299796239,
+  "model_startup_seconds": 6.794286111999099,
+  "cold_batch_seconds": 178.01799140200092,
   "repeats": 3,
   "frames": [
     {
-      "image": "01_images1.jpg",
-      "width": 275,
-      "height": 183,
-      "candidates": 0
+      "image": "01_DJI_20260615115515_0164_D.JPG",
+      "width": 4096,
+      "height": 3072,
+      "candidates": 340
     }
   ],
   "samples": 3,
-  "median_frame_seconds": 0.016417056998761836,
-  "p95_frame_seconds": 0.016679882999596884,
-  "max_frame_seconds": 0.016679882999596884,
-  "throughput_fps_including_export": 59.84593740585219,
+  "median_frame_seconds": 143.8691995299996,
+  "p95_frame_seconds": 179.44602981700154,
+  "max_frame_seconds": 179.44602981700154,
+  "throughput_fps_including_export": 0.0066284511184226645,
   "motion_p95": {
     "speed_kmh": 20,
-    "latency_seconds": 0.016679882999596884,
-    "processing_distance_m": 0.09266601666442713,
-    "total_distance_m": 0.09266601666442713,
+    "latency_seconds": 179.44602981700154,
+    "processing_distance_m": 996.9223878722307,
+    "total_distance_m": 996.9223878722307,
     "camera_to_nozzle_m": null,
     "actuator_ms": 0,
     "deadline_seconds": null,
@@ -83,9 +83,9 @@
   },
   "motion_max_including_cold": {
     "speed_kmh": 20,
-    "latency_seconds": 0.15438066600108868,
-    "processing_distance_m": 0.8576703666727149,
-    "total_distance_m": 0.8576703666727149,
+    "latency_seconds": 179.44602981700154,
+    "processing_distance_m": 996.9223878722307,
+    "total_distance_m": 996.9223878722307,
     "camera_to_nozzle_m": null,
     "actuator_ms": 0,
     "deadline_seconds": null,
