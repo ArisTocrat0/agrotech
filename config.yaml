@@ -27,6 +27,7 @@ vegetation:
 classification:
   top_k: 5
   similarity_threshold: 0.55
+  category_margin: 0.05
   crop_padding: 0.10
 nms:
   iou_threshold: 0.40

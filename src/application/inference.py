@@ -11,6 +11,7 @@ from ..infrastructure.exporters import image_result, save_results
 from ..vision.visualization import annotate
 from ..vision.rows import estimate_rows
 from ..infrastructure.exporters import recount
+from ..domain.performance import motion_budget
 
 
 def run_inference(input_path: Path, output: Path, config: dict, model, classifier, debug: bool = False) -> list[dict]:
@@ -67,11 +68,18 @@ def run_inference(input_path: Path, output: Path, config: dict, model, classifie
         result['rows'] = estimate_rows(image,detector)
         result['gsd_cm'] = config.get('gsd_cm')
         recount(result)
-        result['processing_seconds'] = round(perf_counter()-started,3)
-        results.append(result)
-        logging.info("%s: %d candidates, %.2fs", name, len(detections), result['processing_seconds'])
+        result['analysis_seconds'] = perf_counter()-started
         target = output/"annotated"/Path(name + ".png")
         target.parent.mkdir(parents=True, exist_ok=True)
         annotate(image, detections).save(target)
+        result['processing_seconds'] = perf_counter()-started
+        result['performance'] = {
+            'scope': 'image_load_through_annotation_save_excludes_model_startup_and_final_export',
+            'fps': 1 / result['processing_seconds'],
+            'motion_at_18_kmh': motion_budget(result['processing_seconds'], 18),
+            'motion_at_20_kmh': motion_budget(result['processing_seconds'], 20),
+        }
+        results.append(result)
+        logging.info("%s: %d candidates, %.2fs", name, len(detections), result['processing_seconds'])
     save_results(results, output)
     return results

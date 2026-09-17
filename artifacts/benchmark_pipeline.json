@@ -1,0 +1,95 @@
+{
+  "scope": "real DINOv2 + tiling + NMS + rows + annotation + disk export; no camera or actuator",
+  "offline": true,
+  "python_socket_connections_disabled": true,
+  "platform": "Linux-7.2.5-200.fc44.x86_64-x86_64-with-glibc2.43",
+  "device": "cpu",
+  "torch_version": "2.14.0+cu130",
+  "torch_threads": 4,
+  "native_nms": true,
+  "config": {
+    "model": {
+      "name": "facebook/dinov2-small",
+      "batch_size": 16
+    },
+    "tiling": {
+      "tile_size": 1024,
+      "overlap": 0.2
+    },
+    "vegetation": {
+      "method": "combined",
+      "hsv": {
+        "lower_h": 25,
+        "lower_s": 35,
+        "lower_v": 25,
+        "upper_h": 100,
+        "upper_s": 255,
+        "upper_v": 255
+      },
+      "exg": {
+        "threshold": 20
+      },
+      "morphology": {
+        "open_kernel": 3,
+        "close_kernel": 7
+      },
+      "components": {
+        "min_area": 150,
+        "max_area_ratio": 0.35,
+        "min_width": 8,
+        "min_height": 8,
+        "min_fill_ratio": 0.1
+      }
+    },
+    "classification": {
+      "top_k": 5,
+      "similarity_threshold": 0.55,
+      "category_margin": 0.05,
+      "crop_padding": 0.1
+    },
+    "nms": {
+      "iou_threshold": 0.4
+    },
+    "debug": {
+      "max_tiles": 10,
+      "max_crops": 50
+    }
+  },
+  "model_startup_seconds": 5.407545079997362,
+  "cold_batch_seconds": 0.15565760299796239,
+  "repeats": 3,
+  "frames": [
+    {
+      "image": "01_images1.jpg",
+      "width": 275,
+      "height": 183,
+      "candidates": 0
+    }
+  ],
+  "samples": 3,
+  "median_frame_seconds": 0.016417056998761836,
+  "p95_frame_seconds": 0.016679882999596884,
+  "max_frame_seconds": 0.016679882999596884,
+  "throughput_fps_including_export": 59.84593740585219,
+  "motion_p95": {
+    "speed_kmh": 20,
+    "latency_seconds": 0.016679882999596884,
+    "processing_distance_m": 0.09266601666442713,
+    "total_distance_m": 0.09266601666442713,
+    "camera_to_nozzle_m": null,
+    "actuator_ms": 0,
+    "deadline_seconds": null,
+    "within_budget": null
+  },
+  "motion_max_including_cold": {
+    "speed_kmh": 20,
+    "latency_seconds": 0.15438066600108868,
+    "processing_distance_m": 0.8576703666727149,
+    "total_distance_m": 0.8576703666727149,
+    "camera_to_nozzle_m": null,
+    "actuator_ms": 0,
+    "deadline_seconds": null,
+    "within_budget": null
+  },
+  "field_ready": false
+}

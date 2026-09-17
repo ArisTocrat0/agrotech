@@ -1,4 +1,6 @@
 'use strict';
+const classLabels = {A:'A · Двудольные (широколистные)', B:'B · Злаковые (узколистные)'};
+const stageLabels = {base_minimum:'Идеальное окно: базовая/минимальная норма по регламенту препарата', review_increase_15_20:'4–6 листьев: по заданному правилу +15–20%; требуется проверка регламента препарата', warn_ineffective_crop_risk:'Поздняя фаза: возможна неэффективность обработки и повреждение культуры', review_stage:'Фаза не определена: требуется проверка'};
 let reviewImage = 0, reviewDetection = 0, reviewSaving = false, reviewJob = null;
 const kindLabels = {weed:'Сорняк',crop:'Культура',unknown:'Проверить',not_plant:'Не растение'};
 const kindColors = {weed:'#ff3fa4',crop:'#00d9ff',unknown:'#ffd600',not_plant:'#ffffff'};
@@ -47,7 +49,8 @@ function renderReview() {
   });
   const d = row.detections[reviewDetection];
   $('review-name').textContent = d ? detectionLabel(d) : t('Нет обнаружений');
-  $('review-details').textContent = d ? `${t('Сходство')}: ${Number(d.similarity_score).toFixed(2)} · ${t('Класс')}: ${d.weed_class || '—'} · ${t({annual:'Малолетний',perennial:'Многолетний'}[d.lifecycle] || 'Не определена')}${d.review ? ' · '+t('Проверено вручную') : ''}` : '';
+  $('review-details').textContent = d ? `${t('Сходство')}: ${Number(d.similarity_score).toFixed(2)} · ${t('Класс')}: ${t(classLabels[d.weed_class] || 'Не определена')} · ${t({annual:'Малолетний',perennial:'Многолетний'}[d.lifecycle] || 'Не определена')}${d.review ? ' · '+t('Проверено вручную') : ''}` : '';
+  $('review-stage').textContent = d?.stage_advice ? `${d.priority === 'high' ? t('Приоритет: многолетник') + ' · ' : ''}${t(stageLabels[d.stage_advice.action])}` : '';
   $('review-counter').textContent = `${d ? reviewDetection+1 : 0} / ${row.detections.length} · ${t('Проверено')}: ${row.detections.filter(d=>d.review && d.review!=='unknown').length}`;
   document.querySelectorAll('[data-decision]').forEach(button => button.disabled=reviewSaving || !d);
   $('review-prev').disabled=reviewSaving || reviewDetection<=0;
@@ -56,6 +59,22 @@ function renderReview() {
   const level = {scale_required:'Нужен масштаб',low:'Слабая засорённость',medium:'Средняя засорённость',high:'Сильная засорённость',critical:'Критическая угроза'};
   const density = a.area_m2 ? `${t('Площадь')}: ${a.area_m2.toFixed(2)} м² · ${t('Малолетние')}: ${a.annual_per_m2.toFixed(2)}/м² · ${t('Многолетние')}: ${a.perennial_per_m2.toFixed(2)}/м²` : t('Для плотности укажите масштаб');
   $('review-agronomy').textContent = `${t('Ряды')}: ${row.rows?.count ?? t('Не определены')} · ${t(level[a.level] || 'Нужен масштаб')} · ${density} · ${t('Культур')}: ${row.crop_count || 0} · ${t('Сорняков без агрокласса')}: ${a.unclassified_weeds || 0}`;
+  const classes = $('review-classes'); classes.replaceChildren();
+  for (const group of ['A','B']) {
+    const stats = a.classes?.[group]; if (!stats) continue;
+    const line = document.createElement('p');
+    const densityText = key => stats[key] == null ? '—' : Number(stats[key]).toFixed(2);
+    line.textContent = `${t(classLabels[group])}: ${t('Малолетние')} ${stats.annual_count} (${densityText('annual_per_m2')}/м²), ${t('Многолетние')} ${stats.perennial_count} (${densityText('perennial_per_m2')}/м²)`;
+    if (stats.priority === 'high') line.textContent += ` · ${t('Приоритет: многолетник')}`;
+    classes.append(line);
+  }
+  const actions = {measure_scale:'Нужен масштаб', do_not_spray:'Не опрыскивать: ниже экономического порога', standard_rate:'Стандартная норма по регламенту препарата', maximum_label_rate:'Максимальная разрешённая норма по регламенту препарата', urgent_treatment:'Критическая угроза: срочно оценить обработку', agronomist_review:'Требуется проверка агрономом'};
+  $('review-action').textContent = a.threshold_action ? `${t('По заданным порогам')}: ${t(actions[a.threshold_action])}. ${t('Решение')}: ${t(actions[a.recommendation])}.` : '';
+  const reasons = {scale_required:'Нужен масштаб', uncertain_classification:'Есть объекты с неопределённым классом', late_stage_crop_risk:'Поздняя фаза: возможна неэффективность обработки и повреждение культуры', unknown_stage:'Фаза не определена: требуется проверка', perennials_below_threshold:'Есть многолетники ниже критического порога: требуется отдельная оценка'};
+  $('review-reasons').textContent = (a.review_reasons || []).map(reason => t(reasons[reason] || reason)).join(' · ');
+  const perf = row.performance;
+  $('review-performance').textContent = perf ? `${t('Обработка кадра')}: ${Number(row.processing_seconds).toFixed(3)} ${t('с')} · ${Number(perf.fps).toFixed(2)} FPS · ${t('Путь за обработку при 20 км/ч')}: ${Number(perf.motion_at_20_kmh.processing_distance_m).toFixed(2)} ${t('м')}` : '';
+
 }
 async function decide(decision) {
   if (reviewSaving || selected !== reviewJob) return;

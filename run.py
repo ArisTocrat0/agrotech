@@ -1,5 +1,6 @@
 import argparse
 import logging
+import os
 from pathlib import Path
 from src.config import load_config, DEFAULT_CONFIG
 from src.image_utils import image_paths
@@ -20,6 +21,9 @@ def main() -> None:
     parser.add_argument("--online", action="store_true", help="Allow the initial model download")
     parser.add_argument("--debug", action="store_true")
     args = parser.parse_args()
+    if not args.online:
+        os.environ['HF_HUB_OFFLINE'] = '1'
+        os.environ['TRANSFORMERS_OFFLINE'] = '1'
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
     config = load_config(args.config)
     config["gsd_cm"] = args.gsd_cm
@@ -42,7 +46,8 @@ def main() -> None:
     model = DinoEmbeddingModel(m["name"], args.device, m["batch_size"], offline=not args.online)
     index = build_reference_index(args.references, Path("artifacts/reference_index.pt"),
                                   m["name"], args.device, m["batch_size"], model=model, crop_references=Path("data/Культуры"))
-    classifier = ReferenceClassifier(index, config["classification"]["top_k"], config["classification"]["similarity_threshold"])
+    classifier = ReferenceClassifier(index, config["classification"]["top_k"], config["classification"]["similarity_threshold"],
+                                     config['classification'].get('category_margin', 0.05))
     run_inference(args.input, args.output, config, model, classifier, args.debug)
 
 

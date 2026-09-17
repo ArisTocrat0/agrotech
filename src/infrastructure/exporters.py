@@ -18,11 +18,12 @@ def image_result(name: str, width: int, height: int, detections: list[WeedDetect
 
 
 def recount(result):
-    from ..domain.agronomy import plant_info, assessment
+    from ..domain.agronomy import plant_info, assessment, stage_advice
     rows = result['detections']
     for row in rows:
-        for key,value in plant_info(row['species']).items():
-            row.setdefault(key,value)
+        row.update(plant_info(row['species'], row.get('kind')))
+        row['priority'] = 'high' if row['lifecycle'] == 'perennial' else 'normal'
+        row['stage_advice'] = stage_advice(row.get('stage', '')) if row['kind'] == 'weed' else None
     weeds = [d for d in rows if d['kind']=='weed']
     result.update(total_weeds=len(weeds), total_candidates=len(rows),
                   crop_count=sum(d['kind']=='crop' for d in rows),
@@ -38,12 +39,15 @@ def save_results(results: list[dict], output: Path) -> None:
     output.mkdir(parents=True, exist_ok=True)
     (output/"results.json").write_text(json.dumps(results, ensure_ascii=False, indent=2, allow_nan=False), encoding="utf-8")
     with (output/"results.csv").open("w", encoding="utf-8-sig", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=["image", "detection_id", "species", "stage", "similarity_score", "kind", "review", "x1", "y1", "x2", "y2"])
+        writer = csv.DictWriter(stream, fieldnames=["image", "detection_id", "species", "stage", "similarity_score", "kind", "weed_class", "lifecycle", "priority", "stage_action", "review", "x1", "y1", "x2", "y2"])
         writer.writeheader()
         for result in results:
             for d in result["detections"]:
                 writer.writerow({"image": result["image"], "detection_id": d["id"], "species": d["species"],
-                                 "stage": d["stage"], "similarity_score": d["similarity_score"], "kind":d.get("kind","weed"), "review":d.get("review",""), **d["bbox"]})
+                                 "stage": d["stage"], "similarity_score": d["similarity_score"], "kind":d.get("kind","weed"),
+                                 **{key:d.get(key) for key in ('weed_class','lifecycle','priority')},
+                                 "stage_action":(d.get('stage_advice') or {}).get('action'),
+                                 "review":d.get("review",""), **d["bbox"]})
 
 
 def normalize_bbox(box: dict, width: int, height: int) -> tuple[float, float, float, float]:

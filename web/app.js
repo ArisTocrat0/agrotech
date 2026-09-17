@@ -72,7 +72,7 @@ function renderJobs() {
 function renderStatus() {
   const running = jobs.some(job => job.status === 'running');
     $('analysis-status').hidden = !running;
-    $('analysis-status').textContent = running ? t('Анализ выполняется. При первом запуске загружается модель — это может занять несколько минут. Результаты появятся автоматически. Вы можете переходить между вкладками.') : '';
+    $('analysis-status').textContent = running ? t('Анализ выполняется локально. Загрузка модели из интернета возможна только при включённом разрешении. Результаты появятся автоматически.') : '';
 }
 async function refresh() {
   try {
