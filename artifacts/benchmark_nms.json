@@ -4,9 +4,9 @@
   "classes": 5,
   "seed": 42,
   "native_available": true,
-  "python_seconds": 0.6669132040005934,
-  "native_seconds": 0.009671241998148616,
-  "speedup": 68.95838240096379,
+  "python_seconds": 0.45905770800163737,
+  "native_seconds": 0.005955393000476761,
+  "speedup": 77.08268924735737,
   "platform": "Linux-7.2.5-200.fc44.x86_64-x86_64-with-glibc2.43",
   "scope": "Does not measure DINOv2 or full-frame FPS."
 }

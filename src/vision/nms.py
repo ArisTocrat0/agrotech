@@ -25,10 +25,14 @@ def kernel():
 
 
 def nms(detections: list[WeedDetection], iou_threshold=0.4, backend='auto'):
+    if backend not in {'auto', 'python', 'cpp'}:
+        raise ValueError('NMS backend must be auto, python or cpp')
     if not 0 <= iou_threshold <= 1:
         raise ValueError('Invalid NMS threshold')
     ordered = sorted(detections, key=lambda d:d.similarity_score, reverse=True)
     fn = kernel() if backend != 'python' else None
+    if backend == 'cpp' and fn is None:
+        raise RuntimeError('C++ NMS is unavailable; run python scripts/build_native.py')
     if fn and ordered:
         size = len(ordered)
         boxes = (ctypes.c_double*(size*4))(*(v for d in ordered for v in (d.x1,d.y1,d.x2,d.y2)))

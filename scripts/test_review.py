@@ -21,6 +21,8 @@ from src.recognition.classifier import ReferenceClassifier
 
 class ReviewTests(unittest.TestCase):
     def test_native_matches_python(self):
+        if kernel() is None:
+            self.skipTest('Build C++ NMS with scripts/build_native.py')
         rng=random.Random(42)
         detections=[]
         for i in range(400):
@@ -28,7 +30,7 @@ class ReviewTests(unittest.TestCase):
             detections.append(WeedDetection(i,str(i%3),'stage',rng.random(),x,y,x+rng.randrange(1,80),y+rng.randrange(1,80)))
         for threshold in [0,.4,1]:
             expected=nms(detections,threshold,backend='python')
-            actual=nms(detections,threshold)
+            actual=nms(detections,threshold,backend='cpp')
             self.assertEqual([(d.x1,d.y1,d.similarity_score) for d in expected],[(d.x1,d.y1,d.similarity_score) for d in actual])
 
     def test_crop_ambiguity_and_counts(self):
