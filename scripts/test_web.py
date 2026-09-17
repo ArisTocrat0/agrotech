@@ -38,7 +38,7 @@ class WebTests(unittest.TestCase):
         return urlopen(self.url+path)
 
     def test_assets_and_empty_history(self):
-        for path in ['/', '/app.js', '/i18n.js', '/style.css']:
+        for path in ['/', '/app.js', '/client.js', '/settings.js', '/review.js', '/i18n.js', '/style.css']:
             with self.get(path) as response:
                 self.assertEqual(response.status, 200)
                 self.assertGreater(len(response.read()), 100)

@@ -902,6 +902,190 @@ const translations = {
     "kk": "Талдау жергілікті орындалады. Модельді интернеттен жүктеу үшін рұқсат қажет. Нәтижелер автоматты түрде көрсетіледі."
   }
 };
+Object.assign(translations, {
+  "Обзор": {en:"Overview",kk:"Шолу"},
+  "Анализы": {en:"Analyses",kk:"Талдаулар"},
+  "Проверка": {en:"Review",kk:"Тексеру"},
+  "Отчёты": {en:"Reports",kk:"Есептер"},
+  "Настройки": {en:"Settings",kk:"Баптаулар"},
+  "КОНТРОЛЬ КАЧЕСТВА": {en:"QUALITY CONTROL",kk:"САПАНЫ БАҚЫЛАУ"},
+  "Проверка находок": {en:"Review findings",kk:"Табылған нысандарды тексеру"},
+  "Подтвердите или исправьте решения модели.": {en:"Confirm or correct the model decisions.",kk:"Модель шешімдерін растаңыз немесе түзетіңіз."},
+  "Обработано": {en:"Processed",kk:"Өңделді"},
+  "Обнаружено моделью": {en:"Detected by model",kk:"Модель тапты"},
+  "Все найденные объекты": {en:"All detected objects",kk:"Барлық табылған нысандар"},
+  "Подтверждено сорняков": {en:"Confirmed weeds",kk:"Расталған арамшөптер"},
+  "После ручной проверки": {en:"After manual review",kk:"Қолмен тексергеннен кейін"},
+  "Непроверенные объекты": {en:"Unreviewed objects",kk:"Тексерілмеген нысандар"},
+  "Объекты, найденные моделью": {en:"Objects detected by model",kk:"Модель тапқан нысандар"},
+  "Подтверждённые сорняки": {en:"Confirmed weeds",kk:"Расталған арамшөптер"},
+  "Прогресс проверки": {en:"Review progress",kk:"Тексеру барысы"},
+  "Открыть": {en:"Open",kk:"Ашу"},
+  "из": {en:"of",kk:"ішінен"},
+  "объектов": {en:"objects",kk:"нысан"},
+  "объектов ждут проверки": {en:"objects awaiting review",kk:"нысан тексеруді күтуде"},
+  "объектов уже проверено": {en:"objects already reviewed",kk:"нысан тексерілді"},
+  "Продолжить проверку": {en:"Continue review",kk:"Тексеруді жалғастыру"},
+  "✓ Проверка завершена": {en:"✓ Review complete",kk:"✓ Тексеру аяқталды"},
+  "Все объекты этого анализа проверены.": {en:"All objects in this analysis have been reviewed.",kk:"Осы талдаудағы барлық нысан тексерілді."},
+  "Расширенные настройки": {en:"Advanced settings",kk:"Қосымша баптаулар"},
+  "Для большинства анализов рекомендуем оставить параметры по умолчанию.": {en:"For most analyses, we recommend keeping the default settings.",kk:"Көпшілік талдау үшін әдепкі баптауларды қалдыруды ұсынамыз."},
+  "Диагностика": {en:"Diagnostics",kk:"Диагностика"},
+  "ML / Обучение": {en:"ML / Training",kk:"ML / Оқыту"},
+  "Нажмите, чтобы раскрыть": {en:"Click to expand",kk:"Ашу үшін басыңыз"},
+  "Эталоны и технические инструменты для администратора.": {en:"References and technical tools for administrators.",kk:"Әкімшіге арналған эталондар мен техникалық құралдар."},
+  "ДАННЫЕ ДЛЯ РАБОТЫ": {en:"WORKING DATA",kk:"ЖҰМЫС ДЕРЕКТЕРІ"},
+  "ДЛЯ РАЗРАБОТЧИКОВ / ML": {en:"FOR DEVELOPERS / ML",kk:"ӘЗІРЛЕУШІЛЕР / ML"},
+  "Таблица предсказаний и ручных решений для Excel.": {en:"A table of model predictions and manual decisions for Excel.",kk:"Excel үшін модель болжамдары мен қолмен қабылданған шешімдер кестесі."},
+  "Следующий непроверенный": {en:"Next unreviewed",kk:"Келесі тексерілмеген"},
+  "Показать все рамки": {en:"Show all boxes",kk:"Барлық жиектемені көрсету"},
+  "Сейчас вы проверяете": {en:"Currently reviewing",kk:"Қазір тексеріп жатырсыз"}
+  ,"ТЕКУЩИЙ АНАЛИЗ": {en:"CURRENT ANALYSIS",kk:"АҒЫМДАҒЫ ТАЛДАУ"}
+});
+Object.assign(translations, {
+  "Обзор анализов": {
+    "en": "Analysis overview",
+    "kk": "Талдауларға шолу"
+  },
+  "Проверка ещё не выполнена": {
+    "en": "Not reviewed yet",
+    "kk": "Әлі тексерілмеді"
+  },
+  "Анализ выполняется. Результаты появятся автоматически.": {
+    "en": "Analysis is running. Results will appear automatically.",
+    "kk": "Талдау орындалуда. Нәтижелер автоматты түрде көрсетіледі."
+  },
+  "ДЕТАЛИЗАЦИЯ": {
+    "en": "DETAILS",
+    "kk": "ТОЛЫҒЫРАҚ"
+  },
+  "Данных пока нет": {
+    "en": "No data yet",
+    "kk": "Әзірге деректер жоқ"
+  },
+  "Обработанные снимки": {
+    "en": "Processed images",
+    "kk": "Өңделген суреттер"
+  },
+  "Эталоны": {
+    "en": "References",
+    "kk": "Эталондар"
+  },
+  "Анализ и вычисления": {
+    "en": "Analysis and computing",
+    "kk": "Талдау және есептеу"
+  },
+  "Полный архив": {
+    "en": "Full archive",
+    "kk": "Толық мұрағат"
+  },
+  "Не удалось выполнить действие.": {
+    "en": "Could not complete the action.",
+    "kk": "Әрекетті орындау мүмкін болмады."
+  },
+  "Подробнее": {
+    "en": "Details",
+    "kk": "Толығырақ"
+  },
+  "Решение сохранено": {
+    "en": "Decision saved",
+    "kk": "Шешім сақталды"
+  },
+  "⚡ GPU-профиль": {
+    "en": "⚡ GPU preset",
+    "kk": "⚡ GPU профилі"
+  },
+  "Включён GPU-профиль: CUDA, batch 64, overlap 0.15.": {
+    "en": "GPU preset enabled: CUDA, batch 64, overlap 0.15.",
+    "kk": "GPU профилі қосылды: CUDA, пакет 64, қабаттасу 0.15."
+  },
+  "⚡ Начать полное обучение": {
+    "en": "⚡ Start full training",
+    "kk": "⚡ Толық оқытуды бастау"
+  },
+  "эпох": {
+    "en": "epochs",
+    "kk": "дәуір"
+  },
+  "Решения агронома": {
+    "en": "Agronomist decisions",
+    "kk": "Агроном шешімдері"
+  },
+  "Обучение": {
+    "en": "Training",
+    "kk": "Оқыту"
+  },
+  "YOLO на H100": {
+    "en": "YOLO on H100",
+    "kk": "H100 құрылғысында YOLO"
+  },
+  "✓ Датасет готов": {
+    "en": "✓ Dataset ready",
+    "kk": "✓ Деректер жиыны дайын"
+  },
+  "Train/val проверены · H100 · 150 эпох · AMP": {
+    "en": "Train/val checked · H100 · 150 epochs · AMP",
+    "kk": "Train/val тексерілді · H100 · 150 дәуір · AMP"
+  },
+  "○ Нужна проверенная разметка": {
+    "en": "○ Verified annotations required",
+    "kk": "○ Тексерілген белгілеу қажет"
+  },
+  "Завершите проверку и создайте": {
+    "en": "Complete review and create",
+    "kk": "Тексеруді аяқтап, жасаңыз"
+  },
+  "Полное GPU-обучение завершено.": {
+    "en": "Full GPU training complete.",
+    "kk": "Толық GPU оқыту аяқталды."
+  },
+  "Сначала выберите завершённый анализ.": {
+    "en": "Select a completed analysis first.",
+    "kk": "Алдымен аяқталған талдауды таңдаңыз."
+  }
+});
+Object.assign(translations, {
+  "Проверено": {
+    "en": "Reviewed",
+    "kk": "Тексерілді"
+  },
+  "Нет обнаружений": {
+    "en": "No detections",
+    "kk": "Нысандар табылмады"
+  },
+  "Класс": {
+    "en": "Class",
+    "kk": "Класс"
+  },
+  "Проверено вручную": {
+    "en": "Reviewed manually",
+    "kk": "Қолмен тексерілді"
+  },
+  "Площадь": {
+    "en": "Area",
+    "kk": "Аудан"
+  },
+  "Для плотности укажите масштаб": {
+    "en": "Set scale to calculate density",
+    "kk": "Тығыздық үшін масштабты көрсетіңіз"
+  },
+  "Ряды": {
+    "en": "Rows",
+    "kk": "Қатарлар"
+  },
+  "Не определены": {
+    "en": "Not determined",
+    "kk": "Анықталмаған"
+  },
+  "Культур": {
+    "en": "Crops",
+    "kk": "Дақылдар"
+  },
+  "Сорняков без агрокласса": {
+    "en": "Weeds without agronomic class",
+    "kk": "Агрономиялық класы жоқ арамшөптер"
+  }
+});
 let language = 'ru';
 try { language = localStorage.getItem('olzha-language') || 'ru'; } catch (_) {}
 if (!['ru', 'en', 'kk'].includes(language)) language = 'ru';

@@ -125,6 +125,8 @@ def make_handler(app: Dashboard):
                         self.send(200, image.read_bytes(), 'image/png')
                         return
                 assets = {'/': ('index.html', 'text/html; charset=utf-8'),
+                          '/settings.js': ('settings.js', 'text/javascript; charset=utf-8'),
+                          '/client.js': ('client.js', 'text/javascript; charset=utf-8'),
                           '/app.js': ('app.js', 'text/javascript; charset=utf-8'),
                           '/review.js': ('review.js', 'text/javascript; charset=utf-8'),
                           '/i18n.js': ('i18n.js', 'text/javascript; charset=utf-8'),
