@@ -92,7 +92,8 @@ class SmokeTests(unittest.TestCase):
             output = root/'outputs'
             results = run_inference(inputs, output, config, FakeModel(), FakeClassifier(), True)
             self.assertEqual(results[0]['total_weeds'], 1)
-            self.assertEqual(Image.open(output/'annotated/тест.png.png').size, image.size)
+            with Image.open(output/'annotated/тест.png.png') as annotated:
+                self.assertEqual(annotated.size, image.size)
             self.assertTrue((output/'results.csv').read_bytes().startswith(b'\xef\xbb\xbf'))
             self.assertLessEqual(len(list((output/'debug').glob('*/tile.png'))), config['debug']['max_tiles'])
             self.assertEqual(export_dataset(output/'results.json', inputs, root/'pseudo'), 1)
@@ -108,7 +109,8 @@ class SmokeTests(unittest.TestCase):
             result = image_result('rotated.jpg', 160, 200, [WeedDetection(1, 'Бодяк', 'Розетка', .9, 10, 20, 50, 60)])
             save_results([result], root/'rotated_results')
             export_dataset(root/'rotated_results/results.json', root/'rotated.jpg', root/'rotated_pseudo')
-            self.assertEqual(Image.open(root/'rotated_pseudo/images/000000.png').size, (160, 200))
+            with Image.open(root/'rotated_pseudo/images/000000.png') as exported:
+                self.assertEqual(exported.size, (160, 200))
 
 
 if __name__ == '__main__':
