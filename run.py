@@ -46,6 +46,9 @@ def main() -> None:
     model = DinoEmbeddingModel(m["name"], args.device, m["batch_size"], offline=not args.online)
     index = build_reference_index(args.references, Path("artifacts/reference_index.pt"),
                                   m["name"], args.device, m["batch_size"], model=model, crop_references=Path("data/Культуры"))
+    # Cached indexes are intentionally loaded on CPU for portability. Matching is a
+    # large matrix multiplication, so move it once instead of moving every query.
+    index['embeddings'] = index['embeddings'].to(model.device, non_blocking=True)
     classifier = ReferenceClassifier(index, config["classification"]["top_k"], config["classification"]["similarity_threshold"],
                                      config['classification'].get('category_margin', 0.05))
     run_inference(args.input, args.output, config, model, classifier, args.debug)

@@ -27,6 +27,7 @@ def run_inference(input_path: Path, output: Path, config: dict, model, classifie
         image = load_image_rgb(path)
         name = path.name if input_path.is_file() else path.relative_to(input_path).as_posix()
         detections = []
+        pending = []
         seen_boxes = set()
         for tile in iter_tiles(image, **config["tiling"]):
             mask = detector.mask(tile.image)
@@ -51,18 +52,20 @@ def run_inference(input_path: Path, output: Path, config: dict, model, classifie
                     draw.rectangle((c.x1, c.y1, c.x2-1, c.y2-1), outline="red", width=2)
                 components.save(debug_dir/"components.png")
                 debug_tiles += 1
-            for start in range(0, len(candidates), model.batch_size):
-                batch = candidates[start:start+model.batch_size]
-                crops = [candidate_crop(tile.image, c, config["classification"]["crop_padding"]) for c in batch]
-                predictions = classifier.classify(model.encode(crops))
-                for c, crop, (species, stage, score) in zip(batch, crops, predictions):
-                    c.tile_id = tile.tile_id
-                    detections.append(WeedDetection(0, species, stage, score, c.x1+tile.offset_x,
-                                                   c.y1+tile.offset_y, c.x2+tile.offset_x, c.y2+tile.offset_y,
-                                                   getattr(classifier,"species_kinds",{}).get(species,"")))
-                    if save_debug and debug_crops < config["debug"]["max_crops"]:
-                        crop.save(debug_dir/f"crop_{debug_crops}.png")
-                        debug_crops += 1
+            for c in candidates:
+                crop = candidate_crop(tile.image, c, config["classification"]["crop_padding"])
+                c.tile_id = tile.tile_id
+                pending.append((c, crop, tile.offset_x, tile.offset_y))
+                if save_debug and debug_crops < config["debug"]["max_crops"]:
+                    crop.save(debug_dir/f"crop_{debug_crops}.png")
+                    debug_crops += 1
+        # Encode across tile boundaries so sparse tiles do not produce many tiny GPU
+        # launches. DinoEmbeddingModel still chunks this list to the configured batch.
+        predictions = classifier.classify(model.encode([item[1] for item in pending]))
+        for (c, _crop, offset_x, offset_y), (species, stage, score) in zip(pending, predictions):
+            detections.append(WeedDetection(0, species, stage, score, c.x1+offset_x,
+                                           c.y1+offset_y, c.x2+offset_x, c.y2+offset_y,
+                                           getattr(classifier,"species_kinds",{}).get(species,"")))
         detections = nms(detections, **config["nms"])
         result = image_result(name, image.width, image.height, detections)
         result['rows'] = estimate_rows(image,detector)

@@ -10,8 +10,12 @@ function openReview(index) {
   $('dialog-image').src = `/api/jobs/${reviewJob}/source/${index}`;
   $('review-zoom').value = 1; $('review-frame').style.width = '100%';
   $('review-gsd').value = results[index].gsd_cm || '';
-  $('review-message').textContent = '';
+  $('review-message').textContent = ''; ensureReviewControls();
   $('image-dialog').showModal(); renderReview();
+}
+function ensureReviewControls() {
+  if (!$('review-progress')) { const box=document.createElement('div');box.className='review-progress';box.innerHTML='<div><span>Прогресс проверки</span><strong id="review-progress-label">0%</strong></div><progress id="review-progress" max="100" value="0"></progress>';document.querySelector('.review-layout').before(box); }
+  if (!$('review-next-pending')) { const button=document.createElement('button');button.id='review-next-pending';button.className='secondary';button.textContent='След. непроверенный ⇥';button.addEventListener('click',nextPending);document.querySelector('.review-navigation').append(button); }
 }
 function detectionLabel(d) {
   const species = d.species === 'unknown' ? t('Неизвестный вид') : d.species;
@@ -51,7 +55,10 @@ function renderReview() {
   $('review-name').textContent = d ? detectionLabel(d) : t('Нет обнаружений');
   $('review-details').textContent = d ? `${t('Сходство')}: ${Number(d.similarity_score).toFixed(2)} · ${t('Класс')}: ${t(classLabels[d.weed_class] || 'Не определена')} · ${t({annual:'Малолетний',perennial:'Многолетний'}[d.lifecycle] || 'Не определена')}${d.review ? ' · '+t('Проверено вручную') : ''}` : '';
   $('review-stage').textContent = d?.stage_advice ? `${d.priority === 'high' ? t('Приоритет: многолетник') + ' · ' : ''}${t(stageLabels[d.stage_advice.action])}` : '';
-  $('review-counter').textContent = `${d ? reviewDetection+1 : 0} / ${row.detections.length} · ${t('Проверено')}: ${row.detections.filter(d=>d.review && d.review!=='unknown').length}`;
+  const reviewed=row.detections.filter(d=>d.review).length;
+  const percent=row.detections.length ? Math.round(reviewed/row.detections.length*100) : 100;
+  $('review-counter').textContent = `${d ? reviewDetection+1 : 0} / ${row.detections.length} · ${t('Проверено')}: ${reviewed}`;
+  if ($('review-progress')) { $('review-progress').value=percent;$('review-progress-label').textContent=`${percent}%`; }
   document.querySelectorAll('[data-decision]').forEach(button => button.disabled=reviewSaving || !d);
   $('review-prev').disabled=reviewSaving || reviewDetection<=0;
   $('review-next').disabled=reviewSaving || reviewDetection>=row.detections.length-1;
@@ -76,6 +83,7 @@ function renderReview() {
   $('review-performance').textContent = perf ? `${t('Обработка кадра')}: ${Number(row.processing_seconds).toFixed(3)} ${t('с')} · ${Number(perf.fps).toFixed(2)} FPS · ${t('Путь за обработку при 20 км/ч')}: ${Number(perf.motion_at_20_kmh.processing_distance_m).toFixed(2)} ${t('м')}` : '';
 
 }
+function nextPending() { const detections=results[reviewImage]?.detections||[];for(let step=1;step<=detections.length;step++){const index=(reviewDetection+step)%detections.length;if(!detections[index].review){reviewDetection=index;renderReview();return;}}$('review-message').textContent=t('Все объекты на снимке проверены.'); }
 async function decide(decision) {
   if (reviewSaving || selected !== reviewJob) return;
   const d = results[reviewImage]?.detections[reviewDetection]; if (!d) return;
@@ -99,6 +107,9 @@ $('image-dialog').addEventListener('keydown',event=>{
   if (/INPUT|SELECT|TEXTAREA/.test(event.target.tagName)) return;
   const decision = {'1':'weed','2':'crop','3':'not_plant','4':'unknown'}[event.key];
   if (decision) { event.preventDefault();decide(decision); }
+  else if(event.key==='ArrowLeft'){event.preventDefault();reviewDetection=Math.max(0,reviewDetection-1);renderReview();}
+  else if(event.key==='ArrowRight'){event.preventDefault();reviewDetection=Math.min(results[reviewImage].detections.length-1,reviewDetection+1);renderReview();}
+  else if(event.key==='Enter'){event.preventDefault();nextPending();}
 });
 $('review-geometry').addEventListener('click',async()=>{
   if (!$('review-gsd').reportValidity()) return;

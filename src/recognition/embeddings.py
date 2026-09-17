@@ -25,5 +25,8 @@ class DinoEmbeddingModel:
                          for im in images[start:start+self.batch_size]]
                 inputs = self.processor(images=batch, return_tensors="pt", do_resize=False, do_center_crop=False).to(self.device)
                 vectors = self.model(**inputs).last_hidden_state[:, 0]
-                chunks.append(F.normalize(vectors, dim=1).cpu())
-        return torch.cat(chunks) if chunks else torch.empty((0, self.model.config.hidden_size))
+                # Keep embeddings on the accelerator. Moving every batch to CPU made
+                # reference matching the dominant cost for large reference libraries.
+                chunks.append(F.normalize(vectors, dim=1))
+        return (torch.cat(chunks) if chunks else
+                torch.empty((0, self.model.config.hidden_size), device=self.device))
