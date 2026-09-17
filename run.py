@@ -15,6 +15,7 @@ def main() -> None:
     parser.add_argument("--tile-size", type=int)
     parser.add_argument("--overlap", type=float)
     parser.add_argument("--similarity-threshold", type=float)
+    parser.add_argument("--batch-size", type=int)
     parser.add_argument("--debug", action="store_true")
     args = parser.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
@@ -22,6 +23,10 @@ def main() -> None:
     for key, value in [("tile_size", args.tile_size), ("overlap", args.overlap)]:
         if value is not None:
             config["tiling"][key] = value
+    if args.batch_size is not None:
+        if not 1 <= args.batch_size <= 128:
+            parser.error("Batch size must be between 1 and 128")
+        config["model"]["batch_size"] = args.batch_size
     if args.similarity_threshold is not None:
         config["classification"]["similarity_threshold"] = args.similarity_threshold
     if not image_paths(args.input) or not image_paths(args.references):

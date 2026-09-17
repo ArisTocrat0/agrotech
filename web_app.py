@@ -2,6 +2,11 @@
 import argparse
 import json
 import logging
+import math
+import re
+import tempfile
+import zipfile
+from io import BytesIO
 import subprocess
 import sys
 import threading
@@ -23,9 +28,11 @@ class Dashboard:
         self.jobs = root / 'outputs' / 'web'
         self.lock = threading.Lock()
         self.processes = {}
+        self.check_process = None
+        self.check_log = self.jobs / "system-check.log"
 
     def close(self):
-        for process in self.processes.values():
+        for process in [*self.processes.values(), *([self.check_process] if self.check_process else [])]:
             if process.poll() is None:
                 process.terminate()
                 try:
@@ -63,15 +70,13 @@ class Dashboard:
                          'created': datetime.fromtimestamp(cli.stat().st_mtime, timezone.utc).isoformat()})
         return sorted(rows, key=lambda row: row['created'], reverse=True)
 
-    def start(self, files: list[tuple[str, bytes]]) -> str:
+    @staticmethod
+    def validate_images(files):
         from PIL import Image
-        from io import BytesIO
-        references = self.root / 'data' / 'Сорняки'
-        if not any(p.suffix.lower() in {'.jpg', '.jpeg', '.png'} and len(p.relative_to(references).parts) >= 3
-                   for p in references.rglob('*') if p.is_file()):
-            raise ValueError('Добавьте эталоны в data/Сорняки/Вид/Стадия, затем повторите запуск.')
         if not 1 <= len(files) <= 20:
             raise ValueError('Выберите от 1 до 20 фотографий.')
+        if sum(len(data) for _, data in files) > MAX_UPLOAD:
+            raise ValueError('Общий размер загрузки должен быть не больше 100 МБ.')
         for name, data in files:
             if Path(name).suffix.lower() not in {'.jpg', '.jpeg', '.png'}:
                 raise ValueError('Допустимы только JPG, JPEG и PNG.')
@@ -80,6 +85,124 @@ class Dashboard:
                     image.verify()
             except Exception as exc:
                 raise ValueError(f'Не удалось прочитать изображение: {name}') from exc
+
+    def references(self):
+        base = self.root / 'data' / 'Сорняки'
+        groups = {}
+        for path in base.rglob('*'):
+            if path.is_file() and path.suffix.lower() in {'.jpg', '.jpeg', '.png'}:
+                parts = path.relative_to(base).parts
+                if len(parts) >= 3:
+                    key = parts[:2]
+                    groups[key] = groups.get(key, 0) + 1
+        return [{'species': key[0], 'stage': key[1], 'count': count}
+                for key, count in sorted(groups.items())]
+
+    def add_references(self, species, stage, files):
+        labels = [species.strip(), stage.strip()]
+        if any(not value or len(value) > 100 or value in {'.', '..'} or
+               any(c in value for c in '/\\') or any(ord(c) < 32 for c in value)
+               for value in labels):
+            raise ValueError('Укажите вид и стадию без слешей, до 100 символов.')
+        self.validate_images(files)
+        with self.lock:
+            if any(p.poll() is None for p in self.processes.values()):
+                raise ValueError('Анализ уже выполняется. Дождитесь его завершения.')
+            base = (self.root / 'data' / 'Сорняки').resolve()
+            folder = base.joinpath(*labels).resolve()
+            if not folder.is_relative_to(base):
+                raise ValueError('Некорректный путь')
+            folder.mkdir(parents=True, exist_ok=True)
+            for name, data in files:
+                (folder / (uuid.uuid4().hex + Path(name).suffix.lower())).write_bytes(data)
+        return self.references()
+
+    @staticmethod
+    def options(fields):
+        device = fields.get('device', 'auto')
+        if not re.fullmatch(r'auto|cpu|cuda(?::[0-9]+)?', device):
+            raise ValueError('Некорректное устройство обработки.')
+        try:
+            tile = int(fields.get('tile_size', '1024'))
+            overlap = float(fields.get('overlap', '0.20'))
+            similarity = float(fields.get('similarity_threshold', '0.55'))
+            batch = int(fields.get('batch_size', '16'))
+        except (TypeError, ValueError) as exc:
+            raise ValueError('Проверьте числовые настройки анализа.') from exc
+        if (not 128 <= tile <= 4096 or not 1 <= batch <= 128 or
+                not math.isfinite(overlap) or not 0 <= overlap < 1 or
+                not math.isfinite(similarity) or not -1 <= similarity <= 1):
+            raise ValueError('Настройки анализа выходят за допустимые пределы.')
+        return {'device': device, 'tile_size': tile, 'overlap': overlap,
+                'similarity_threshold': similarity, 'batch_size': batch,
+                'debug': fields.get('debug') == 'true'}
+
+    @staticmethod
+    def log_tail(path):
+        if not path.exists():
+            return ''
+        with path.open('rb') as stream:
+            stream.seek(0, 2)
+            stream.seek(max(0, stream.tell() - 24000))
+            return stream.read().decode('utf-8', errors='replace')
+
+    def check_status(self):
+        process = self.check_process
+        code = process.poll() if process else None
+        return {'status': ('idle' if process is None else 'running' if code is None
+                           else 'done' if code == 0 else 'error'),
+                'log': self.log_tail(self.check_log)}
+
+    def start_check(self):
+        with self.lock:
+            if self.check_process is not None and self.check_process.poll() is None:
+                return self.check_status()
+            self.jobs.mkdir(parents=True, exist_ok=True)
+            with self.check_log.open('w') as log:
+                self.check_process = subprocess.Popen(
+                    [sys.executable, str(ROOT / 'scripts' / 'smoke_test.py')],
+                    cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)
+            return self.check_status()
+
+    def archive(self, job_id, pseudo=False):
+        folder = self.directory(job_id)
+        if not (folder / 'results.json').exists():
+            raise ValueError('Сначала дождитесь завершения анализа.')
+        data = BytesIO()
+        with tempfile.TemporaryDirectory() as temporary:
+            source = folder
+            if pseudo:
+                if job_id == 'cli':
+                    raise ValueError('Для экспорта YOLO запустите анализ через сайт.')
+                from scripts.export_pseudo_yolo import export_dataset
+                source = Path(temporary)
+                try:
+                    export_dataset(folder / 'results.json', folder / 'input', source)
+                except ValueError as exc:
+                    if str(exc).startswith('No accepted detections'):
+                        raise ValueError('Нет подходящих обнаружений для разметки YOLO.') from exc
+                    raise
+                # A downloaded dataset must not refer to the server temporary directory.
+                import yaml
+                config = yaml.safe_load((source / 'dataset.yaml').read_text())
+                config.pop('path', None)
+                (source / 'dataset.yaml').write_text(yaml.safe_dump(config, allow_unicode=True))
+            with zipfile.ZipFile(data, 'w', zipfile.ZIP_DEFLATED) as archive:
+                for path in source.rglob('*'):
+                    relative = path.relative_to(source)
+                    if path.is_file() and (pseudo or relative.parts[0] in
+                            {'annotated', 'debug', 'results.json', 'results.csv', 'analysis.log'}):
+                        if path.resolve().is_relative_to(source.resolve()):
+                            archive.write(path, relative.as_posix())
+        return data.getvalue()
+
+    def start(self, files: list[tuple[str, bytes]], fields=None) -> str:
+        options = self.options(fields or {})
+        references = self.root / 'data' / 'Сорняки'
+        if not any(p.suffix.lower() in {'.jpg', '.jpeg', '.png'} and len(p.relative_to(references).parts) >= 3
+                   for p in references.rglob('*') if p.is_file()):
+            raise ValueError('Добавьте эталоны на вкладке «Подготовка», затем повторите запуск.')
+        self.validate_images(files)
         with self.lock:
             if any(p.poll() is None for p in self.processes.values()):
                 raise ValueError('Анализ уже выполняется. Дождитесь его завершения.')
@@ -90,10 +213,13 @@ class Dashboard:
                 clean = Path(name.replace('\\', '/')).name
                 (folder / 'input' / f'{index+1:02d}_{clean}').write_bytes(data)
             row = {'id': job_id, 'name': f'Анализ · {len(files)} фото', 'status': 'running',
-                   'created': datetime.now(timezone.utc).isoformat()}
+                   'created': datetime.now(timezone.utc).isoformat(), 'options': options}
             with (folder / 'analysis.log').open('w') as log:
                 process = subprocess.Popen([sys.executable, str(self.root/'run.py'),
-                    '--references', str(references), '--input', str(folder/'input'), '--output', str(folder)],
+                    '--references', str(references), '--input', str(folder/'input'), '--output', str(folder),
+                    '--device', options['device'], '--tile-size', str(options['tile_size']),
+                    '--overlap', str(options['overlap']), '--similarity-threshold', str(options['similarity_threshold']),
+                    '--batch-size', str(options['batch_size']), *(['--debug'] if options['debug'] else [])],
                     cwd=self.root, stdout=log, stderr=subprocess.STDOUT)
             self.processes[job_id] = process
             (folder/'job.json').write_text(json.dumps(row, ensure_ascii=False), encoding='utf-8')
@@ -120,6 +246,23 @@ def make_handler(app: Dashboard):
         def do_GET(self):
             path = urlparse(self.path).path
             try:
+                if path in {'/api/training', '/api/training/weights'}:
+                    from scripts.train_yolo import training_status, TRAINING
+                    state = training_status()
+                    if path.endswith('/weights'):
+                        if not state.get('weights_ready'):
+                            raise ValueError('Веса ещё не сохранены.')
+                        self.send(200, (TRAINING / state['run'] / 'weights' / 'best.pt').read_bytes(),
+                                  'application/octet-stream', 'yolo11n-trial-best.pt')
+                    else:
+                        self.json(200, state)
+                    return
+                if path == '/api/references':
+                    self.json(200, app.references())
+                    return
+                if path == '/api/check':
+                    self.json(200, app.check_status())
+                    return
                 if path == '/api/jobs':
                     with app.lock:
                         self.json(200, app.history())
@@ -128,6 +271,12 @@ def make_handler(app: Dashboard):
                     parts = path.split('/')
                     folder = app.directory(parts[3])
                     action = parts[4] if len(parts) > 4 else ''
+                    if action == 'log':
+                        self.json(200, {'log': app.log_tail(folder / 'analysis.log')})
+                        return
+                    if action in {'archive', 'pseudo'}:
+                        self.send(200, app.archive(parts[3], action == 'pseudo'), 'application/zip', action + '.zip')
+                        return
                     if action in {'results', 'json', 'csv'}:
                         filename = 'results.csv' if action == 'csv' else 'results.json'
                         mime = 'text/csv; charset=utf-8' if action == 'csv' else 'application/json; charset=utf-8'
@@ -146,6 +295,7 @@ def make_handler(app: Dashboard):
                         return
                 assets = {'/': ('index.html', 'text/html; charset=utf-8'),
                           '/app.js': ('app.js', 'text/javascript; charset=utf-8'),
+                          '/i18n.js': ('i18n.js', 'text/javascript; charset=utf-8'),
                           '/style.css': ('style.css', 'text/css; charset=utf-8')}
                 if path in assets:
                     name, mime = assets[path]
@@ -156,7 +306,8 @@ def make_handler(app: Dashboard):
                 self.json(404, {'error': str(exc)})
 
         def do_POST(self):
-            if urlparse(self.path).path != '/api/analyze':
+            path = urlparse(self.path).path
+            if path not in {'/api/analyze', '/api/references', '/api/check', '/api/training'}:
                 self.json(404, {'error': 'Не найдено'})
                 return
             # Only the local dashboard can submit work; reject cross-origin forms.
@@ -165,6 +316,14 @@ def make_handler(app: Dashboard):
                 self.json(403, {'error': 'Запрос с другого сайта запрещён'})
                 return
             try:
+                if path == '/api/training':
+                    from scripts.train_yolo import start_training, training_status
+                    start_training()
+                    self.json(202, training_status())
+                    return
+                if path == '/api/check':
+                    self.json(202, app.start_check())
+                    return
                 size = int(self.headers.get('Content-Length', '0'))
                 if not 0 < size <= MAX_UPLOAD:
                     raise ValueError('Общий размер загрузки должен быть не больше 100 МБ.')
@@ -176,12 +335,18 @@ def make_handler(app: Dashboard):
                     f'Content-Type: {content_type}\r\nMIME-Version: 1.0\r\n\r\n'.encode()+body)
                 files = [(part.get_filename(), part.get_payload(decode=True)) for part in message.iter_parts()
                          if part.get_filename() and part.get_param('name', header='content-disposition') == 'files']
-                self.json(202, {'id': app.start(files)})
+                fields = {part.get_param('name', header='content-disposition'):
+                          part.get_payload(decode=True).decode('utf-8') for part in message.iter_parts()
+                          if not part.get_filename() and part.get_param('name', header='content-disposition')}
+                if path == '/api/references':
+                    self.json(201, app.add_references(fields.get('species', ''), fields.get('stage', ''), files))
+                else:
+                    self.json(202, {'id': app.start(files, fields)})
             except ValueError as exc:
                 self.json(400, {'error': str(exc)})
             except Exception:
                 logging.exception('Cannot start analysis')
-                self.json(500, {'error': 'Не удалось запустить анализ. Подробности в терминале сервера.'})
+                self.json(500, {'error': 'Не удалось выполнить действие. Проверьте систему на вкладке «Подготовка».'})
     return Handler
 
 

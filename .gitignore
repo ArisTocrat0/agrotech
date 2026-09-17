@@ -10,3 +10,6 @@ data/**
 !data/**/
 !data/**/.gitkeep
 *.DS_Store
+
+yolo_dataset/
+runs/

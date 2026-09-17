@@ -1,0 +1,10 @@
+{
+  "source": "/home/beka/Projects/agrotech.worktrees/yolo-training-initiation/yolo_tiled_dataset",
+  "labels": "automatic, not manually reviewed",
+  "missing_train_classes": [
+    1
+  ],
+  "train_images": 59,
+  "val_images": 20,
+  "test_images": 12
+}
