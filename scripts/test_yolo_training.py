@@ -28,6 +28,7 @@ class TrainingTests(unittest.TestCase):
 
     def test_idle_and_missing_dataset(self):
         self.assertEqual(training.training_status()['status'], 'idle')
+        self.assertFalse(training.training_status()['full_ready'])
         with self.assertRaisesRegex(ValueError, 'датасет'):
             training.start_training()
 

@@ -21,7 +21,8 @@ def save_status(state):
 
 def training_status():
     if not STATUS.exists():
-        return {'status': 'idle', 'epoch': 0, 'epochs': 5}
+        return {'status': 'idle', 'epoch': 0, 'epochs': 5,
+                'full_ready': (ROOT/'yolo_dataset/verified/dataset.yaml').exists()}
     state = json.loads(STATUS.read_text(encoding='utf-8'))
     if state['status'] == 'running':
         # The lock survives parent/server restarts and does not depend on PID namespaces.
@@ -42,6 +43,8 @@ def training_status():
             import re
             state['log'] = re.sub(r'\x1b\[[0-?]*[ -/]*[@-~]', '', state['log']).replace('\r', '\n')
     state['weights_ready'] = state['status'] == 'done' and (TRAINING / state['run'] / 'weights' / 'best.pt').exists()
+    state['percent'] = round(100 * state.get('epoch', 0) / max(1, state.get('epochs', 1)))
+    state['full_ready'] = (ROOT/'yolo_dataset/verified/dataset.yaml').exists()
     return state
 
 
@@ -68,6 +71,34 @@ def start_training():
         except Exception as exc:
             save_status({'status':'error', 'run':run, 'epoch':0, 'epochs':5, 'error':str(exc)})
             raise
+    return process
+
+
+def start_full_training():
+    dataset = ROOT/'yolo_dataset/verified/dataset.yaml'
+    if not dataset.exists():
+        raise ValueError('Полное обучение не готово: нет yolo_dataset/verified/dataset.yaml.')
+    from scripts.train_yolo_full import validate_dataset
+    validate_dataset(dataset)
+    if not (ROOT/'artifacts/yolo11n.pt').exists():
+        raise ValueError('Не найдены исходные веса YOLO11n.')
+    TRAINING.mkdir(parents=True, exist_ok=True)
+    with (TRAINING/'training.lock').open('a') as lock:
+        try:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError as exc:
+            raise ValueError('Обучение уже выполняется.') from exc
+        run='full_'+uuid.uuid4().hex[:12]
+        folder=TRAINING/run
+        folder.mkdir()
+        save_status({'status':'running','mode':'full','run':run,'epoch':0,'epochs':150,'percent':0,'device':'cuda'})
+        with (folder/'training.log').open('w') as log:
+            process=subprocess.Popen([sys.executable,str(ROOT/'scripts/train_yolo_full.py'),
+                '--data',str(dataset),'--model',str(ROOT/'artifacts/yolo11n.pt'),
+                '--epochs','150','--imgsz','640','--batch','-1','--device','0',
+                '--workers','2','--patience','30','--name',run,'--status',str(STATUS),
+                '--lock-fd',str(lock.fileno()),'--exist-ok'],cwd=ROOT,stdout=log,
+                stderr=subprocess.STDOUT,pass_fds=(lock.fileno(),),start_new_session=True)
     return process
 
 

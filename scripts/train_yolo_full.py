@@ -1,5 +1,6 @@
 """Train a validated YOLO detection dataset on CUDA."""
 import argparse
+import json
 import os
 from pathlib import Path
 
@@ -42,6 +43,9 @@ def main() -> None:
     parser.add_argument("--workers", type=int, default=2)
     parser.add_argument("--patience", type=int, default=25)
     parser.add_argument("--name", default="agrotech_yolo")
+    parser.add_argument("--status", type=Path)
+    parser.add_argument("--lock-fd", type=int)
+    parser.add_argument("--exist-ok", action="store_true")
     args = parser.parse_args()
     if args.epochs < 1 or args.imgsz < 128 or args.workers < 0 or args.patience < 0:
         parser.error("invalid training limits")
@@ -64,14 +68,34 @@ def main() -> None:
     for key in ("sync", "wandb", "mlflow", "clearml", "comet", "neptune"):
         if key in settings:
             settings.update({key: False})
-    model = YOLO(str(model_path))
-    model.train(
-        data=str(data), epochs=args.epochs, imgsz=args.imgsz, batch=args.batch,
-        device=args.device, workers=args.workers, patience=args.patience,
-        project=str(ROOT / "outputs" / "yolo_training"), name=args.name,
-        exist_ok=False, seed=42, deterministic=True, amp=True, cache=False,
-        pretrained=True, save=True, val=True, plots=True, close_mosaic=10,
-    )
+    state = {'status':'running','mode':'full','run':args.name,'pid':os.getpid(),
+             'epoch':0,'epochs':args.epochs,'percent':0,'device':'cuda'}
+    def save_state():
+        if not args.status: return
+        temporary=args.status.with_suffix('.tmp')
+        temporary.write_text(json.dumps(state,ensure_ascii=False,indent=2),encoding='utf-8')
+        temporary.replace(args.status)
+    try:
+        model = YOLO(str(model_path))
+        def progress(trainer):
+            state['epoch']=min(trainer.epoch+1,args.epochs)
+            state['percent']=round(100*state['epoch']/args.epochs)
+            state['metrics']={key:float(value) for key,value in trainer.metrics.items()}
+            save_state()
+        model.add_callback('on_fit_epoch_end',progress)
+        save_state()
+        model.train(
+            data=str(data), epochs=args.epochs, imgsz=args.imgsz, batch=args.batch,
+            device=args.device, workers=args.workers, patience=args.patience,
+            project=str(ROOT / "outputs" / "yolo_training"), name=args.name,
+            exist_ok=args.exist_ok, seed=42, deterministic=True, amp=True, cache=False,
+            pretrained=True, save=True, val=True, plots=True, close_mosaic=10,
+        )
+        state.update(status='done',epoch=args.epochs,percent=100);save_state()
+    except BaseException as exc:
+        state.update(status='error',error=str(exc));save_state();raise
+    finally:
+        if args.lock_fd is not None: os.close(args.lock_fd)
 
 
 if __name__ == "__main__":

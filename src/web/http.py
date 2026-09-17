@@ -140,7 +140,7 @@ def make_handler(app: Dashboard):
         def do_POST(self):
             path = urlparse(self.path).path
             is_review = bool(re.fullmatch(r'/api/jobs/(?:[a-f0-9]{32}|cli)/(?:review|geometry)',path))
-            if not is_review and path not in {'/api/analyze', '/api/references', '/api/check', '/api/training', '/api/crop-import'}:
+            if not is_review and path not in {'/api/analyze', '/api/references', '/api/check', '/api/training', '/api/training/full', '/api/crop-import'}:
                 self.json(404, {'error': 'Не найдено'})
                 return
             # Only the local dashboard can submit work; reject cross-origin forms.
@@ -166,9 +166,9 @@ def make_handler(app: Dashboard):
                             rows = save_decision(folder,int(data['image']),int(data['detection']),data['decision'])
                     self.json(200,rows)
                     return
-                if path == '/api/training':
-                    from scripts.train_yolo import start_training, training_status
-                    start_training()
+                if path in {'/api/training','/api/training/full'}:
+                    from scripts.train_yolo import start_training, start_full_training, training_status
+                    (start_full_training if path.endswith('/full') else start_training)()
                     self.json(202, training_status())
                     return
                 if path == '/api/check':
@@ -198,5 +198,4 @@ def make_handler(app: Dashboard):
                 logging.exception('Cannot start analysis')
                 self.json(500, {'error': 'Не удалось выполнить действие. Проверьте систему на вкладке «Подготовка».'})
     return Handler
-
 

@@ -63,6 +63,20 @@ function renderResults() {
   const detections = results.flatMap(row => row.detections.map(d => ({...d,image:row.image})));
   $('preview-count').textContent = `${number(detections.length)} ${t("объектов")}`;
   $('preview-body').innerHTML = detections.length ? detections.slice(0,100).map(d => `<tr><td>${escapeHTML(d.image)}</td><td>${escapeHTML(d.species === 'unknown' ? t('Неизвестный вид') : d.species)}</td><td>${escapeHTML(d.stage === 'unknown' ? t('Не определена') : d.stage)}</td><td>${Number(d.similarity_score).toLocaleString(locale(), {minimumFractionDigits:2, maximumFractionDigits:2})}</td><td>${['x1','y1','x2','y2'].map(key => escapeHTML(d.bbox[key])).join(', ')}</td></tr>`).join('') : `<tr><td colspan="5" class="empty">${t("Нет обнаружений. После завершения анализа файлы доступны даже при отсутствии объектов.")}</td></tr>`;
+  if ($('metric-details') && !$('metric-details').hidden) showMetricDetails($('metric-details').dataset.metric);
+}
+const metricCards=[...document.querySelectorAll('.metrics article')];
+const metricDetails=document.createElement('section');metricDetails.id='metric-details';metricDetails.className='panel metric-details';metricDetails.hidden=true;document.querySelector('.metrics').after(metricDetails);
+metricCards.forEach((card,index)=>{card.tabIndex=0;card.setAttribute('role','button');card.setAttribute('aria-expanded','false');card.dataset.metric=['images','weeds','species','unknown'][index];card.addEventListener('click',()=>showMetricDetails(card.dataset.metric));card.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();showMetricDetails(card.dataset.metric);}});});
+function showMetricDetails(metric) {
+  const titles={images:'Обработанные снимки',weeds:'Предполагаемые сорняки',species:'Найденные виды',unknown:'Объекты, которые нужно проверить'};
+  metricCards.forEach(card=>{const active=card.dataset.metric===metric;card.classList.toggle('selected',active);card.setAttribute('aria-expanded',String(active));});
+  let rows=[];
+  if(metric==='species'||metric==='weeds'){const counts={};results.flatMap(row=>row.detections).filter(d=>d.kind==='weed'&&d.species!=='unknown').forEach(d=>counts[d.species]=(counts[d.species]||0)+1);rows=Object.entries(counts).sort((a,b)=>b[1]-a[1]).map(([name,count])=>`<li><span>${escapeHTML(name)}</span><strong>${number(count)}</strong></li>`);}
+  else rows=results.map((row,index)=>{const value=metric==='unknown'?(row.unknown_count||0):metric==='images'?(row.detections?.length||0):(row.total_weeds||0);const suffix=metric==='images'?'объектов':metric==='unknown'?'на проверку':'сорняков';return `<li><span>${escapeHTML(row.image)}<small>${number(value)} ${suffix}</small></span><button class="secondary" data-open-image="${index}" data-find-unknown="${metric==='unknown'}">Открыть →</button></li>`;});
+  metricDetails.dataset.metric=metric;metricDetails.hidden=false;metricDetails.innerHTML=`<div class="metric-detail-head"><div><span class="eyebrow">ДЕТАЛИЗАЦИЯ</span><h2>${titles[metric]}</h2></div><button class="metric-close" aria-label="Закрыть">✕</button></div><ul>${rows.join('')||'<li class="empty">Данных пока нет</li>'}</ul>`;
+  metricDetails.querySelector('.metric-close').addEventListener('click',()=>{metricDetails.hidden=true;metricCards.forEach(card=>{card.classList.remove('selected');card.setAttribute('aria-expanded','false');});});
+  metricDetails.querySelectorAll('[data-open-image]').forEach(button=>button.addEventListener('click',()=>{const index=Number(button.dataset.openImage);openReview(index);if(button.dataset.findUnknown==='true'){const found=results[index].detections.findIndex(d=>d.kind==='unknown');if(found>=0){reviewDetection=found;renderReview();}}}));
 }
 function renderJobs() {
     $('history').innerHTML = jobs.length ? jobs.slice(0,5).map(job => `<button class="history-row" data-job="${job.id}"><span class="history-icon">▧</span><span><strong>${escapeHTML(jobName(job))}</strong><small>${date(job.created)}</small></span><span class="badge ${job.status === 'error' ? 'error-badge' : ''}">${{done:t('Готово'),running:t('В работе'),error:t('Ошибка')}[job.status]}</span></button>`).join('') : t('Вы ещё не запускали анализ.');
@@ -224,12 +238,23 @@ $('log-job').addEventListener('change', event => { logSelection = event.target.v
   finally { renderResults(); }
 }));
 let trainingState = {status:'idle', epoch:0, epochs:5};
+const trainingPanel=document.querySelector('.training-panel');
+const mlFlow=document.createElement('div');mlFlow.className='ml-flow';mlFlow.innerHTML='<div><b>01</b><span><strong>Анализ</strong><small>DINOv2 + GPU</small></span></div><i>→</i><div><b>02</b><span><strong>Проверка</strong><small>Решения агронома</small></span></div><i>→</i><div><b>03</b><span><strong>Обучение</strong><small>YOLO на H100</small></span></div>';
+trainingPanel.before(mlFlow);
+const fullTraining=document.createElement('button');fullTraining.id='start-full-training';fullTraining.className='primary full-training';fullTraining.textContent='⚡ Начать полное обучение';
+document.querySelector('.training-actions').prepend(fullTraining);
+const trainingReadiness=document.createElement('div');trainingReadiness.id='training-readiness';trainingReadiness.className='readiness';document.querySelector('.training-actions').before(trainingReadiness);
 function renderTraining() {
   $('start-training').disabled = trainingState.status === 'running';
+  fullTraining.disabled = trainingState.status === 'running' || !trainingState.full_ready;
   $('download-weights').disabled = !trainingState.weights_ready;
-  const label = {idle:'Обучение ещё не запускалось.', running:'Обучение выполняется…', done:'Пробное обучение завершено.', error:'Обучение завершилось с ошибкой.'}[trainingState.status];
-  $('training-status').textContent = `${t(label)} ${number(trainingState.epoch)} / ${number(trainingState.epochs)}`;
+  const label = {idle:'Обучение ещё не запускалось.', running:'Обучение выполняется…', done:trainingState.mode==='full'?'Полное GPU-обучение завершено.':'Пробное обучение завершено.', error:'Обучение завершилось с ошибкой.'}[trainingState.status];
+  const percent=trainingState.percent ?? Math.round(100*(trainingState.epoch||0)/Math.max(1,trainingState.epochs||1));
+  $('training-status').textContent = `${t(label)} ${percent}% · ${number(trainingState.epoch)} / ${number(trainingState.epochs)} эпох`;
+  $('training-progress').max = trainingState.epochs || 1;
   $('training-progress').value = trainingState.epoch || 0;
+  trainingReadiness.className=`readiness ${trainingState.full_ready?'ready':'waiting'}`;
+  trainingReadiness.innerHTML=trainingState.full_ready?'<b>✓ Датасет готов</b><span>Train/val проверены · H100 · 150 эпох · AMP</span>':'<b>○ Нужна проверенная разметка</b><span>Завершите проверку и создайте yolo_dataset/verified/dataset.yaml</span>';
   $('training-log').hidden = !trainingState.log && !trainingState.error;
   $('training-log').textContent = trainingState.log || translateMessage(trainingState.error || '');
 }
@@ -243,6 +268,7 @@ $('start-training').addEventListener('click', async () => {
   catch(error) { trainingState = {status:'error',epoch:0,epochs:5,error:error.message}; }
   renderTraining();
 });
+fullTraining.addEventListener('click',async()=>{trainingState={status:'running',mode:'full',epoch:0,epochs:150,percent:0,full_ready:true};renderTraining();try{trainingState=await api('/api/training/full',{method:'POST'});}catch(error){trainingState={status:'error',mode:'full',epoch:0,epochs:150,percent:0,full_ready:true,error:error.message};}renderTraining();});
 $('download-weights').addEventListener('click', () => { location.href = '/api/training/weights'; });
 refreshTraining();
 setInterval(refreshTraining, 4000);

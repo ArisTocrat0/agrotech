@@ -16,7 +16,10 @@ function openReview(index) {
 function ensureReviewControls() {
   if (!$('review-progress')) { const box=document.createElement('div');box.className='review-progress';box.innerHTML='<div><span>Прогресс проверки</span><strong id="review-progress-label">0%</strong></div><progress id="review-progress" max="100" value="0"></progress>';document.querySelector('.review-layout').before(box); }
   if (!$('review-next-pending')) { const button=document.createElement('button');button.id='review-next-pending';button.className='secondary';button.textContent='След. непроверенный ⇥';button.addEventListener('click',nextPending);document.querySelector('.review-navigation').append(button); }
+  if (!$('show-all-boxes')) { const label=document.createElement('label');label.className='show-all-boxes';label.innerHTML='<input id="show-all-boxes" type="checkbox"> Показать все рамки';label.querySelector('input').addEventListener('change',renderReview);document.querySelector('.review-toolbar').append(label); }
+  if (!$('review-crop')) { const heading=document.createElement('span');heading.className='crop-label';heading.textContent='Сейчас вы проверяете';const canvas=document.createElement('canvas');canvas.id='review-crop';canvas.width=320;canvas.height=220;document.querySelector('.review-inspector').prepend(canvas);document.querySelector('.review-inspector').prepend(heading); }
 }
+function renderSelectedCrop(row,d) { const canvas=$('review-crop'),image=$('dialog-image');if(!canvas||!d||!image.complete)return;const context=canvas.getContext('2d'),b=d.bbox,pad=Math.max(12,Math.round(Math.max(b.x2-b.x1,b.y2-b.y1)*.35));const x=Math.max(0,b.x1-pad),y=Math.max(0,b.y1-pad),w=Math.min(row.width-x,b.x2-b.x1+pad*2),h=Math.min(row.height-y,b.y2-b.y1+pad*2);context.fillStyle='#101512';context.fillRect(0,0,canvas.width,canvas.height);const scale=Math.min(canvas.width/w,canvas.height/h),dw=w*scale,dh=h*scale,dx=(canvas.width-dw)/2,dy=(canvas.height-dh)/2;context.drawImage(image,x,y,w,h,dx,dy,dw,dh);context.strokeStyle=kindColors[d.kind]||kindColors.unknown;context.lineWidth=4;context.strokeRect(dx+(b.x1-x)*scale,dy+(b.y1-y)*scale,(b.x2-b.x1)*scale,(b.y2-b.y1)*scale); }
 function detectionLabel(d) {
   const species = d.species === 'unknown' ? t('Неизвестный вид') : d.species;
   return `${t(kindLabels[d.kind] || 'Проверить')} · ${species} · ${d.stage === 'unknown' ? t('Не определена') : d.stage}`;
@@ -36,6 +39,7 @@ function renderReview() {
     el.style.pointerEvents='none'; overlay.append(el);
   });
   row.detections.forEach((d,index) => {
+    if (!$('show-all-boxes')?.checked && index !== reviewDetection) return;
     const rect = svg('rect'), b = d.bbox;
     for (const [key,value] of Object.entries({x:b.x1,y:b.y1,width:b.x2-b.x1,height:b.y2-b.y1})) rect.setAttribute(key,value);
     rect.setAttribute('stroke',kindColors[d.kind] || kindColors.unknown);
@@ -52,6 +56,7 @@ function renderReview() {
     overlay.append(rect);
   });
   const d = row.detections[reviewDetection];
+  renderSelectedCrop(row,d);
   $('review-name').textContent = d ? detectionLabel(d) : t('Нет обнаружений');
   $('review-details').textContent = d ? `${t('Сходство')}: ${Number(d.similarity_score).toFixed(2)} · ${t('Класс')}: ${t(classLabels[d.weed_class] || 'Не определена')} · ${t({annual:'Малолетний',perennial:'Многолетний'}[d.lifecycle] || 'Не определена')}${d.review ? ' · '+t('Проверено вручную') : ''}` : '';
   $('review-stage').textContent = d?.stage_advice ? `${d.priority === 'high' ? t('Приоритет: многолетник') + ' · ' : ''}${t(stageLabels[d.stage_advice.action])}` : '';
@@ -103,6 +108,7 @@ $('review-prev').addEventListener('click',()=>{ reviewDetection=Math.max(0,revie
 $('review-next').addEventListener('click',()=>{ reviewDetection=Math.min(results[reviewImage].detections.length-1,reviewDetection+1);renderReview(); });
 $('review-zoom').addEventListener('input',()=>{ $('review-frame').style.width=`${Number($('review-zoom').value)*100}%`; });
 $('show-rows').addEventListener('change',renderReview);
+$('dialog-image').addEventListener('load',renderReview);
 $('image-dialog').addEventListener('keydown',event=>{
   if (/INPUT|SELECT|TEXTAREA/.test(event.target.tagName)) return;
   const decision = {'1':'weed','2':'crop','3':'not_plant','4':'unknown'}[event.key];
