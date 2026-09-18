@@ -70,7 +70,7 @@ class ReviewTests(unittest.TestCase):
     def test_old_results_remain_readable_without_fake_review(self):
         with tempfile.TemporaryDirectory() as temp:
             folder=Path(temp)
-            legacy=[{'image':'old.jpg','width':100,'height':100,'detections':[{
+            legacy=[{'image':'old.jpg','width':100,'height':100,'gsd_cm':1,'detections':[{
                 'id':1,'species':'Щирица','stage':'unknown','similarity_score':.8,
                 'kind':'weed','weed_class':'A','lifecycle':'annual',
                 'bbox':{'x1':1,'y1':2,'x2':20,'y2':30}}]}]
