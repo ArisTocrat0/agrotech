@@ -1,0 +1,9 @@
+path: /home/beka/Projects/agrotech.worktrees/yolo-training-initiation/pseudo_dataset
+train: images
+val: images
+names:
+  0: Бодяк полевой__Розетка
+  1: Бодяк полевой__Стеблевание
+  2: Вьюнок полевой__Розетка
+  3: Вьюнок полевой__Стеблевание
+  4: Пырей ползучий__Стеблевание

@@ -1,0 +1,5 @@
+path: /home/beka/Projects/agrotech.worktrees/yolo-training-initiation/demo_yolo_dataset
+train: images/train
+val: images/val
+nc: 1
+names: ["weed"]
