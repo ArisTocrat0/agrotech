@@ -128,7 +128,7 @@ def run_inference(input_path: Path, output: Path, config: dict, model, classifie
         timings['dinov2_seconds'] = float(profile.get('model_seconds', 0.))
 
         stage_started = perf_counter()
-        if hasattr(classifier, 'classify_detailed'):
+        if callable(getattr(type(classifier), 'classify_detailed', None)):
             predictions = classifier.classify_detailed(embeddings)
         else:
             predictions = _fallback_predictions(classifier, embeddings)
