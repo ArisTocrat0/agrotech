@@ -14,6 +14,42 @@ from ..infrastructure.exporters import recount
 from ..domain.performance import motion_budget
 
 
+def _fallback_predictions(classifier, embeddings):
+    rows = []
+    for species, stage, score in classifier.classify(embeddings):
+        predicted_kind = getattr(classifier, "species_kinds", {}).get(species)
+        rows.append({
+            'species': species,
+            'species_prediction': species if species != 'unknown' else None,
+            'stage': stage,
+            'model_score': score,
+            'score_type': 'model_score',
+            'species_accepted': species != 'unknown',
+            'category': predicted_kind or ('unknown' if species == 'unknown' else 'weed'),
+            'category_prediction': predicted_kind,
+            'category_score': None,
+            'category_score_type': None,
+            'category_accepted': species != 'unknown' and predicted_kind in {'weed', 'crop'},
+            'uncertainty_reasons': [] if species != 'unknown' else ['low_species_confidence'],
+        })
+    return rows
+
+
+def _uncertainty_message(code, crop=None):
+    messages = {
+        'unsupported_crop': (f'Нет обучающих примеров выбранной культуры «{crop}»: '
+                             'вид растения сохранён, но категория «сорняк/культура» не подтверждена.'),
+        'insufficient_calibration_data': 'Недостаточно validation-данных для калибровки порога вида.',
+        'species_calibration_unavailable': 'Порог принятия вида не откалиброван на validation.',
+        'low_species_margin': 'Разница между лучшими вариантами вида ниже откалиброванного порога.',
+        'insufficient_category_calibration': 'Недостаточно validation-данных для калибровки категории.',
+        'category_calibration_unavailable': 'Порог категории «сорняк/культура» не откалиброван.',
+        'low_category_margin': 'Категория «сорняк/культура» неоднозначна.',
+        'low_species_confidence': 'Модель не приняла предсказание вида.',
+    }
+    return messages.get(code, code)
+
+
 def run_inference(input_path: Path, output: Path, config: dict, model, classifier, debug: bool = False) -> list[dict]:
     paths = image_paths(input_path)
     if not paths:
@@ -24,14 +60,28 @@ def run_inference(input_path: Path, output: Path, config: dict, model, classifie
     for path in paths:
         logging.info("Processing %s", path)
         started = perf_counter()
+        timings = {
+            'image_load_seconds': 0., 'vegetation_mask_seconds': 0.,
+            'candidate_extraction_seconds': 0., 'crop_preparation_seconds': 0.,
+            'preprocessing_seconds': 0., 'dinov2_seconds': 0.,
+            'embedding_total_seconds': 0., 'classification_seconds': 0.,
+            'nms_seconds': 0., 'row_estimation_seconds': 0.,
+            'annotation_export_seconds': 0.,
+        }
+        stage_started = perf_counter()
         image = load_image_rgb(path)
+        timings['image_load_seconds'] = perf_counter() - stage_started
         name = path.name if input_path.is_file() else path.relative_to(input_path).as_posix()
         detections = []
         pending = []
         seen_boxes = set()
         for tile in iter_tiles(image, **config["tiling"]):
+            stage_started = perf_counter()
             mask = detector.mask(tile.image)
+            timings['vegetation_mask_seconds'] += perf_counter() - stage_started
+            stage_started = perf_counter()
             candidates = detector.candidates(mask)
+            timings['candidate_extraction_seconds'] += perf_counter() - stage_started
             unique = []
             for candidate in candidates:
                 key = (candidate.x1+tile.offset_x,candidate.y1+tile.offset_y,
@@ -53,59 +103,111 @@ def run_inference(input_path: Path, output: Path, config: dict, model, classifie
                 components.save(debug_dir/"components.png")
                 debug_tiles += 1
             for c in candidates:
+                stage_started = perf_counter()
                 crop = candidate_crop(tile.image, c, config["classification"]["crop_padding"])
+                timings['crop_preparation_seconds'] += perf_counter() - stage_started
                 c.tile_id = tile.tile_id
                 pending.append((c, crop, tile.offset_x, tile.offset_y))
                 if save_debug and debug_crops < config["debug"]["max_crops"]:
                     crop.save(debug_dir/f"crop_{debug_crops}.png")
                     debug_crops += 1
-        # Encode across tile boundaries so sparse tiles do not produce many tiny GPU
-        # launches. DinoEmbeddingModel still chunks this list to the configured batch.
-        crop_supported = (not config.get('crop') or config['crop'] in
-                          (config.get('learning_report') or {}).get('crop_species', []))
-        if not crop_supported:
-            logging.warning('Нет обучающих данных культуры %s; объекты останутся неопределёнными.', config['crop'])
-            predictions = [('unknown', 'unknown', 0.) for _ in pending]
+
+        crop = config.get('crop')
+        crop_species = (config.get('learning_report') or {}).get('crop_species', [])
+        crop_supported = not crop or crop in crop_species
+        if crop and not crop_supported:
+            logging.warning(
+                'Нет обучающих данных культуры %s; вид будет распознаваться отдельно, '
+                'а категория сорняк/культура останется неопределённой.', crop)
+
+        stage_started = perf_counter()
+        embeddings = model.encode([item[1] for item in pending])
+        timings['embedding_total_seconds'] = perf_counter() - stage_started
+        profile = getattr(model, 'last_profile', {}) or {}
+        if not isinstance(profile, dict):
+            profile = {}
+        timings['preprocessing_seconds'] = float(profile.get('preprocessing_seconds', 0.))
+        timings['dinov2_seconds'] = float(profile.get('model_seconds', 0.))
+
+        stage_started = perf_counter()
+        if callable(getattr(type(classifier), 'classify_detailed', None)):
+            predictions = classifier.classify_detailed(embeddings)
         else:
-            predictions = classifier.classify(model.encode([item[1] for item in pending]))
-        for (c, _crop, offset_x, offset_y), (species, stage, score) in zip(pending, predictions):
-            detections.append(WeedDetection(0, species, stage, score, c.x1+offset_x,
-                                           c.y1+offset_y, c.x2+offset_x, c.y2+offset_y,
-                                           getattr(classifier,"species_kinds",{}).get(species,"")))
-        detections = nms(detections, **config["nms"])
-        result = image_result(name, image.width, image.height, detections)
-        if config.get('crop'):
-            result['mode'] = 'automatic'
-            result['crop'] = config['crop']
-            result['learning_report'] = config.get('learning_report')
-            crop_supported = config['crop'] in (config.get('learning_report') or {}).get('crop_species', [])
-            for row in result['detections']:
-                row['model_score'] = row.pop('similarity_score')
-                row['similarity_score'] = None
-                row['score_type'] = 'linear_margin_not_probability'
-                row['decision_source'] = 'model'
+            predictions = _fallback_predictions(classifier, embeddings)
+        timings['classification_seconds'] = perf_counter() - stage_started
+
+        for (c, _crop, offset_x, offset_y), prediction in zip(pending, predictions):
+            species = prediction.get('species', 'unknown')
+            species_prediction = prediction.get('species_prediction') or (
+                species if species != 'unknown' else None)
+            predicted_kind = prediction.get('category_prediction')
+            kind = prediction.get('category', 'unknown')
+            category_accepted = bool(prediction.get('category_accepted'))
+            reasons = list(dict.fromkeys(prediction.get('uncertainty_reasons') or []))
+
+            if crop:
                 if not crop_supported:
-                    row.update(species='unknown', kind='unknown')
-                elif row['kind'] == 'crop' and row['species'] != config['crop']:
-                    row['species'] = 'Падалица ' + row['species'].lower()
-                    row['kind'] = 'weed'
+                    kind = 'unknown'
+                    category_accepted = False
+                    if 'unsupported_crop' not in reasons:
+                        reasons.append('unsupported_crop')
+                elif kind == 'crop' and species != 'unknown' and species != crop:
+                    # A confidently identified different crop is volunteer crop in the
+                    # selected field context. Preserve the raw model category separately.
+                    species = 'Падалица ' + species.lower()
+                    kind = 'weed'
+
+            detection = WeedDetection(
+                0, species, prediction.get('stage', 'unknown'),
+                float(prediction.get('model_score', 0.)),
+                c.x1+offset_x, c.y1+offset_y, c.x2+offset_x, c.y2+offset_y, kind)
+            detection.species_prediction = species_prediction
+            detection.species_accepted = bool(prediction.get('species_accepted', species != 'unknown'))
+            detection.model_score = float(prediction.get('model_score', 0.))
+            detection.score_type = prediction.get('score_type', 'model_score')
+            detection.category_prediction = predicted_kind
+            detection.category_score = prediction.get('category_score')
+            detection.category_score_type = prediction.get('category_score_type')
+            detection.category_accepted = category_accepted
+            detection.uncertainty_reasons = reasons
+            detection.uncertainty_messages = [_uncertainty_message(code, crop) for code in reasons]
+            detection.prediction_status = (
+                'recognized' if species != 'unknown' and kind in {'weed', 'crop'} else 'uncertain')
+            detection.stage_status = (
+                'known' if detection.stage != 'unknown' else 'unknown_untrained')
+            detections.append(detection)
+
+        stage_started = perf_counter()
+        detections = nms(detections, **config["nms"])
+        timings['nms_seconds'] = perf_counter() - stage_started
+        result = image_result(name, image.width, image.height, detections)
+        if crop:
+            result['mode'] = 'automatic'
+            result['crop'] = crop
+            result['learning_report'] = config.get('learning_report')
             result['crop_supported'] = crop_supported
-            for detection, row in zip(detections, result['detections']):
-                detection.species, detection.kind = row['species'], row['kind']
-                detection.score_type = 'linear_margin_not_probability'
+            result['manual_review_required'] = False
+            result['analysis_status'] = 'complete'
+            result['unsupported_crop_message'] = (
+                None if crop_supported else _uncertainty_message('unsupported_crop', crop))
+        stage_started = perf_counter()
         result['rows'] = estimate_rows(image,detector)
+        timings['row_estimation_seconds'] = perf_counter() - stage_started
         result['gsd_cm'] = config.get('gsd_cm')
         recount(result)
         result['analysis_seconds'] = perf_counter()-started
         target = output/"annotated"/Path(name + ".png")
         target.parent.mkdir(parents=True, exist_ok=True)
+        stage_started = perf_counter()
         annotate(image, detections).save(target)
+        timings['annotation_export_seconds'] = perf_counter() - stage_started
         result['processing_seconds'] = perf_counter()-started
         result['performance'] = {
-            'scope': 'image_load_through_annotation_save_excludes_model_startup_and_final_export',
+            'scope': 'image_load_through_annotation_save_excludes_model_startup_and_final_json_csv_export',
             'fps': 1 / result['processing_seconds'],
             'motion_at_18_kmh': motion_budget(result['processing_seconds'], 18),
             'motion_at_20_kmh': motion_budget(result['processing_seconds'], 20),
+            'timings': timings,
         }
         results.append(result)
         logging.info("%s: %d candidates, %.2fs", name, len(detections), result['processing_seconds'])

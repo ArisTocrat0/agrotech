@@ -25,7 +25,7 @@ const nav=document.querySelector('nav');
 const navLabels={dashboard:t('Обзор'),analysis:t('Анализы'),assistant:'AI помощник',exports:t('Отчёты'),setup:t('Настройки')};
 nav.querySelectorAll('[data-tab]').forEach(button=>{const label=navLabels[button.dataset.tab];if(label)button.lastChild.textContent=label;});
 const reviewNav=document.createElement('button');reviewNav.dataset.tab='review';reviewNav.innerHTML=`<span>✓</span>${t('Проверка')}`;nav.querySelector('[data-tab="exports"]').before(reviewNav);
-const reviewView=document.createElement('section');reviewView.id='review';reviewView.className='view';reviewView.hidden=true;reviewView.innerHTML=`<div class="page-heading"><div><p class="eyebrow">${t('КОНТРОЛЬ КАЧЕСТВА')}</p><h1>${t('Проверка находок')}<span class="green">.</span></h1><p class="muted">${t('Подтвердите или исправьте решения модели.')}</p></div></div><div id="review-queue"></div>`;
+const reviewView=document.createElement('section');reviewView.id='review';reviewView.className='view';reviewView.hidden=true;reviewView.innerHTML=`<div class="page-heading"><div><p class="eyebrow">${t('КОНТРОЛЬ КАЧЕСТВА')}</p><h1>${t('Проверка находок')}<span class="green">.</span></h1><p class="muted">${t('При необходимости исправьте решения модели; проверка необязательна.')}</p></div></div><div id="review-queue"></div>`;
 $('exports').before(reviewView);
 document.querySelectorAll('[data-tab], [data-go]').forEach(el => el.addEventListener('click', () => tab(el.dataset.tab || el.dataset.go)));
 window.addEventListener('hashchange', () => tab(location.hash.slice(1)));
@@ -45,7 +45,7 @@ function renderResults() {
   const species = {};
   results.forEach(row => Object.entries(row.counts_by_species || {}).forEach(([name,count]) => species[name] = (species[name] || 0)+count));
   $('stat-images').textContent = number(results.length);
-  const {total, reviewed, confirmed, pending, percent:reviewPercent}=reviewMetrics(results);
+  const {total, reviewed, confirmed, pending, recognized, uncertain, corrected, percent:reviewPercent}=reviewMetrics(results);
   const allDetections=results.flatMap(row=>row.detections);
   metricElements[2].querySelector('small').textContent=t(allDetections.some(d=>d.review) ? 'После ручной проверки' : 'Проверка ещё не выполнена');
   $('stat-weeds').textContent = number(allDetections.length);
@@ -103,7 +103,7 @@ function showMetricDetails(metric) {
   metricDetails.querySelectorAll('[data-open-image]').forEach(button=>button.addEventListener('click',()=>{const index=Number(button.dataset.openImage);openReview(index);if(button.dataset.findUnknown==='true'){const found=results[index].detections.findIndex(d=>d.kind==='unknown');if(found>=0){reviewDetection=found;renderReview();}}}));
 }
 function firstPending(){return pendingTarget(results);}
-function continueReview(){if(results.length && results.every(row=>row.mode==='automatic')){tab('review');return;}const target=firstPending();if(!target){notice(t('Все объекты этого анализа проверены.'));return;}openReview(target.image);reviewDetection=target.detection;renderReview();}
+function continueReview(){const target=firstPending();if(!target){notice(results.length&&results.every(row=>row.mode==='automatic')?'Неопределённых объектов для исправления нет.':t('Все объекты этого анализа проверены.'));return;}openReview(target.image);reviewDetection=target.detection;renderReview();}
 function renderReviewQueue(pending,reviewed,total){if(!results.length){$('review-queue').textContent=t('Сначала выберите завершённый анализ.');dashboardReview.replaceChildren();return;}const complete=results.length>0&&pending===0;const content=`<article class="panel review-cta ${complete?'complete':''}"><div><span class="eyebrow">${t('ТЕКУЩИЙ АНАЛИЗ')}</span><h2>${complete?t('✓ Проверка завершена'):`${number(pending)} ${t('объектов ждут проверки')}`}</h2><p>${number(reviewed)} ${t('из')} ${number(total)} ${t('объектов уже проверено')}</p>${complete?`<p>${t('Один класс «сорняк». Минимум два разных снимка с подтверждёнными сорняками.')}</p>`:''}</div>${complete?`<button class="primary prepare-dataset" ${selected==='cli'?'disabled':''}>${t('Подготовить датасет для обучения')}</button>`:`<button class="primary continue-review">${t('Продолжить проверку')} →</button>`}</article>`;$('review-queue').innerHTML=content;dashboardReview.innerHTML=results.length?content:'';document.querySelectorAll('.continue-review').forEach(button=>button.addEventListener('click',continueReview));document.querySelectorAll('.prepare-dataset').forEach(button=>{button.disabled=datasetPreparing||selected==='cli';button.addEventListener('click',prepareDataset);});}
 function renderJobs() {
     $('history').innerHTML = jobs.length ? jobs.slice(0,5).map(job => `<button class="history-row" data-job="${job.id}"><span class="history-icon">▧</span><span><strong>${escapeHTML(jobName(job))}</strong><small>${date(job.created)}</small></span><span class="badge ${job.status === 'error' ? 'error-badge' : ''}">${{done:t('Готово'),running:t('В работе'),error:t('Ошибка')}[job.status]}</span></button>`).join('') : t('Вы ещё не запускали анализ.');
@@ -231,21 +231,35 @@ async function prepareDataset() {
 
 function renderAutomaticResults() {
   const automatic = results.length && results.every(row => row.mode === 'automatic');
-  metricElements[2].querySelector('.metric-top').firstChild.textContent = t(automatic ? 'Предполагаемые сорняки' : 'Подтверждено сорняков');
-  metricElements[3].querySelector('.metric-top').firstChild.textContent = t(automatic ? 'Культурные растения' : 'Проверено');
+  metricElements[2].querySelector('.metric-top').firstChild.textContent = t(automatic ? 'Распознано' : 'Подтверждено сорняков');
+  metricElements[3].querySelector('.metric-top').firstChild.textContent = t(automatic ? 'Исправлено вручную' : 'Проверено');
   pendingCard.querySelector('.metric-top').firstChild.textContent = t(automatic ? 'Не определено' : 'Требуют проверки');
-  pendingCard.querySelector('small').textContent = t(automatic ? 'Модель воздержалась от ответа' : 'Непроверенные объекты');
+  pendingCard.querySelector('small').textContent = t(automatic ? 'Можно исправить по желанию' : 'Непроверенные объекты');
   if (!automatic) return;
   const detections = results.flatMap(row => row.detections);
-  $('stat-species').textContent = number(detections.filter(d => d.kind === 'weed').length);
-  metricElements[2].querySelector('small').textContent = 'Результат модели, без ручного подтверждения';
-  $('stat-unknown').textContent = number(detections.filter(d => d.kind === 'crop').length);
-  $('stat-review-detail').textContent = results[0].crop;
-  $('stat-pending').textContent = number(detections.filter(d => d.kind === 'unknown').length);
+  const metrics = reviewMetrics(results);
+  $('stat-species').textContent = number(metrics.recognized);
+  metricElements[2].querySelector('small').textContent = 'Автоматический результат, ручное подтверждение не требуется';
+  $('stat-unknown').textContent = number(metrics.corrected);
+  $('stat-review-detail').textContent = `${results[0].crop || ''} · вручную просмотрено: ${number(metrics.reviewed)}`;
+  $('stat-pending').textContent = number(metrics.uncertain);
+
   const report = results[0].learning_report;
   const percent = value => value == null ? 'не измерена' : `${(100 * value).toFixed(1)}%`;
-  const message = !results[0].crop_supported ? 'В датасете недостаточно фотографий выбранной культуры. Объекты оставлены неопределёнными.' : 'Анализ завершён. Ручная проверка необязательна.';
-  dashboardReview.innerHTML = `<article class="panel"><h2>${escapeHTML(message)}</h2><p>Точность обнаружения на поле: не измерена. Цель: 90%.</p>${report ? `<p>Классификация эталонных фото: ${percent(report.accuracy)}; средняя по видам: ${percent(report.balanced_accuracy)}. Тест: ${number(report.count)} фото. Доля принятых ответов на тесте: ${percent(report.coverage)}.</p><p>Это проверка на фотографиях датасета, а не подтверждение 90% на снимках вашего поля.</p>` : ''}<p>Обучение обновляется автоматически при изменении локального датасета.</p></article>`;
+  const unsupported = results.some(row => row.crop_supported === false);
+  const message = unsupported
+    ? (results.find(row => row.unsupported_crop_message)?.unsupported_crop_message
+       || 'Для выбранной культуры нет обучающих примеров: вид сохранён, категория «сорняк/культура» остаётся неопределённой.')
+    : 'Анализ завершён. Результаты и экспорт доступны сразу; ручная проверка необязательна.';
+  const category = report?.category;
+  const categoryText = category?.accuracy == null
+    ? 'Ошибка «культура ↔ сорняк»: не измерена — нужны примеры обеих категорий.'
+    : `Категория «культура/сорняк» на test: ${percent(category.accuracy)}; ошибка: ${percent(category.crop_weed_error_rate)}.`;
+  dashboardReview.innerHTML = `<article class="panel"><h2>${escapeHTML(message)}</h2><p>Точность обнаружения на поле: не измерена. ${escapeHTML(categoryText)}</p>${report ? `<p>Классификация эталонных фото: ${percent(report.accuracy)}; средняя по видам: ${percent(report.balanced_accuracy)}. Test: ${number(report.count)} фото. Доля принятых видов: ${percent(report.coverage)}.</p><p>Это метрики эталонных фото, а не подтверждение качества на поле.</p>` : ''}<p>Неопределённые объекты можно открыть и исправить добровольно.</p></article>`;
   $('download-pseudo').disabled = true;
-  $('review-queue').innerHTML = '<article class="panel"><h2>Проверка по желанию</h2><p>Результат уже доступен в обзоре и отчётах. Чтобы исправить отдельный объект, откройте фотографию в обзоре.</p></article>';
+  const optional = metrics.uncertain
+    ? `<button class="secondary continue-review">Открыть неопределённые →</button>`
+    : '';
+  $('review-queue').innerHTML = `<article class="panel"><h2>Проверка по желанию</h2><p>Результат уже завершён: распознано ${number(metrics.recognized)}, неопределённо ${number(metrics.uncertain)}, исправлено вручную ${number(metrics.corrected)}.</p><p>Отсутствие ручной проверки не считается ошибкой распознавания.</p>${optional}</article>`;
+  $('review-queue').querySelector('.continue-review')?.addEventListener('click', continueReview);
 }
