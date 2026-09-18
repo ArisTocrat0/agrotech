@@ -44,6 +44,37 @@ def save_decision(folder: Path, image_index: int, detection_id: int, decision: s
     reviews = json.loads(path.read_text(encoding='utf-8')) if path.exists() else {}
     reviews.setdefault(row['image'],{})[str(detection_id)] = {
         'decision':decision,'at':datetime.now(timezone.utc).isoformat()}
+
+    # Human review is durable training signal. Promote the exact crop into the
+    # persistent reference dataset only when the reviewer agrees with the model's
+    # original kind and a species label exists. Kind-only corrections are stored
+    # separately so they cannot poison species labels.
+    detection = next(d for d in row['detections'] if d['id'] == detection_id)
+    try:
+        from .experience import remember_exemplar, save_unresolved_review
+        from ..vision.image_utils import load_image_rgb
+        root = folder.parents[2]
+        source_root = (folder / 'input').resolve()
+        source = (source_root / row['image']).resolve()
+        if source.is_relative_to(source_root) and source.is_file():
+            image = load_image_rgb(source)
+            box = detection['bbox']
+            crop = image.crop((box['x1'], box['y1'], box['x2'], box['y2']))
+            predicted_kind = detection.get('kind')
+            predicted_species = detection.get('species')
+            if (decision in {'weed', 'crop'} and
+                    decision == predicted_kind and
+                    predicted_species and predicted_species != 'unknown'):
+                remember_exemplar(
+                    root, crop, decision, predicted_species,
+                    detection.get('similarity_score'), source='human'
+                )
+            elif decision in {'weed', 'crop'}:
+                save_unresolved_review(root, crop, decision)
+    except (OSError, ValueError, KeyError):
+        # A review must remain saveable even if the source image is unavailable.
+        pass
+
     temporary = path.with_suffix('.tmp')
     temporary.write_text(json.dumps(reviews,ensure_ascii=False,indent=2),encoding='utf-8')
     temporary.replace(path)
