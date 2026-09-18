@@ -91,7 +91,9 @@ def main() -> None:
             exist_ok=args.exist_ok, seed=42, deterministic=True, amp=True, cache=False,
             pretrained=True, save=True, val=True, plots=True, close_mosaic=10,
         )
-        state.update(status='done',epoch=args.epochs,percent=100);save_state()
+        state.update(status='done', stopped_early=state['epoch'] < args.epochs)
+        state['percent'] = round(100 * state['epoch'] / args.epochs)
+        save_state()
     except BaseException as exc:
         state.update(status='error',error=str(exc));save_state();raise
     finally:

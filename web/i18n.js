@@ -1146,6 +1146,9 @@ Object.assign(translations, {
     kk: 'Бір класс: арамшөп. Расталған арамшөптері бар кемінде екі түрлі сурет қажет.'
   }
 });
+Object.assign(translations, {
+  'Обучение завершено досрочно.': {en:'Training finished early.', kk:'Оқыту мерзімінен бұрын аяқталды.'}
+});
 let language = 'ru';
 try { language = localStorage.getItem('olzha-language') || 'ru'; } catch (_) {}
 if (!['ru', 'en', 'kk'].includes(language)) language = 'ru';

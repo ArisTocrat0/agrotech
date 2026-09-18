@@ -1,5 +1,6 @@
 """Small local YOLO trial, also launched and monitored by the web dashboard."""
 import argparse
+import csv
 import fcntl
 import json
 import os
@@ -63,6 +64,19 @@ def training_status():
             state['log'] = stream.read().decode('utf-8', errors='replace')
             import re
             state['log'] = re.sub(r'\x1b\[[0-?]*[ -/]*[@-~]', '', state['log']).replace('\r', '\n')
+    # Older full runs overwrote the actual epoch with the requested budget.
+    # Recover the completed count from the run's own CSV, never from another run.
+    if state['status'] == 'done' and state.get('mode') == 'full':
+        metrics_path = TRAINING / state['run'] / 'results.csv'
+        try:
+            with metrics_path.open(newline='', encoding='utf-8') as stream:
+                rows = [{key.strip(): value for key, value in row.items()} for row in csv.DictReader(stream)]
+            epochs = [int(row['epoch'].strip()) for row in rows]
+            if epochs and min(epochs) >= 1 and max(epochs) <= state['epochs']:
+                state['epoch'] = max(epochs)
+        except (OSError, ValueError, KeyError, TypeError, AttributeError, csv.Error):
+            pass
+        state['stopped_early'] = state.get('epoch', 0) < state['epochs']
     state['weights_ready'] = state['status'] == 'done' and (TRAINING / state['run'] / 'weights' / 'best.pt').exists()
     state['percent'] = round(100 * state.get('epoch', 0) / max(1, state.get('epochs', 1)))
     state['full_ready'] = dataset_ready()

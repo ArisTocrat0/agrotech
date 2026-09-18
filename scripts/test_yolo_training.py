@@ -57,6 +57,28 @@ class TrainingTests(unittest.TestCase):
         self.assertTrue(state['weights_ready'])
         self.assertEqual(state['log'], 'Training\nDone')
 
+    def test_legacy_full_run_recovers_actual_epoch(self):
+        folder = self.folder/'full_test'
+        (folder/'weights').mkdir(parents=True)
+        (folder/'weights/best.pt').write_bytes(b'checkpoint')
+        (folder/'results.csv').write_text(' epoch, train/box_loss\n12,4.0\n42,3.2\n')
+        training.save_status({'status':'done','mode':'full','run':'full_test','epoch':150,'epochs':150})
+        state = training.training_status()
+        self.assertEqual(state['epoch'],42)
+        self.assertEqual(state['percent'],28)
+        self.assertTrue(state['stopped_early'])
+        self.assertTrue(state['weights_ready'])
+
+    def test_actual_epoch_survives_missing_csv(self):
+        training.save_status({'status':'done','mode':'full','run':'full_test','epoch':42,'epochs':150})
+        state = training.training_status()
+        self.assertEqual(state['epoch'],42)
+        self.assertTrue(state['stopped_early'])
+
+    def test_full_budget_is_not_early_stopping(self):
+        training.save_status({'status':'done','mode':'full','run':'full_test','epoch':150,'epochs':150})
+        self.assertFalse(training.training_status()['stopped_early'])
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

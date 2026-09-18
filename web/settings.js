@@ -82,7 +82,7 @@ function renderTraining() {
   $('start-training').disabled = trainingState.status === 'running';
   fullTraining.disabled = trainingState.status === 'running' || !trainingState.full_ready;
   $('download-weights').disabled = !trainingState.weights_ready;
-  const label = {idle:'Обучение ещё не запускалось.', running:'Обучение выполняется…', done:trainingState.mode==='full'?'Полное GPU-обучение завершено.':'Пробное обучение завершено.', error:'Обучение завершилось с ошибкой.'}[trainingState.status];
+  const label = {idle:'Обучение ещё не запускалось.', running:'Обучение выполняется…', done:trainingState.stopped_early?'Обучение завершено досрочно.':trainingState.mode==='full'?'Полное GPU-обучение завершено.':'Пробное обучение завершено.', error:'Обучение завершилось с ошибкой.'}[trainingState.status];
   const percent=trainingState.percent ?? Math.round(100*(trainingState.epoch||0)/Math.max(1,trainingState.epochs||1));
   $('training-status').textContent = `${t(label)} ${percent}% · ${number(trainingState.epoch)} / ${number(trainingState.epochs)} ${t('эпох')}`;
   $('training-progress').max = trainingState.epochs || 1;
