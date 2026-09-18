@@ -25,7 +25,7 @@ const nav=document.querySelector('nav');
 const navLabels={dashboard:t('Обзор'),analysis:t('Анализы'),assistant:'AI помощник',exports:t('Отчёты'),setup:t('Настройки')};
 nav.querySelectorAll('[data-tab]').forEach(button=>{const label=navLabels[button.dataset.tab];if(label)button.lastChild.textContent=label;});
 const reviewNav=document.createElement('button');reviewNav.dataset.tab='review';reviewNav.innerHTML=`<span>✓</span>${t('Проверка')}`;nav.querySelector('[data-tab="exports"]').before(reviewNav);
-const reviewView=document.createElement('section');reviewView.id='review';reviewView.className='view';reviewView.hidden=true;reviewView.innerHTML=`<div class="page-heading"><div><p class="eyebrow">${t('КОНТРОЛЬ КАЧЕСТВА')}</p><h1>${t('Проверка находок')}<span class="green">.</span></h1><p class="muted">${t('Подтвердите или исправьте решения модели.')}</p></div></div><div id="review-queue"></div>`;
+const reviewView=document.createElement('section');reviewView.id='review';reviewView.className='view';reviewView.hidden=true;reviewView.innerHTML=`<div class="page-heading"><div><p class="eyebrow">${t('КОНТРОЛЬ КАЧЕСТВА')}</p><h1>${t('Проверка находок')}<span class="green">.</span></h1><p class="muted">${t('При необходимости исправьте решения модели; проверка необязательна.')}</p></div></div><div id="review-queue"></div>`;
 $('exports').before(reviewView);
 document.querySelectorAll('[data-tab], [data-go]').forEach(el => el.addEventListener('click', () => tab(el.dataset.tab || el.dataset.go)));
 window.addEventListener('hashchange', () => tab(location.hash.slice(1)));
