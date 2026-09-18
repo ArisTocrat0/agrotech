@@ -2,7 +2,7 @@
 const {readFileSync}=require('node:fs');
 const vm=require('node:vm');
 const assert=require('node:assert/strict');
-const context=vm.createContext({});
+const context=vm.createContext({document:{createElement:()=>({}),head:{append(){}}}});
 vm.runInContext(readFileSync('web/client.js','utf8'),context);
 const evaluate=code=>JSON.parse(JSON.stringify(vm.runInContext(code,context)));
 vm.runInContext(`const rows=[{detections:[{review:'weed'},{}]},{detections:[]},{detections:[{review:'unknown'},{review:'crop'},{review:'not_plant'}]}];`,context);
@@ -63,9 +63,9 @@ const autoElements=new Map();
 const element=()=>({textContent:'',innerHTML:'',disabled:false,firstChild:{textContent:''},addEventListener(){},querySelector(selector){this.children??={};return this.children[selector]??=element();}});
 const autoContext=vm.createContext({
  $:id=>{if(!autoElements.has(id))autoElements.set(id,element());return autoElements.get(id);},
- t:x=>x,number:String,escapeHTML:x=>String(x),
+ t:x=>x,number:String,escapeHTML:x=>String(x),reviewMetrics:context.reviewMetrics,continueReview(){},
  metricElements:[element(),element(),element(),element()],pendingCard:element(),dashboardReview:element(),
- results:[{mode:'automatic',crop:'Пшеница',crop_supported:false,detections:[{kind:'unknown'}],learning_report:{accuracy:.98,balanced_accuracy:.97,count:110,coverage:.8}}]
+ results:[{mode:'automatic',crop:'Пшеница',crop_supported:false,detections:[{species:'Бодяк полевой',kind:'unknown',prediction_status:'uncertain',uncertainty_reasons:['unsupported_crop']}],learning_report:{accuracy:.98,balanced_accuracy:.97,count:110,coverage:.8}}]
 });
 vm.runInContext(app.slice(app.indexOf('function renderAutomaticResults()')),autoContext);
 vm.runInContext('renderAutomaticResults()',autoContext);
