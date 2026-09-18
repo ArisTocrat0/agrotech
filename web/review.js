@@ -1,8 +1,8 @@
 'use strict';
 const classLabels = {A:'A · Двудольные (широколистные)', B:'B · Злаковые (узколистные)'};
-const stageLabels = {base_minimum:'Идеальное окно: базовая/минимальная норма по регламенту препарата', review_increase_15_20:'4–6 листьев: по заданному правилу +15–20%; требуется проверка регламента препарата', warn_ineffective_crop_risk:'Поздняя фаза: возможна неэффективность обработки и повреждение культуры', review_stage:'Фаза не определена: требуется проверка'};
+const stageLabels = {base_minimum:'Идеальное окно: базовая/минимальная норма по регламенту препарата', review_increase_15_20:'4–6 листьев: по заданному правилу +15–20%; требуется проверка регламента препарата', warn_ineffective_crop_risk:'Поздняя фаза: возможна неэффективность обработки и повреждение культуры', stage_data_required:'Фаза не определена: для фазозависимого совета нужны дополнительные данные'};
 let reviewImage = 0, reviewDetection = 0, reviewSaving = false, reviewJob = null;
-const kindLabels = {weed:'Сорняк',crop:'Культура',unknown:'Проверить',not_plant:'Не растение'};
+const kindLabels = {weed:'Сорняк',crop:'Культура',unknown:'Неопределённо',not_plant:'Не растение'};
 const kindColors = {weed:'#ff3fa4',crop:'#00d9ff',unknown:'#ffd600',not_plant:'#ffffff'};
 function openReview(index) {
   if(reviewSaving || !results[index]) return;
@@ -59,11 +59,16 @@ function renderReview() {
   const d = row.detections[reviewDetection];
   renderSelectedCrop(row,d);
   $('review-name').textContent = d ? detectionLabel(d) : t('Нет обнаружений');
-  $('review-details').textContent = d ? `${t('Сходство')}: ${(d.similarity_score == null ? '—' : Number(d.similarity_score).toFixed(2))} · ${t('Класс')}: ${t(classLabels[d.weed_class] || 'Не определена')} · ${t({annual:'Малолетний',perennial:'Многолетний'}[d.lifecycle] || 'Не определена')}${d.review ? ' · '+t('Проверено вручную') : ''}` : '';
+  const score = d ? (d.model_score ?? d.similarity_score) : null;
+  const scoreLabel = d?.score_type === 'linear_margin_not_probability' ? 'Linear margin' : t('Сходство');
+  const uncertainty = d ? uncertaintyText(d) : '';
+  $('review-details').textContent = d ? `${scoreLabel}: ${(score == null ? '—' : Number(score).toFixed(2))} · ${t('Класс')}: ${t(classLabels[d.weed_class] || 'Не определена')} · ${t({annual:'Малолетний',perennial:'Многолетний'}[d.lifecycle] || 'Не определена')}${uncertainty ? ' · '+uncertainty : ''}${d.review ? ' · '+t('Проверено вручную') : ''}` : '';
   $('review-stage').textContent = d?.stage_advice ? `${d.priority === 'high' ? t('Приоритет: многолетник') + ' · ' : ''}${t(stageLabels[d.stage_advice.action])}` : '';
-  const reviewed=row.detections.filter(d=>!isPending(d)).length;
+  const automatic=row.mode==='automatic';
+  const reviewed=automatic ? row.detections.filter(hasManualReview).length : row.detections.filter(d=>!isPending(d,row)).length;
+  const corrected=row.detections.filter(d=>d.manual_correction || d.review_status==='corrected').length;
   const percent=row.detections.length ? Math.round(reviewed/row.detections.length*100) : 100;
-  $('review-counter').textContent = `${d ? reviewDetection+1 : 0} / ${row.detections.length} · ${t('Проверено')}: ${reviewed}`;
+  $('review-counter').textContent = automatic ? `${d ? reviewDetection+1 : 0} / ${row.detections.length} · Исправлено вручную: ${corrected}` : `${d ? reviewDetection+1 : 0} / ${row.detections.length} · ${t('Проверено')}: ${reviewed}`;
   if ($('review-progress')) { $('review-progress').value=percent;$('review-progress-label').textContent=`${percent}%`; }
   document.querySelectorAll('[data-decision]').forEach(button => button.disabled=reviewSaving || !d);
   if($('review-next-pending')) $('review-next-pending').disabled=reviewSaving;
@@ -84,8 +89,9 @@ function renderReview() {
   }
   const actions = {measure_scale:'Нужен масштаб', do_not_spray:'Не опрыскивать: ниже экономического порога', standard_rate:'Стандартная норма по регламенту препарата', maximum_label_rate:'Максимальная разрешённая норма по регламенту препарата', urgent_treatment:'Критическая угроза: срочно оценить обработку', agronomist_review:'Требуется проверка агрономом'};
   $('review-action').textContent = a.threshold_action ? `${t('По заданным порогам')}: ${t(actions[a.threshold_action])}. ${t('Решение')}: ${t(actions[a.recommendation])}.` : '';
-  const reasons = {scale_required:'Нужен масштаб', uncertain_classification:'Есть объекты с неопределённым классом', late_stage_crop_risk:'Поздняя фаза: возможна неэффективность обработки и повреждение культуры', unknown_stage:'Фаза не определена: требуется проверка', perennials_below_threshold:'Есть многолетники ниже критического порога: требуется отдельная оценка'};
-  $('review-reasons').textContent = (a.review_reasons || []).map(reason => t(reasons[reason] || reason)).join(' · ');
+  const reasons = {scale_required:'Нужен масштаб', uncertain_classification:'Есть объекты с неопределённой категорией', late_stage_crop_risk:'Поздняя фаза: возможна неэффективность обработки и повреждение культуры', unknown_stage:'Фаза не определена: фазозависимые рекомендации ограничены', perennials_below_threshold:'Есть многолетники ниже критического порога: требуется отдельная оценка'};
+  const missing = {scale:'Нужен масштаб',classification:'Нужны более уверенные категории растений',growth_stage:'Для фазозависимого совета нужна фаза роста'};
+  $('review-reasons').textContent = [...(a.review_reasons || []).map(reason => reasons[reason] || reason), ...(a.limitations || []).map(reason => reasons[reason] || reason), ...(a.recommendation_missing_data || []).map(key => missing[key] || key)].filter((value,index,all)=>all.indexOf(value)===index).join(' · ');
   const perf = row.performance;
   $('review-performance').textContent = perf ? `${t('Обработка кадра')}: ${Number(row.processing_seconds).toFixed(3)} ${t('с')} · ${Number(perf.fps).toFixed(2)} FPS · ${t('Путь за обработку при 20 км/ч')}: ${Number(perf.motion_at_20_kmh.processing_distance_m).toFixed(2)} ${t('м')}` : '';
 
@@ -99,7 +105,7 @@ function nextPending() {
     $('dialog-title').textContent=results[reviewImage].image;$('review-gsd').value=results[reviewImage].gsd_cm||'';
     $('review-message').textContent='';renderReview();return;
   }
-  $('review-message').textContent=t('Все объекты этого анализа проверены.');
+  $('review-message').textContent=results.every(row=>row.mode==='automatic')?'Неопределённых объектов для исправления нет.':t('Все объекты этого анализа проверены.');
 }
 async function decide(decision) {
   if (reviewSaving || selected !== reviewJob) return;
