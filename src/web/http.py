@@ -18,9 +18,13 @@ from email.policy import default
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse
+from urllib.error import HTTPError, URLError
+from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[2]
 MAX_UPLOAD = 100 * 1024 * 1024
+MAX_ASSISTANT_UPLOAD = 15 * 1024 * 1024
+N8N_WEBHOOK_URL = 'https://n8n.kineu.kz/webhook/crop-chat'
 
 
 from .service import Dashboard
@@ -127,6 +131,7 @@ def make_handler(app: Dashboard):
                 assets = {'/': ('index.html', 'text/html; charset=utf-8'),
                           '/settings.js': ('settings.js', 'text/javascript; charset=utf-8'),
                           '/client.js': ('client.js', 'text/javascript; charset=utf-8'),
+                          '/assistant.js': ('assistant.js', 'text/javascript; charset=utf-8'),
                           '/app.js': ('app.js', 'text/javascript; charset=utf-8'),
                           '/review.js': ('review.js', 'text/javascript; charset=utf-8'),
                           '/i18n.js': ('i18n.js', 'text/javascript; charset=utf-8'),
@@ -143,7 +148,7 @@ def make_handler(app: Dashboard):
             path = urlparse(self.path).path
             is_dataset = bool(re.fullmatch(r'/api/jobs/[a-f0-9]{32}/dataset', path))
             is_review = bool(re.fullmatch(r'/api/jobs/(?:[a-f0-9]{32}|cli)/(?:review|geometry)',path))
-            if not is_review and not is_dataset and path not in {'/api/analyze', '/api/references', '/api/check', '/api/training', '/api/training/full', '/api/crop-import'}:
+            if not is_review and not is_dataset and path not in {'/api/analyze', '/api/references', '/api/check', '/api/training', '/api/training/full', '/api/crop-import', '/api/assistant'}:
                 self.json(404, {'error': 'Не найдено'})
                 return
             # Only the local dashboard can submit work; reject cross-origin forms.
@@ -152,6 +157,37 @@ def make_handler(app: Dashboard):
                 self.json(403, {'error': 'Запрос с другого сайта запрещён'})
                 return
             try:
+                if path == '/api/assistant':
+                    size = int(self.headers.get('Content-Length', '0'))
+                    if not 0 < size <= MAX_ASSISTANT_UPLOAD:
+                        raise ValueError('Сообщение или фото слишком большое. Максимум 15 МБ.')
+                    content_type = self.headers.get('Content-Type', '')
+                    if not (content_type.startswith('multipart/form-data;') or content_type.startswith('application/json')):
+                        raise ValueError('Ожидается сообщение AI-агроному в JSON или multipart/form-data.')
+                    request_body = self.rfile.read(size)
+                    request = Request(
+                        N8N_WEBHOOK_URL,
+                        data=request_body,
+                        headers={'Content-Type': content_type, 'Accept': 'application/json', 'User-Agent': 'OlzheAgro-Local/1.0'},
+                        method='POST',
+                    )
+                    try:
+                        with urlopen(request, timeout=90) as response:
+                            response_body = response.read()
+                    except HTTPError as exc:
+                        details = exc.read().decode('utf-8', errors='replace')[:1000]
+                        self.json(502, {'error': f'n8n вернул HTTP {exc.code}: {details}'})
+                        return
+                    except (URLError, TimeoutError) as exc:
+                        self.json(502, {'error': f'Не удалось связаться с n8n: {exc}'})
+                        return
+                    text = response_body.decode('utf-8', errors='replace')
+                    try:
+                        result = json.loads(text)
+                    except json.JSONDecodeError:
+                        result = {'output': text}
+                    self.json(200, result)
+                    return
                 if is_dataset:
                     from scripts.train_yolo import prepare_verified_dataset
                     with app.lock:

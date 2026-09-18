@@ -32,3 +32,9 @@ function pendingTarget(rows, image = 0, detection = -1) {
 }
 
 function technicalSection(title,nodes,open=false){const details=document.createElement('details');details.className='settings-section';details.open=open;const summary=document.createElement('summary');summary.innerHTML=`<span>${t(title)}</span><small>${t('Нажмите, чтобы раскрыть')}</small>`;details.append(summary);nodes[0].before(details);nodes.forEach(node=>details.append(node));return details;}
+
+// Load the n8n-backed agronomist assistant after shared client helpers.
+const agronomistAssistant = document.createElement('script');
+agronomistAssistant.src = '/assistant.js';
+agronomistAssistant.async = false;
+document.head.append(agronomistAssistant);
