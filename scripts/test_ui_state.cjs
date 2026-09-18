@@ -6,7 +6,7 @@ const context=vm.createContext({});
 vm.runInContext(readFileSync('web/client.js','utf8'),context);
 const evaluate=code=>JSON.parse(JSON.stringify(vm.runInContext(code,context)));
 vm.runInContext(`const rows=[{detections:[{review:'weed'},{}]},{detections:[]},{detections:[{review:'unknown'},{review:'crop'},{review:'not_plant'}]}];`,context);
-assert.deepEqual(evaluate('reviewMetrics(rows)'),{total:5,pending:2,reviewed:3,confirmed:1,percent:60});
+assert.deepEqual(evaluate('reviewMetrics(rows)'),{total:5,pending:2,reviewed:3,corrected:0,recognized:0,uncertain:0,confirmed:1,percent:60});
 assert.deepEqual(evaluate('pendingTarget(rows)'),{image:0,detection:1});
 assert.deepEqual(evaluate('pendingTarget(rows,0,1)'),{image:2,detection:0});
 assert.deepEqual(evaluate('pendingTarget(rows,2,0)'),{image:0,detection:1});
@@ -24,6 +24,10 @@ for(const file of ['app.js','review.js','settings.js','client.js']){
  }
 }
 console.log('PASS: KPI, unresolved decisions, cross-image traversal, empty results, RU/EN/KZ keys');
+
+const automaticMetrics=evaluate("reviewMetrics([{mode:'automatic',detections:[{species:'Бодяк',kind:'weed',prediction_status:'recognized'},{species:'Бодяк',kind:'unknown',prediction_status:'uncertain',uncertainty_reasons:['unsupported_crop']},{species:'unknown',kind:'crop',prediction_status:'uncertain',review:'weed',review_status:'corrected',manual_correction:true}]}])");
+assert.deepEqual(automaticMetrics,{total:3,pending:1,reviewed:1,corrected:1,recognized:1,uncertain:2,confirmed:1,percent:33});
+console.log('PASS: automatic counters separate recognized, uncertain and manual corrections');
 
 // Execute the actual upload-state renderer with lightweight element doubles.
 const elements=new Map();
@@ -56,7 +60,7 @@ vm.runInContext("let reviewSaving=false,selected='job',reviewJob='job',reviewIma
 
 // Automatic results must not present model decisions as manual confirmations.
 const autoElements=new Map();
-const element=()=>({textContent:'',innerHTML:'',firstChild:{textContent:''},querySelector(selector){this.children??={};return this.children[selector]??=element();}});
+const element=()=>({textContent:'',innerHTML:'',disabled:false,firstChild:{textContent:''},addEventListener(){},querySelector(selector){this.children??={};return this.children[selector]??=element();}});
 const autoContext=vm.createContext({
  $:id=>{if(!autoElements.has(id))autoElements.set(id,element());return autoElements.get(id);},
  t:x=>x,number:String,escapeHTML:x=>String(x),
@@ -67,7 +71,8 @@ vm.runInContext(app.slice(app.indexOf('function renderAutomaticResults()')),auto
 vm.runInContext('renderAutomaticResults()',autoContext);
 assert.equal(autoElements.get('stat-species').textContent,'0');
 assert.equal(autoElements.get('stat-pending').textContent,'1');
-assert.match(autoContext.dashboardReview.innerHTML,/недостаточно фотографий/);
+assert.equal(autoElements.get('stat-unknown').textContent,'0');
+assert.match(autoContext.dashboardReview.innerHTML,/обучающих примеров/);
 assert.match(autoContext.dashboardReview.innerHTML,/на поле: не измерена/);
 assert.equal(autoElements.get('download-pseudo').disabled,true);
 assert.match(autoElements.get('review-queue').innerHTML,/по желанию/);
