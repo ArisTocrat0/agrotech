@@ -1149,6 +1149,16 @@ Object.assign(translations, {
 Object.assign(translations, {
   'Обучение завершено досрочно.': {en:'Training finished early.', kk:'Оқыту мерзімінен бұрын аяқталды.'}
 });
+Object.assign(translations, {
+  'Распознавание готово автоматически. Неопределённые объекты можно исправить по желанию.': {
+    en:'Recognition is ready automatically. Uncertain objects can be corrected optionally.',
+    kk:'Тану нәтижесі автоматты түрде дайын. Белгісіз нысандарды қалауыңызша түзете аласыз.'
+  },
+  'При необходимости исправьте решения модели; проверка необязательна.': {
+    en:'Correct model decisions when needed; review is optional.',
+    kk:'Қажет болса модель шешімдерін түзетіңіз; тексеру міндетті емес.'
+  }
+});
 let language = 'ru';
 try { language = localStorage.getItem('olzha-language') || 'ru'; } catch (_) {}
 if (!['ru', 'en', 'kk'].includes(language)) language = 'ru';
