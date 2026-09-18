@@ -6,6 +6,7 @@ so adding experience does not require re-encoding the whole library.
 """
 import hashlib
 import json
+import logging
 from datetime import datetime, timezone
 from io import BytesIO
 from pathlib import Path
@@ -38,24 +39,31 @@ def remember_exemplar(root: Path, image: Image.Image, kind: str, species: str,
         return False
 
     species = _safe_component(species)
-    base = root / "data" / ("Сорняки" if kind == "weed" else "Культуры")
+    # data/ is commonly mounted read-only in production. Keep learned field
+    # experience under artifacts/, which is the writable persistent model volume.
+    base = root / "artifacts" / "experience" / ("Сорняки" if kind == "weed" else "Культуры")
     folder = base / species / AUTO_STAGE
-    folder.mkdir(parents=True, exist_ok=True)
 
     payload = _png_bytes(image)
     digest = hashlib.sha256(payload).hexdigest()
     target = folder / f"{digest}.png"
-    if target.exists():
-        return False
 
-    # Avoid unbounded self-training growth. Human-labelled exemplars are allowed even
-    # after the automatic quota because they are more valuable than pseudo labels.
-    if source != "human" and sum(1 for p in folder.glob("*.png") if p.is_file()) >= MAX_AUTO_PER_SPECIES:
-        return False
+    try:
+        folder.mkdir(parents=True, exist_ok=True)
+        if target.exists():
+            return False
 
-    temporary = target.with_suffix(".tmp")
-    temporary.write_bytes(payload)
-    temporary.replace(target)
+        # Avoid unbounded self-training growth. Human-labelled exemplars are allowed even
+        # after the automatic quota because they are more valuable than pseudo labels.
+        if source != "human" and sum(1 for p in folder.glob("*.png") if p.is_file()) >= MAX_AUTO_PER_SPECIES:
+            return False
+
+        temporary = target.with_suffix(".tmp")
+        temporary.write_bytes(payload)
+        temporary.replace(target)
+    except OSError as exc:
+        logging.warning("Cannot persist field experience %s/%s: %s", kind, species, exc)
+        return False
 
     log = root / "artifacts" / "experience_log.jsonl"
     log.parent.mkdir(parents=True, exist_ok=True)
@@ -80,12 +88,16 @@ def save_unresolved_review(root: Path, image: Image.Image, decision: str) -> boo
         return False
     payload = _png_bytes(image)
     digest = hashlib.sha256(payload).hexdigest()
-    folder = root / "pseudo_dataset" / "reviewed_kind" / decision
-    folder.mkdir(parents=True, exist_ok=True)
+    folder = root / "artifacts" / "experience_kind" / decision
     target = folder / f"{digest}.png"
-    if target.exists():
+    try:
+        folder.mkdir(parents=True, exist_ok=True)
+        if target.exists():
+            return False
+        temporary = target.with_suffix(".tmp")
+        temporary.write_bytes(payload)
+        temporary.replace(target)
+        return True
+    except OSError as exc:
+        logging.warning("Cannot persist reviewed kind example %s: %s", decision, exc)
         return False
-    temporary = target.with_suffix(".tmp")
-    temporary.write_bytes(payload)
-    temporary.replace(target)
-    return True
