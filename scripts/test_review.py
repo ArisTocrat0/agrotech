@@ -54,6 +54,8 @@ class ReviewTests(unittest.TestCase):
             self.assertEqual(result['crop_count'],1)
             self.assertEqual(result['detections'][0]['species'],'unknown')
             self.assertEqual(result['detections'][0]['prediction']['species'],'Пырей ползучий')
+            self.assertTrue(result['detections'][0]['manual_correction'])
+            self.assertEqual(result['detections'][0]['review_status'],'corrected')
             self.assertEqual(load_results(folder)[0]['detections'][0]['review'],'crop')
             self.assertEqual((folder/'results.json').read_bytes(),before)
             with self.assertRaises(ValueError): save_decision(folder,0,100,'weed')
@@ -62,6 +64,47 @@ class ReviewTests(unittest.TestCase):
             result=save_decision(folder,0,1,'weed')[0]
             self.assertEqual(result['total_weeds'],1)
             self.assertEqual(result['detections'][0]['species'],'Пырей ползучий')
+            self.assertFalse(result['detections'][0]['manual_correction'])
+            self.assertEqual(result['detections'][0]['review_status'],'confirmed')
+
+    def test_old_results_remain_readable_without_fake_review(self):
+        with tempfile.TemporaryDirectory() as temp:
+            folder=Path(temp)
+            legacy=[{'image':'old.jpg','width':100,'height':100,'detections':[{
+                'id':1,'species':'Бодяк полевой','stage':'unknown','similarity_score':.8,
+                'kind':'weed','weed_class':'A','lifecycle':'perennial',
+                'bbox':{'x1':1,'y1':2,'x2':20,'y2':30}}]}]
+            (folder/'results.json').write_text(json.dumps(legacy,ensure_ascii=False),encoding='utf-8')
+            row=load_results(folder)[0]
+            self.assertEqual(row['recognized_count'],1)
+            self.assertEqual(row['uncertain_count'],0)
+            self.assertNotIn('review',row['detections'][0])
+            self.assertEqual(row['detections'][0]['stage_status'],'unknown_untrained')
+            self.assertEqual(row['agronomy']['recommendation_status'],'partial')
+
+    def test_uncertainty_export_has_no_implicit_manual_decision(self):
+        import csv
+        with tempfile.TemporaryDirectory() as temp:
+            folder=Path(temp)
+            detection=WeedDetection(1,'Бодяк полевой','unknown',.8,1,2,20,30,'unknown')
+            detection.species_prediction='Бодяк полевой'
+            detection.species_accepted=True
+            detection.model_score=.8
+            detection.score_type='linear_margin_not_probability'
+            detection.category_prediction='weed'
+            detection.category_accepted=False
+            detection.prediction_status='uncertain'
+            detection.stage_status='unknown_untrained'
+            detection.uncertainty_reasons=['unsupported_crop']
+            detection.uncertainty_messages=['Нет данных культуры']
+            save_results([image_result('field.jpg',100,100,[detection])],folder)
+            with (folder/'results.csv').open(encoding='utf-8-sig') as stream:
+                exported=next(csv.DictReader(stream))
+            self.assertEqual(exported['species_prediction'],'Бодяк полевой')
+            self.assertEqual(exported['uncertainty_reasons'],'unsupported_crop')
+            self.assertEqual(exported['review'],'')
+            self.assertEqual(exported['manual_correction'],'')
+
 
     def test_density_boundaries_and_missing_scale(self):
         annual={'kind':'weed','lifecycle':'annual','stage':'4-6 листьев'}
