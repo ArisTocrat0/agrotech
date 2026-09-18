@@ -28,6 +28,19 @@ class AutomaticLearningTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             split_records(records)
 
+    def test_group_metadata_keeps_series_out_of_multiple_splits(self):
+        records = []
+        for field in range(5):
+            for species, kind in [('Пшеница','crop'),('Бодяк','weed')]:
+                records.append({'species':species,'kind':kind,'stage':'unknown',
+                                'sha256':f'{field}-{species}','field_id':f'field-{field}'})
+        train, val, test, excluded = split_records(records)
+        self.assertFalse(excluded)
+        split_by_index = {i:name for name, ids in [('train',train),('val',val),('test',test)] for i in ids}
+        for field in {row['field_id'] for row in records}:
+            self.assertEqual(len({split_by_index[i] for i,row in enumerate(records)
+                                  if row['field_id']==field}), 1)
+
     def test_training_cache_heldout_report_and_category_metrics(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / 'head.pt'
