@@ -71,8 +71,8 @@ class ReviewTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             folder=Path(temp)
             legacy=[{'image':'old.jpg','width':100,'height':100,'detections':[{
-                'id':1,'species':'Бодяк полевой','stage':'unknown','similarity_score':.8,
-                'kind':'weed','weed_class':'A','lifecycle':'perennial',
+                'id':1,'species':'Щирица','stage':'unknown','similarity_score':.8,
+                'kind':'weed','weed_class':'A','lifecycle':'annual',
                 'bbox':{'x1':1,'y1':2,'x2':20,'y2':30}}]}]
             (folder/'results.json').write_text(json.dumps(legacy,ensure_ascii=False),encoding='utf-8')
             row=load_results(folder)[0]
