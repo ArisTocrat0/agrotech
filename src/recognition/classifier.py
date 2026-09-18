@@ -155,4 +155,7 @@ class CropContextClassifier:
         top_count = min(20, max(1, (len(embeddings) + 4) // 5))
         field_scores = crop_scores.topk(top_count, dim=0).values.mean(dim=0)
         score, idx = field_scores.max(dim=0)
-        return self.crop_species[int(idx)], float(score)
+        score = float(score)
+        if score < self.threshold:
+            return None, score
+        return self.crop_species[int(idx)], score
