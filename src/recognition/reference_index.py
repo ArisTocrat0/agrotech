@@ -20,6 +20,16 @@ def build_reference_index(references: Path, output: Path, model_name: str,
     roots = [(references, 'weed')]
     if crop_references and crop_references.exists():
         roots.append((crop_references, 'crop'))
+
+    # Production data/ may be read-only. High-confidence field experience is written
+    # to artifacts/experience and participates in matching on the next analysis.
+    experience_root = output.parent / "experience"
+    experience_weeds = experience_root / "Сорняки"
+    experience_crops = experience_root / "Культуры"
+    if experience_weeds.exists():
+        roots.append((experience_weeds, 'weed'))
+    if experience_crops.exists():
+        roots.append((experience_crops, 'crop'))
     for root, kind in roots:
         for path in image_paths(root):
             relative = path.relative_to(root)
