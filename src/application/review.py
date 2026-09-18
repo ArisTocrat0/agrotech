@@ -1,6 +1,5 @@
-"""Persistent human decisions layered over immutable model results."""
+"""Persistent optional human decisions layered over immutable model results."""
 import json
-from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
 from ..infrastructure.exporters import recount
@@ -19,13 +18,24 @@ def load_results(folder: Path):
         for d in row['detections']:
             decision = reviews.get(row['image'],{}).get(str(d['id']))
             if decision:
-                d['prediction'] = {k:d.get(k) for k in ['species','stage','kind']}
+                prediction = {k:d.get(k) for k in [
+                    'species','stage','kind','species_prediction','category_prediction',
+                    'prediction_status','uncertainty_reasons']}
+                d['prediction'] = prediction
+                original_kind = d.get('kind') or ('unknown' if d.get('species') == 'unknown' else 'weed')
                 d['review'] = decision['decision']
                 d['kind'] = decision['decision']
                 d['reviewed_at'] = decision['at']
-                # A changed category does not confirm the model's species/lifecycle.
-                original_kind = d['prediction'].get('kind') or ('unknown' if d['species']=='unknown' else 'weed')
-                if original_kind != d['kind']:
+                d['manual_correction'] = decision['decision'] != original_kind
+                d['review_status'] = 'corrected' if d['manual_correction'] else 'confirmed'
+                # Category review does not certify a species. If a known weed/crop is
+                # changed to the opposite category or to not-a-plant, keep the raw
+                # prediction in d['prediction'] but stop presenting that species as final.
+                if (original_kind in {'weed', 'crop'} and
+                        decision['decision'] in {'weed', 'crop', 'not_plant'} and
+                        decision['decision'] != original_kind):
+                    d.update(species='unknown',stage='unknown',weed_class=None,lifecycle=None)
+                if decision['decision'] == 'not_plant':
                     d.update(species='unknown',stage='unknown',weed_class=None,lifecycle=None)
         recount(row)
     return results
