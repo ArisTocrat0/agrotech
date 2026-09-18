@@ -13,18 +13,18 @@ function showError(details) {
 }
 function notice(message) { currentNotice = message; $('notice').textContent = translateMessage(message); $('notice').hidden = !message; }
 function tab(name) {
-  if (!['dashboard','analysis','review','exports','setup'].includes(name)) name = 'dashboard';
+  if (!['dashboard','analysis','assistant','review','exports','setup'].includes(name)) name = 'dashboard';
   document.querySelectorAll('.view').forEach(el => el.hidden = el.id !== name);
   document.querySelectorAll('[data-tab]').forEach(el => el.classList.toggle('active', el.dataset.tab === name));
-  $('crumb').textContent = {dashboard:t('Обзор'),analysis:t('Анализы'),review:t('Проверка'),exports:t('Отчёты'),setup:t('Настройки')}[name];
+  $('crumb').textContent = {dashboard:t('Обзор'),analysis:t('Анализы'),assistant:'AI помощник агроному',review:t('Проверка'),exports:t('Отчёты'),setup:t('Настройки')}[name];
   history.replaceState(null, '', '#'+name);
   if(name==='setup') { refreshSetup();refreshTraining();updateLog(); }
   window.dispatchEvent(new Event('viewchange'));
 }
 const nav=document.querySelector('nav');
-const navButtons=[...nav.querySelectorAll('[data-tab]')];
-navButtons[0].lastChild.textContent=t('Обзор');navButtons[1].lastChild.textContent=t('Анализы');navButtons[2].lastChild.textContent=t('Отчёты');navButtons[3].lastChild.textContent=t('Настройки');
-const reviewNav=document.createElement('button');reviewNav.dataset.tab='review';reviewNav.innerHTML=`<span>✓</span>${t('Проверка')}`;navButtons[2].before(reviewNav);
+const navLabels={dashboard:t('Обзор'),analysis:t('Анализы'),assistant:'AI помощник',exports:t('Отчёты'),setup:t('Настройки')};
+nav.querySelectorAll('[data-tab]').forEach(button=>{const label=navLabels[button.dataset.tab];if(label)button.lastChild.textContent=label;});
+const reviewNav=document.createElement('button');reviewNav.dataset.tab='review';reviewNav.innerHTML=`<span>✓</span>${t('Проверка')}`;nav.querySelector('[data-tab="exports"]').before(reviewNav);
 const reviewView=document.createElement('section');reviewView.id='review';reviewView.className='view';reviewView.hidden=true;reviewView.innerHTML=`<div class="page-heading"><div><p class="eyebrow">${t('КОНТРОЛЬ КАЧЕСТВА')}</p><h1>${t('Проверка находок')}<span class="green">.</span></h1><p class="muted">${t('Подтвердите или исправьте решения модели.')}</p></div></div><div id="review-queue"></div>`;
 $('exports').before(reviewView);
 document.querySelectorAll('[data-tab], [data-go]').forEach(el => el.addEventListener('click', () => tab(el.dataset.tab || el.dataset.go)));
