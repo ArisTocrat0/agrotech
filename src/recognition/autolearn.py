@@ -14,9 +14,17 @@ MIN_CALIBRATION_ACCEPTED = 10
 TARGET_ACCEPTED_ACCURACY = .9
 
 
+def _group_value(row):
+    for field in ('field_id', 'series_id', 'capture_date'):
+        if row.get(field):
+            return field + ':' + str(row[field])
+    return None
+
+
 def split_records(records):
-    groups = defaultdict(list)
+    class_groups = defaultdict(list)
     seen = {}
+    unique = []
     for i, row in enumerate(records):
         key = (row['species'], row.get('kind', 'weed'))
         digest = row['sha256']
@@ -25,10 +33,38 @@ def split_records(records):
                 raise ValueError('Одинаковое фото имеет разные классы в датасете.')
             continue
         seen[digest] = key
-        groups[key].append(i)
+        unique.append(i)
+        class_groups[key].append(i)
+
+    # If field/series/date metadata exists, keep each group wholly in one split.
+    # Refuse an unusable grouped split instead of silently leaking adjacent frames.
+    if any(_group_value(records[i]) for i in unique):
+        grouped = defaultdict(list)
+        for i in unique:
+            grouped[_group_value(records[i]) or ('image:' + records[i]['sha256'])].append(i)
+        tokens = sorted(grouped, key=lambda value: hashlib.sha256(
+            ('split42-group:' + value).encode()).hexdigest())
+        if len(tokens) < 3:
+            raise ValueError('Для train/validation/test нужны минимум три независимые группы полей/серий/дат.')
+        count = max(1, int(len(tokens) * .2))
+        test_groups = set(tokens[:count])
+        val_groups = set(tokens[count:2*count])
+        train_groups = set(tokens[2*count:])
+        train = [i for token in train_groups for i in grouped[token]]
+        val = [i for token in val_groups for i in grouped[token]]
+        test = [i for token in test_groups for i in grouped[token]]
+        for key in class_groups:
+            for name, split in [('train', train), ('validation', val), ('test', test)]:
+                if not any((records[i]['species'], records[i].get('kind', 'weed')) == key
+                           for i in split):
+                    raise ValueError(
+                        f'Недостаточно независимых групп для класса {key[0]} в {name}; '
+                        'добавьте данные вместо разбиения соседних кадров.')
+        return train, val, test, []
+
     train, val, test = [], [], []
     excluded = []
-    for key, ids in sorted(groups.items()):
+    for key, ids in sorted(class_groups.items()):
         ids.sort(key=lambda i: hashlib.sha256(('split42' + records[i]['sha256']).encode()).hexdigest())
         if len(ids) < 3:
             excluded.append(key[0])
@@ -188,7 +224,8 @@ def train_head(index, output: Path):
                   target_met=report['balanced_accuracy'] >= TARGET_ACCEPTED_ACCURACY,
                   train_count=len(train), validation=validation, excluded_species=excluded,
                   crop_species=[c[0] for c in classes if c[1] == 'crop'],
-                  split='sha256_deduplicated_images_not_fields',
+                  split=('grouped_by_field_series_or_date' if grouping_fields else
+                         'sha256_deduplicated_images_not_fields'),
                   split_group_metadata=grouping_fields,
                   leakage_limitation=(None if grouping_fields else
                                       'Нет field_id/series_id/date: соседние кадры нельзя гарантированно развести по группам.'),
