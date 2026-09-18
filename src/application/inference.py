@@ -14,7 +14,8 @@ from ..infrastructure.exporters import recount
 from ..domain.performance import motion_budget
 
 
-def run_inference(input_path: Path, output: Path, config: dict, model, classifier, debug: bool = False) -> list[dict]:
+def run_inference(input_path: Path, output: Path, config: dict, model, classifier,
+                  debug: bool = False, crop_classifier=None) -> list[dict]:
     paths = image_paths(input_path)
     if not paths:
         raise ValueError(f"No input images: {input_path}")
@@ -59,40 +60,57 @@ def run_inference(input_path: Path, output: Path, config: dict, model, classifie
                 if save_debug and debug_crops < config["debug"]["max_crops"]:
                     crop.save(debug_dir/f"crop_{debug_crops}.png")
                     debug_crops += 1
-        # Encode across tile boundaries so sparse tiles do not produce many tiny GPU
-        # launches. DinoEmbeddingModel still chunks this list to the configured batch.
-        crop_supported = (not config.get('crop') or config['crop'] in
-                          (config.get('learning_report') or {}).get('crop_species', []))
-        if not crop_supported:
-            logging.warning('Нет обучающих данных культуры %s; объекты останутся неопределёнными.', config['crop'])
-            predictions = [('unknown', 'unknown', 0.) for _ in pending]
-        else:
-            predictions = classifier.classify(model.encode([item[1] for item in pending]))
-        for (c, _crop, offset_x, offset_y), (species, stage, score) in zip(pending, predictions):
-            detections.append(WeedDetection(0, species, stage, score, c.x1+offset_x,
-                                           c.y1+offset_y, c.x2+offset_x, c.y2+offset_y,
-                                           getattr(classifier,"species_kinds",{}).get(species,"")))
+
+        # Encode candidates once. Crop recognition is only a context/filter and can
+        # never suppress weed classification globally.
+        embeddings = model.encode([item[1] for item in pending])
+        predictions = classifier.classify(embeddings)
+
+        crop_context = (crop_classifier.classify(embeddings)
+                        if crop_classifier is not None else
+                        [(False, None, None, None) for _ in pending])
+        inferred_crop, inferred_crop_score = (
+            crop_classifier.infer_crop(embeddings)
+            if crop_classifier is not None else (None, None)
+        )
+
+        ignored_crops = 0
+        for (c, _crop, offset_x, offset_y), (species, stage, score), crop_info in zip(
+                pending, predictions, crop_context):
+            is_crop, crop_species, crop_score, _weed_score = crop_info
+            if is_crop:
+                ignored_crops += 1
+                continue
+            kind = getattr(classifier, "species_kinds", {}).get(species, "")
+            detections.append(WeedDetection(
+                0, species, stage, score,
+                c.x1+offset_x, c.y1+offset_y, c.x2+offset_x, c.y2+offset_y,
+                kind,
+            ))
+
         detections = nms(detections, **config["nms"])
         result = image_result(name, image.width, image.height, detections)
-        if config.get('crop'):
-            result['mode'] = 'automatic'
-            result['crop'] = config['crop']
-            result['learning_report'] = config.get('learning_report')
-            crop_supported = config['crop'] in (config.get('learning_report') or {}).get('crop_species', [])
-            for row in result['detections']:
-                row['model_score'] = row.pop('similarity_score')
-                row['similarity_score'] = None
-                row['score_type'] = 'linear_margin_not_probability'
-                row['decision_source'] = 'model'
-                if not crop_supported:
-                    row.update(species='unknown', kind='unknown')
-                elif row['kind'] == 'crop' and row['species'] != config['crop']:
-                    row['species'] = 'Падалица ' + row['species'].lower()
-                    row['kind'] = 'weed'
-            result['crop_supported'] = crop_supported
-            for detection, row in zip(detections, result['detections']):
-                detection.species, detection.kind = row['species'], row['kind']
-                detection.score_type = 'linear_margin_not_probability'
+
+        # Automatic crop is informational only. The weed classifier does not contain
+        # crop classes and does not depend on this result.
+        result['mode'] = 'weed_first'
+        result['crop'] = inferred_crop
+        result['crop_score'] = inferred_crop_score
+        result['crop_source'] = 'automatic_context' if inferred_crop else 'not_detected'
+        result['ignored_crop_candidates'] = ignored_crops
+        result['crop_supported'] = bool(inferred_crop)
+        result['learning_report'] = config.get('learning_report')
+        for row in result['detections']:
+            row['decision_source'] = 'weed_only_reference_match'
+            row['score_type'] = 'cosine_similarity'
+        if inferred_crop:
+            logging.info(
+                "Автовыбор культуры: %s (score=%.4f); культурных кандидатов проигнорировано: %d",
+                inferred_crop, inferred_crop_score, ignored_crops,
+            )
+        elif crop_classifier is not None:
+            logging.info("Культура автоматически не определена; поиск сорняков продолжается без неё.")
+
         result['rows'] = estimate_rows(image,detector)
         result['gsd_cm'] = config.get('gsd_cm')
         recount(result)
@@ -108,6 +126,9 @@ def run_inference(input_path: Path, output: Path, config: dict, model, classifie
             'motion_at_20_kmh': motion_budget(result['processing_seconds'], 20),
         }
         results.append(result)
-        logging.info("%s: %d candidates, %.2fs", name, len(detections), result['processing_seconds'])
+        logging.info(
+            "%s: %d weed/unknown candidates, %d crop candidates ignored, %.2fs",
+            name, len(detections), ignored_crops, result['processing_seconds'],
+        )
     save_results(results, output)
     return results
