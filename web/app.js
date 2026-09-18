@@ -230,7 +230,7 @@ async function prepareDataset() {
 }
 
 function renderAutomaticResults() {
-  const automatic = results.length && results.every(row => row.mode === 'automatic');
+  const automatic = results.length && results.every(row => ['automatic','weed_first'].includes(row.mode));
   metricElements[2].querySelector('.metric-top').firstChild.textContent = t(automatic ? 'Предполагаемые сорняки' : 'Подтверждено сорняков');
   metricElements[3].querySelector('.metric-top').firstChild.textContent = t(automatic ? 'Культурные растения' : 'Проверено');
   pendingCard.querySelector('.metric-top').firstChild.textContent = t(automatic ? 'Не определено' : 'Требуют проверки');
@@ -239,12 +239,12 @@ function renderAutomaticResults() {
   const detections = results.flatMap(row => row.detections);
   $('stat-species').textContent = number(detections.filter(d => d.kind === 'weed').length);
   metricElements[2].querySelector('small').textContent = 'Результат модели, без ручного подтверждения';
-  $('stat-unknown').textContent = number(detections.filter(d => d.kind === 'crop').length);
-  $('stat-review-detail').textContent = results[0].crop;
+  $('stat-unknown').textContent = number(results.reduce((sum,row) => sum + (row.ignored_crop_candidates || 0), 0));
+  $('stat-review-detail').textContent = results[0].crop || t('Автоматически не определена');
   $('stat-pending').textContent = number(detections.filter(d => d.kind === 'unknown').length);
   const report = results[0].learning_report;
   const percent = value => value == null ? 'не измерена' : `${(100 * value).toFixed(1)}%`;
-  const message = !results[0].crop_supported ? 'В датасете недостаточно фотографий выбранной культуры. Объекты оставлены неопределёнными.' : 'Анализ завершён. Ручная проверка необязательна.';
+  const message = results[0].mode === 'weed_first' ? 'Анализ сорняков завершён. Культурные растения используются только как фон и не блокируют поиск.' : (!results[0].crop_supported ? 'В датасете недостаточно фотографий выбранной культуры. Объекты оставлены неопределёнными.' : 'Анализ завершён. Ручная проверка необязательна.');
   dashboardReview.innerHTML = `<article class="panel"><h2>${escapeHTML(message)}</h2><p>Точность обнаружения на поле: не измерена. Цель: 90%.</p>${report ? `<p>Классификация эталонных фото: ${percent(report.accuracy)}; средняя по видам: ${percent(report.balanced_accuracy)}. Тест: ${number(report.count)} фото. Доля принятых ответов на тесте: ${percent(report.coverage)}.</p><p>Это проверка на фотографиях датасета, а не подтверждение 90% на снимках вашего поля.</p>` : ''}<p>Обучение обновляется автоматически при изменении локального датасета.</p></article>`;
   $('download-pseudo').disabled = true;
   $('review-queue').innerHTML = '<article class="panel"><h2>Проверка по желанию</h2><p>Результат уже доступен в обзоре и отчётах. Чтобы исправить отдельный объект, откройте фотографию в обзоре.</p></article>';
