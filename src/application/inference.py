@@ -74,17 +74,49 @@ def run_inference(input_path: Path, output: Path, config: dict, model, classifie
             if crop_classifier is not None else (None, None)
         )
 
+        from .experience import remember_exemplar
+        auto_learn_threshold = max(
+            0.75,
+            float(config["classification"]["similarity_threshold"]) + 0.10,
+        )
         ignored_crops = 0
-        for (c, _crop, offset_x, offset_y), (species, stage, score), crop_info in zip(
+        learned_weed_examples = 0
+        learned_crop_examples = 0
+        review_required_by_box = {}
+        for (c, crop_image, offset_x, offset_y), (species, stage, score), crop_info in zip(
                 pending, predictions, crop_context):
             is_crop, crop_species, crop_score, _weed_score = crop_info
+            box = (c.x1+offset_x, c.y1+offset_y, c.x2+offset_x, c.y2+offset_y)
             if is_crop:
                 ignored_crops += 1
+                if crop_score is not None and crop_score >= auto_learn_threshold:
+                    learned_crop_examples += int(remember_exemplar(
+                        Path(__file__).resolve().parents[2],
+                        crop_image,
+                        "crop",
+                        crop_species,
+                        crop_score,
+                    ))
                 continue
             kind = getattr(classifier, "species_kinds", {}).get(species, "")
+            confident = (
+                kind == "weed" and
+                species != "unknown" and
+                score is not None and
+                score >= auto_learn_threshold
+            )
+            if confident:
+                learned_weed_examples += int(remember_exemplar(
+                    Path(__file__).resolve().parents[2],
+                    crop_image,
+                    "weed",
+                    species,
+                    score,
+                ))
+            review_required_by_box[box] = not confident
             detections.append(WeedDetection(
                 0, species, stage, score,
-                c.x1+offset_x, c.y1+offset_y, c.x2+offset_x, c.y2+offset_y,
+                *box,
                 kind,
             ))
 
@@ -103,6 +135,15 @@ def run_inference(input_path: Path, output: Path, config: dict, model, classifie
         for row in result['detections']:
             row['decision_source'] = 'weed_only_reference_match'
             row['score_type'] = 'cosine_similarity'
+            b = row['bbox']
+            box = (b['x1'], b['y1'], b['x2'], b['y2'])
+            row['review_required'] = review_required_by_box.get(box, True)
+            row['auto_learned'] = not row['review_required']
+        result['auto_learned_weeds'] = learned_weed_examples
+        result['auto_learned_crops'] = learned_crop_examples
+        result['review_required_count'] = sum(
+            bool(row.get('review_required')) for row in result['detections']
+        )
         if inferred_crop:
             logging.info(
                 "Автовыбор культуры: %s (score=%.4f); культурных кандидатов проигнорировано: %d",
@@ -127,8 +168,10 @@ def run_inference(input_path: Path, output: Path, config: dict, model, classifie
         }
         results.append(result)
         logging.info(
-            "%s: %d weed/unknown candidates, %d crop candidates ignored, %.2fs",
-            name, len(detections), ignored_crops, result['processing_seconds'],
+            "%s: %d weed/unknown candidates, %d crop candidates ignored, %d new weed examples, %d new crop examples, %d require review, %.2fs",
+            name, len(detections), ignored_crops, learned_weed_examples,
+            learned_crop_examples, result['review_required_count'],
+            result['processing_seconds'],
         )
     save_results(results, output)
     return results
