@@ -124,6 +124,8 @@ def run_inference(input_path: Path, output: Path, config: dict, model, classifie
         embeddings = model.encode([item[1] for item in pending])
         timings['embedding_total_seconds'] = perf_counter() - stage_started
         profile = getattr(model, 'last_profile', {}) or {}
+        if not isinstance(profile, dict):
+            profile = {}
         timings['preprocessing_seconds'] = float(profile.get('preprocessing_seconds', 0.))
         timings['dinov2_seconds'] = float(profile.get('model_seconds', 0.))
 
