@@ -24,13 +24,12 @@ function reviewMetrics(rows) {
   const automatic = Boolean(rows.length && rows.every(row => row.mode === 'automatic'));
   const total = items.length;
   const uncertain = items.filter(({detection}) => isUncertain(detection)).length;
-  const reviewed = items.filter(({detection}) => hasManualReview(detection)).length;
+  const manualReviewed = items.filter(({detection}) => hasManualReview(detection)).length;
   const corrected = items.filter(({detection}) => detection.manual_correction || detection.review_status === 'corrected').length;
   const recognized = items.filter(({detection}) => detection.prediction_status === 'recognized'
     || (!detection.prediction_status && detection.kind !== 'unknown' && detection.species !== 'unknown')).length;
-  const pending = automatic
-    ? items.filter(({row,detection}) => isPending(detection,row)).length
-    : items.filter(({row,detection}) => isPending(detection,row)).length;
+  const pending = items.filter(({row,detection}) => isPending(detection,row)).length;
+  const reviewed = automatic ? manualReviewed : total - pending;
   return {
     total, pending, reviewed, corrected, recognized, uncertain,
     confirmed: items.filter(({detection}) => detection.review === 'weed').length,
