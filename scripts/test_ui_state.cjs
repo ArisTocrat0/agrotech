@@ -53,3 +53,22 @@ vm.runInContext("let reviewSaving=false,selected='job',reviewJob='job',reviewIma
  assert.equal(vm.runInContext("results[0].detections[0].review",saveContext),'weed');
  console.log('PASS: review save payload, response and duplicate-submit guard');
 })().catch(error=>{console.error(error);process.exitCode=1;});
+
+// Automatic results must not present model decisions as manual confirmations.
+const autoElements=new Map();
+const element=()=>({textContent:'',innerHTML:'',firstChild:{textContent:''},querySelector(selector){this.children??={};return this.children[selector]??=element();}});
+const autoContext=vm.createContext({
+ $:id=>{if(!autoElements.has(id))autoElements.set(id,element());return autoElements.get(id);},
+ t:x=>x,number:String,escapeHTML:x=>String(x),
+ metricElements:[element(),element(),element(),element()],pendingCard:element(),dashboardReview:element(),
+ results:[{mode:'automatic',crop:'Пшеница',crop_supported:false,detections:[{kind:'unknown'}],learning_report:{accuracy:.98,balanced_accuracy:.97,count:110,coverage:.8}}]
+});
+vm.runInContext(app.slice(app.indexOf('function renderAutomaticResults()')),autoContext);
+vm.runInContext('renderAutomaticResults()',autoContext);
+assert.equal(autoElements.get('stat-species').textContent,'0');
+assert.equal(autoElements.get('stat-pending').textContent,'1');
+assert.match(autoContext.dashboardReview.innerHTML,/недостаточно фотографий/);
+assert.match(autoContext.dashboardReview.innerHTML,/на поле: не измерена/);
+assert.equal(autoElements.get('download-pseudo').disabled,true);
+assert.match(autoElements.get('review-queue').innerHTML,/по желанию/);
+console.log('PASS: automatic results, missing crop data, optional review, honest quality report');

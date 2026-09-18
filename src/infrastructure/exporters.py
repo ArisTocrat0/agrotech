@@ -39,12 +39,12 @@ def save_results(results: list[dict], output: Path) -> None:
     output.mkdir(parents=True, exist_ok=True)
     (output/"results.json").write_text(json.dumps(results, ensure_ascii=False, indent=2, allow_nan=False), encoding="utf-8")
     with (output/"results.csv").open("w", encoding="utf-8-sig", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=["image", "detection_id", "species", "stage", "similarity_score", "kind", "weed_class", "lifecycle", "priority", "stage_action", "review", "x1", "y1", "x2", "y2"])
+        writer = csv.DictWriter(stream, fieldnames=["image", "detection_id", "species", "stage", "similarity_score", "model_score", "score_type", "kind", "weed_class", "lifecycle", "priority", "stage_action", "review", "x1", "y1", "x2", "y2"])
         writer.writeheader()
         for result in results:
             for d in result["detections"]:
                 writer.writerow({"image": result["image"], "detection_id": d["id"], "species": d["species"],
-                                 "stage": d["stage"], "similarity_score": d["similarity_score"], "kind":d.get("kind","weed"),
+                                 "stage": d["stage"], "similarity_score": d["similarity_score"], "model_score": d.get("model_score"), "score_type": d.get("score_type", "cosine_similarity"), "kind":d.get("kind","weed"),
                                  **{key:d.get(key) for key in ('weed_class','lifecycle','priority')},
                                  "stage_action":(d.get('stage_advice') or {}).get('action'),
                                  "review":d.get("review",""), **d["bbox"]})

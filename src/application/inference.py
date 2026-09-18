@@ -61,13 +61,38 @@ def run_inference(input_path: Path, output: Path, config: dict, model, classifie
                     debug_crops += 1
         # Encode across tile boundaries so sparse tiles do not produce many tiny GPU
         # launches. DinoEmbeddingModel still chunks this list to the configured batch.
-        predictions = classifier.classify(model.encode([item[1] for item in pending]))
+        crop_supported = (not config.get('crop') or config['crop'] in
+                          (config.get('learning_report') or {}).get('crop_species', []))
+        if not crop_supported:
+            logging.warning('Нет обучающих данных культуры %s; объекты останутся неопределёнными.', config['crop'])
+            predictions = [('unknown', 'unknown', 0.) for _ in pending]
+        else:
+            predictions = classifier.classify(model.encode([item[1] for item in pending]))
         for (c, _crop, offset_x, offset_y), (species, stage, score) in zip(pending, predictions):
             detections.append(WeedDetection(0, species, stage, score, c.x1+offset_x,
                                            c.y1+offset_y, c.x2+offset_x, c.y2+offset_y,
                                            getattr(classifier,"species_kinds",{}).get(species,"")))
         detections = nms(detections, **config["nms"])
         result = image_result(name, image.width, image.height, detections)
+        if config.get('crop'):
+            result['mode'] = 'automatic'
+            result['crop'] = config['crop']
+            result['learning_report'] = config.get('learning_report')
+            crop_supported = config['crop'] in (config.get('learning_report') or {}).get('crop_species', [])
+            for row in result['detections']:
+                row['model_score'] = row.pop('similarity_score')
+                row['similarity_score'] = None
+                row['score_type'] = 'linear_margin_not_probability'
+                row['decision_source'] = 'model'
+                if not crop_supported:
+                    row.update(species='unknown', kind='unknown')
+                elif row['kind'] == 'crop' and row['species'] != config['crop']:
+                    row['species'] = 'Падалица ' + row['species'].lower()
+                    row['kind'] = 'weed'
+            result['crop_supported'] = crop_supported
+            for detection, row in zip(detections, result['detections']):
+                detection.species, detection.kind = row['species'], row['kind']
+                detection.score_type = 'linear_margin_not_probability'
         result['rows'] = estimate_rows(image,detector)
         result['gsd_cm'] = config.get('gsd_cm')
         recount(result)

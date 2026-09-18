@@ -50,7 +50,7 @@ function renderReview() {
     rect.setAttribute('tabindex','0'); rect.setAttribute('role','button');
     rect.setAttribute('aria-label',detectionLabel(d));
     if (d.kind === 'unknown') rect.setAttribute('stroke-dasharray','5 3');
-    const title = svg('title'); title.textContent = `${detectionLabel(d)} · ${t('Сходство')}: ${Number(d.similarity_score).toFixed(2)}`;
+    const title = svg('title'); title.textContent = `${detectionLabel(d)} · ${t('Сходство')}: ${(d.similarity_score == null ? '—' : Number(d.similarity_score).toFixed(2))}`;
     rect.append(title);
     rect.addEventListener('click',() => { reviewDetection=index; renderReview(); });
     rect.addEventListener('keydown',event => { if (event.key==='Enter' || event.key===' ') { event.preventDefault();reviewDetection=index;renderReview(); } });
@@ -59,7 +59,7 @@ function renderReview() {
   const d = row.detections[reviewDetection];
   renderSelectedCrop(row,d);
   $('review-name').textContent = d ? detectionLabel(d) : t('Нет обнаружений');
-  $('review-details').textContent = d ? `${t('Сходство')}: ${Number(d.similarity_score).toFixed(2)} · ${t('Класс')}: ${t(classLabels[d.weed_class] || 'Не определена')} · ${t({annual:'Малолетний',perennial:'Многолетний'}[d.lifecycle] || 'Не определена')}${d.review ? ' · '+t('Проверено вручную') : ''}` : '';
+  $('review-details').textContent = d ? `${t('Сходство')}: ${(d.similarity_score == null ? '—' : Number(d.similarity_score).toFixed(2))} · ${t('Класс')}: ${t(classLabels[d.weed_class] || 'Не определена')} · ${t({annual:'Малолетний',perennial:'Многолетний'}[d.lifecycle] || 'Не определена')}${d.review ? ' · '+t('Проверено вручную') : ''}` : '';
   $('review-stage').textContent = d?.stage_advice ? `${d.priority === 'high' ? t('Приоритет: многолетник') + ' · ' : ''}${t(stageLabels[d.stage_advice.action])}` : '';
   const reviewed=row.detections.filter(d=>!isPending(d)).length;
   const percent=row.detections.length ? Math.round(reviewed/row.detections.length*100) : 100;

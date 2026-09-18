@@ -29,7 +29,8 @@ def annotate(image: Image.Image, detections: list) -> Image.Image:
         color = {'weed':'#ff3fa4','crop':'#00d9ff','unknown':'#ffd600'}.get(kind,'#ffffff')
         draw.rectangle((d.x1, d.y1, d.x2-1, d.y2-1), outline="black", width=7)
         draw.rectangle((d.x1, d.y1, d.x2-1, d.y2-1), outline=color, width=3)
-        label = f"{d.species} | {d.stage} | sim={d.similarity_score:.2f}"
+        score_label = 'margin' if getattr(d, 'score_type', '') == 'linear_margin_not_probability' else 'sim'
+        label = f"{d.species} | {d.stage} | {score_label}={d.similarity_score:.2f}"
         try:
             draw.text((d.x1, max(0, d.y1-22)), label, fill=color, font=font,
                       stroke_width=1, stroke_fill="black")

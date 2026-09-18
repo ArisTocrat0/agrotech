@@ -58,6 +58,7 @@ function renderResults() {
   $('species-chart').innerHTML = entries.length ? entries.map(([name,count]) => `<div><div class="bar-heading"><span>${escapeHTML(name)}</span><span>${number(count)}</span></div><div class="bar-track"><div class="bar-fill" style="width:${count/max*100}%"></div></div></div>`).join('') : t('Пока нет определённых видов. Загрузите снимки или выберите другой анализ.');
   $('image-grid').innerHTML = results.length ? results.map((row,i) => `<button class="image-card" data-image="${i}"><img loading="lazy" src="/api/jobs/${selected}/image/${i}" alt="${escapeHTML(row.image)} — ${t("найденные объекты")}"><div><strong>${escapeHTML(row.image)}</strong><p>${number(row.total_weeds)} ${t("предполагаемых сорняков")} · ${number(row.unknown_count)} ${t("неизвестных")}</p></div></button>`).join('') : `<div class="empty-state"><span>⌖</span><h3>${t("Здесь начинается наблюдение")}</h3><p>${t("Добавьте первый снимок поля — результаты появятся здесь.")}</p><button class="secondary" id="empty-upload">${t("Загрузить снимки")}</button></div>`;
   results.forEach((row,i) => {
+    if (row.mode === 'automatic') return;
     const reviewed=row.detections.filter(d=>!isPending(d)).length,total=row.detections.length;
     const percent=total ? Math.round(reviewed/total*100) : 100;
     const content=document.querySelector(`[data-image="${i}"] div`); if (!content) return;
@@ -75,9 +76,10 @@ function renderResults() {
   $('download-pseudo').disabled = !results.length || selected === 'cli';
   const detections = results.flatMap(row => row.detections.map(d => ({...d,image:row.image})));
   $('preview-count').textContent = `${number(detections.length)} ${t("объектов")}`;
-  $('preview-body').innerHTML = detections.length ? detections.slice(0,100).map(d => `<tr><td>${escapeHTML(d.image)}</td><td>${escapeHTML(d.species === 'unknown' ? t('Неизвестный вид') : d.species)}</td><td>${escapeHTML(d.stage === 'unknown' ? t('Не определена') : d.stage)}</td><td>${Number(d.similarity_score).toLocaleString(locale(), {minimumFractionDigits:2, maximumFractionDigits:2})}</td><td>${['x1','y1','x2','y2'].map(key => escapeHTML(d.bbox[key])).join(', ')}</td></tr>`).join('') : `<tr><td colspan="5" class="empty">${t("Нет обнаружений. После завершения анализа файлы доступны даже при отсутствии объектов.")}</td></tr>`;
+  $('preview-body').innerHTML = detections.length ? detections.slice(0,100).map(d => `<tr><td>${escapeHTML(d.image)}</td><td>${escapeHTML(d.species === 'unknown' ? t('Неизвестный вид') : d.species)}</td><td>${escapeHTML(d.stage === 'unknown' ? t('Не определена') : d.stage)}</td><td>${(d.similarity_score == null ? '—' : Number(d.similarity_score).toLocaleString(locale(), {minimumFractionDigits:2, maximumFractionDigits:2}))}</td><td>${['x1','y1','x2','y2'].map(key => escapeHTML(d.bbox[key])).join(', ')}</td></tr>`).join('') : `<tr><td colspan="5" class="empty">${t("Нет обнаружений. После завершения анализа файлы доступны даже при отсутствии объектов.")}</td></tr>`;
   if ($('metric-details') && !$('metric-details').hidden) showMetricDetails($('metric-details').dataset.metric);
   renderReviewQueue(pending,reviewed,allDetections.length);
+  renderAutomaticResults();
   document.querySelector('.hero').classList.toggle('compact',jobs.some(job=>job.status==='done'));
 }
 const metricElements=document.querySelectorAll('.metrics article');
@@ -91,6 +93,7 @@ const metricCards=[...document.querySelectorAll('.metrics article')];
 const metricDetails=document.createElement('section');metricDetails.id='metric-details';metricDetails.className='panel metric-details';metricDetails.hidden=true;document.querySelector('.metrics').after(metricDetails);
 metricCards.forEach((card,index)=>{card.tabIndex=0;card.setAttribute('role','button');card.setAttribute('aria-expanded','false');card.dataset.metric=['images','detected','confirmed','reviewed','pending'][index];card.addEventListener('click',()=>index===4?continueReview():showMetricDetails(card.dataset.metric));card.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();index===4?continueReview():showMetricDetails(card.dataset.metric);}});});
 function showMetricDetails(metric) {
+  if (results.length && results.every(row => row.mode === 'automatic')) { metricDetails.hidden = true; tab('exports'); return; }
   const titles={images:t('Обработанные снимки'),detected:t('Объекты, найденные моделью'),confirmed:t('Подтверждённые сорняки'),reviewed:t('Прогресс проверки')};
   metricCards.forEach(card=>{const active=card.dataset.metric===metric;card.classList.toggle('selected',active);card.setAttribute('aria-expanded',String(active));});
   let rows=[];
@@ -100,7 +103,7 @@ function showMetricDetails(metric) {
   metricDetails.querySelectorAll('[data-open-image]').forEach(button=>button.addEventListener('click',()=>{const index=Number(button.dataset.openImage);openReview(index);if(button.dataset.findUnknown==='true'){const found=results[index].detections.findIndex(d=>d.kind==='unknown');if(found>=0){reviewDetection=found;renderReview();}}}));
 }
 function firstPending(){return pendingTarget(results);}
-function continueReview(){const target=firstPending();if(!target){notice(t('Все объекты этого анализа проверены.'));return;}openReview(target.image);reviewDetection=target.detection;renderReview();}
+function continueReview(){if(results.length && results.every(row=>row.mode==='automatic')){tab('review');return;}const target=firstPending();if(!target){notice(t('Все объекты этого анализа проверены.'));return;}openReview(target.image);reviewDetection=target.detection;renderReview();}
 function renderReviewQueue(pending,reviewed,total){if(!results.length){$('review-queue').textContent=t('Сначала выберите завершённый анализ.');dashboardReview.replaceChildren();return;}const complete=results.length>0&&pending===0;const content=`<article class="panel review-cta ${complete?'complete':''}"><div><span class="eyebrow">${t('ТЕКУЩИЙ АНАЛИЗ')}</span><h2>${complete?t('✓ Проверка завершена'):`${number(pending)} ${t('объектов ждут проверки')}`}</h2><p>${number(reviewed)} ${t('из')} ${number(total)} ${t('объектов уже проверено')}</p>${complete?`<p>${t('Один класс «сорняк». Минимум два разных снимка с подтверждёнными сорняками.')}</p>`:''}</div>${complete?`<button class="primary prepare-dataset" ${selected==='cli'?'disabled':''}>${t('Подготовить датасет для обучения')}</button>`:`<button class="primary continue-review">${t('Продолжить проверку')} →</button>`}</article>`;$('review-queue').innerHTML=content;dashboardReview.innerHTML=results.length?content:'';document.querySelectorAll('.continue-review').forEach(button=>button.addEventListener('click',continueReview));document.querySelectorAll('.prepare-dataset').forEach(button=>{button.disabled=datasetPreparing||selected==='cli';button.addEventListener('click',prepareDataset);});}
 function renderJobs() {
     $('history').innerHTML = jobs.length ? jobs.slice(0,5).map(job => `<button class="history-row" data-job="${job.id}"><span class="history-icon">▧</span><span><strong>${escapeHTML(jobName(job))}</strong><small>${date(job.created)}</small></span><span class="badge ${job.status === 'error' ? 'error-badge' : ''}">${{done:t('Готово'),running:t('В работе'),error:t('Ошибка')}[job.status]}</span></button>`).join('') : t('Вы ещё не запускали анализ.');
@@ -168,10 +171,11 @@ gpuPreset.addEventListener('click',()=>{const form=$('analysis-options');form.qu
 const advanced=document.querySelector('.analysis-settings');advanced.querySelector('summary').textContent=t('Расширенные настройки');const advancedHint=document.createElement('p');advancedHint.className='muted advanced-hint';advancedHint.textContent=t('Для большинства анализов рекомендуем оставить параметры по умолчанию.');advanced.querySelector('summary').after(advancedHint);advanced.querySelector('.settings-grid').prepend(gpuPreset);
 $('start-analysis').addEventListener('click', async () => {
   if (uploading || busy || !files.length) return;
+  if (!$('field-crop').reportValidity()) return;
   const options = [...document.querySelectorAll('#analysis-options [name]')];
   if (options.some(input => !input.reportValidity())) return;
   uploading = true; updateFiles(false); notice('');
-  const body = new FormData(); files.forEach(file => body.append('files',file));
+  const body = new FormData(); body.append('crop', $('field-crop').value); files.forEach(file => body.append('files',file));
   options.forEach(input => body.append(input.name, input.type === 'checkbox' ? String(input.checked) : input.value));
   try { await api('/api/analyze', {method:'POST',body}); files=[]; updateFiles(); await refresh(); }
   catch(error) { showError(error.message); }
@@ -223,4 +227,25 @@ async function prepareDataset() {
     fullTraining.focus();
   } catch(error) { showError(translateMessage(error.message)); }
   finally { datasetPreparing=false;renderResults(); }
+}
+
+function renderAutomaticResults() {
+  const automatic = results.length && results.every(row => row.mode === 'automatic');
+  metricElements[2].querySelector('.metric-top').firstChild.textContent = t(automatic ? 'Предполагаемые сорняки' : 'Подтверждено сорняков');
+  metricElements[3].querySelector('.metric-top').firstChild.textContent = t(automatic ? 'Культурные растения' : 'Проверено');
+  pendingCard.querySelector('.metric-top').firstChild.textContent = t(automatic ? 'Не определено' : 'Требуют проверки');
+  pendingCard.querySelector('small').textContent = t(automatic ? 'Модель воздержалась от ответа' : 'Непроверенные объекты');
+  if (!automatic) return;
+  const detections = results.flatMap(row => row.detections);
+  $('stat-species').textContent = number(detections.filter(d => d.kind === 'weed').length);
+  metricElements[2].querySelector('small').textContent = 'Результат модели, без ручного подтверждения';
+  $('stat-unknown').textContent = number(detections.filter(d => d.kind === 'crop').length);
+  $('stat-review-detail').textContent = results[0].crop;
+  $('stat-pending').textContent = number(detections.filter(d => d.kind === 'unknown').length);
+  const report = results[0].learning_report;
+  const percent = value => value == null ? 'не измерена' : `${(100 * value).toFixed(1)}%`;
+  const message = !results[0].crop_supported ? 'В датасете недостаточно фотографий выбранной культуры. Объекты оставлены неопределёнными.' : 'Анализ завершён. Ручная проверка необязательна.';
+  dashboardReview.innerHTML = `<article class="panel"><h2>${escapeHTML(message)}</h2><p>Точность обнаружения на поле: не измерена. Цель: 90%.</p>${report ? `<p>Классификация эталонных фото: ${percent(report.accuracy)}; средняя по видам: ${percent(report.balanced_accuracy)}. Тест: ${number(report.count)} фото. Доля принятых ответов на тесте: ${percent(report.coverage)}.</p><p>Это проверка на фотографиях датасета, а не подтверждение 90% на снимках вашего поля.</p>` : ''}<p>Обучение обновляется автоматически при изменении локального датасета.</p></article>`;
+  $('download-pseudo').disabled = true;
+  $('review-queue').innerHTML = '<article class="panel"><h2>Проверка по желанию</h2><p>Результат уже доступен в обзоре и отчётах. Чтобы исправить отдельный объект, откройте фотографию в обзоре.</p></article>';
 }

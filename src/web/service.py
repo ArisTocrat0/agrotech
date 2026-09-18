@@ -125,6 +125,9 @@ class Dashboard:
 
     @staticmethod
     def options(fields):
+        crop = fields.get('crop', '')
+        if crop and crop not in {'Пшеница', 'Ячмень', 'Подсолнечник'}:
+            raise ValueError('Выберите культуру: пшеница, ячмень или подсолнечник.')
         device = fields.get('device', 'auto')
         if not re.fullmatch(r'auto|cpu|cuda(?::[0-9]+)?', device):
             raise ValueError('Некорректное устройство обработки.')
@@ -142,7 +145,7 @@ class Dashboard:
             raise ValueError('Настройки анализа выходят за допустимые пределы.')
         if gsd is not None and (not math.isfinite(gsd) or not 0 < gsd <= 100):
             raise ValueError('Масштаб должен быть от 0 до 100 см/пиксель (не включая 0).')
-        return {'gsd_cm':gsd, 'online':fields.get('online') == 'true', 'device': device, 'tile_size': tile, 'overlap': overlap,
+        return {'crop':crop, 'gsd_cm':gsd, 'online':fields.get('online') == 'true', 'device': device, 'tile_size': tile, 'overlap': overlap,
                 'similarity_threshold': similarity, 'batch_size': batch,
                 'debug': fields.get('debug') == 'true'}
 
@@ -202,6 +205,8 @@ class Dashboard:
             save_results(load_results(folder), snapshot)
             source = folder
             if pseudo:
+                if any(row.get('mode') == 'automatic' for row in load_results(folder)):
+                    raise ValueError('Автоматические результаты не являются проверенной разметкой для обучения YOLO.')
                 if job_id == 'cli':
                     raise ValueError('Для экспорта YOLO запустите анализ через сайт.')
                 from scripts.export_pseudo_yolo import export_dataset
@@ -255,6 +260,7 @@ class Dashboard:
                     '--device', options['device'], '--tile-size', str(options['tile_size']),
                     '--overlap', str(options['overlap']), '--similarity-threshold', str(options['similarity_threshold']),
                     '--batch-size', str(options['batch_size']),
+                    *(['--crop', options['crop']] if options['crop'] else []),
                     *(['--gsd-cm', str(options['gsd_cm'])] if options['gsd_cm'] else []),
                     *(['--online'] if options['online'] else []), *(['--debug'] if options['debug'] else [])],
                     cwd=self.root, stdout=log, stderr=subprocess.STDOUT)

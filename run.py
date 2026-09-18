@@ -8,6 +8,7 @@ from src.image_utils import image_paths
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Olzha Agro: weed candidates with DINOv2")
+    parser.add_argument("--crop", choices=("Пшеница", "Ячмень", "Подсолнечник"))
     parser.add_argument("--references", type=Path, default=Path("data/Сорняки"))
     parser.add_argument("--input", type=Path, required=True)
     parser.add_argument("--output", type=Path, default=Path("outputs"))
@@ -27,6 +28,7 @@ def main() -> None:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
     config = load_config(args.config)
     config["gsd_cm"] = args.gsd_cm
+    config["crop"] = args.crop
     for key, value in [("tile_size", args.tile_size), ("overlap", args.overlap)]:
         if value is not None:
             config["tiling"][key] = value
@@ -51,6 +53,11 @@ def main() -> None:
     index['embeddings'] = index['embeddings'].to(model.device, non_blocking=True)
     classifier = ReferenceClassifier(index, config["classification"]["top_k"], config["classification"]["similarity_threshold"],
                                      config['classification'].get('category_margin', 0.05))
+    if args.crop:
+        from src.recognition.autolearn import train_head
+        classifier = train_head(index, Path("artifacts/learned_classifier.pt"))
+        config['learning_report'] = classifier.report
+        logging.info("Автообучение: %s", classifier.report)
     run_inference(args.input, args.output, config, model, classifier, args.debug)
 
 
