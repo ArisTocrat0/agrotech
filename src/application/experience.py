@@ -66,7 +66,6 @@ def remember_exemplar(root: Path, image: Image.Image, kind: str, species: str,
         return False
 
     log = root / "artifacts" / "experience_log.jsonl"
-    log.parent.mkdir(parents=True, exist_ok=True)
     event = {
         "at": datetime.now(timezone.utc).isoformat(),
         "kind": kind,
@@ -77,8 +76,12 @@ def remember_exemplar(root: Path, image: Image.Image, kind: str, species: str,
         "sha256": digest,
         "path": str(target.relative_to(root)),
     }
-    with log.open("a", encoding="utf-8") as stream:
-        stream.write(json.dumps(event, ensure_ascii=False, allow_nan=False) + "\n")
+    try:
+        log.parent.mkdir(parents=True, exist_ok=True)
+        with log.open("a", encoding="utf-8") as stream:
+            stream.write(json.dumps(event, ensure_ascii=False, allow_nan=False) + "\n")
+    except OSError as exc:
+        logging.warning("Experience exemplar saved but audit log could not be updated: %s", exc)
     return True
 
 
