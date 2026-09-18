@@ -53,15 +53,25 @@ class AgronomyTests(unittest.TestCase):
         cases = [([weed('mystery')], 'uncertain_classification'),
                  ([{'kind': 'unknown'}], 'uncertain_classification'),
                  ([weed(stage='цветение')] * 16, 'late_stage_crop_risk'),
-                 ([weed(stage='Розетка')] * 6, 'unknown_stage'),
                  ([weed('Бодяк полевой')], 'perennials_below_threshold')]
         for detections, reason in cases:
             result = assessment(detections, 100, 100, 1)
             self.assertEqual(result['recommendation'], 'agronomist_review')
             self.assertIn(reason, result['review_reasons'])
+
+        # Unknown growth stage limits stage-specific advice only. The recognized
+        # species/category and the density rule remain available.
+        unknown_stage = assessment([weed(stage='Розетка')] * 6, 100, 100, 1)
+        self.assertEqual(unknown_stage['recommendation'], 'standard_rate')
+        self.assertEqual(unknown_stage['recommendation_status'], 'partial')
+        self.assertIn('unknown_stage', unknown_stage['limitations'])
+        self.assertIn('growth_stage', unknown_stage['recommendation_missing_data'])
+        self.assertNotIn('unknown_stage', unknown_stage['review_reasons'])
+
         result = assessment([weed()] * 20, 100, 100)
         self.assertIsNone(result['area_m2'])
         self.assertEqual(result['recommendation'], 'agronomist_review')
+        self.assertIn('scale', result['recommendation_missing_data'])
         for width, gsd in [(0, 1), (100, float('nan')), (100, 0)]:
             with self.assertRaises(ValueError):
                 assessment([], width, 100, gsd)
