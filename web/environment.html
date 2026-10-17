@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Экологический мониторинг · Olzha Agro</title>
+  <link rel="stylesheet" href="/environment.css">
+  <script src="/environment.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">К содержимому</a>
+  <aside class="sidebar">
+    <a class="brand" href="/"><span class="brand-symbol" aria-hidden="true">✳</span><span>olzha<span class="brand-accent">agro</span><small>ЗАБОТА О ТЕРРИТОРИИ</small></span></a>
+    <div class="workspace"><span class="workspace-icon" aria-hidden="true">ОА</span><div>Рабочее пространство<small>Экологический мониторинг</small></div></div>
+    <p class="nav-label">НАБЛЮДЕНИЕ</p>
+    <nav aria-label="Главное меню">
+      <a href="/">▦ <span>Мониторинг посевов</span></a>
+      <a class="active" href="/environment.html" aria-current="page">⌖ <span>Экология территории</span></a>
+      <a href="#upload">＋ <span>Новый анализ</span></a>
+      <a href="#results">▤ <span>Находки и материалы</span></a>
+    </nav>
+    <div class="sidebar-note"><span aria-hidden="true">↗</span><h2>Сначала наблюдение.<br>Затем проверка.</h2><p>Каждая находка привязана к исходному кадру. Решение остаётся за человеком.</p><small>Файлы обрабатываются на этом сервере</small></div>
+  </aside>
+  <div class="shell">
+    <header class="topbar"><span>Рабочее пространство <span class="separator">/</span> <strong>Экология территории</strong></span><a href="/">К посевам ↗</a></header>
+    <main id="main">
+      <div class="page-heading"><div><p class="eyebrow">ЭКОЛОГИЧЕСКИЙ МОНИТОРИНГ</p><h1>Замечать. Проверять.<br><span>Сохранять территорию.</span></h1><p class="lede">Предполагаемый мусор, видимые огонь и дым на фотографиях.</p></div><div class="mode-tag">ФОТО С ДРОНА<span>Предварительная оценка</span></div></div>
+      <div class="safety-note"><span aria-hidden="true">!</span><p>Обычная камера видит только внешние признаки. Это не пожарная сигнализация и не тепловизор. Все обнаружения требуют проверки человеком; отсутствие находок не доказывает безопасность.</p></div>
+      <section class="model-card" aria-labelledby="model-heading"><div><p class="eyebrow">ГОТОВНОСТЬ МОДЕЛИ</p><h2 id="model-heading">Проверяем конфигурацию…</h2><p id="model-message" role="status">Запуск доступен только после проверки отдельной экологической модели.</p><p id="model-classes" class="small muted"></p></div><button id="refresh-status" type="button" class="secondary">Проверить снова</button></section>
+      <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+      <div class="work-grid">
+        <section id="upload" class="panel" aria-labelledby="upload-heading">
+          <div class="section-heading"><div><p class="eyebrow">01 / ИСХОДНЫЕ МАТЕРИАЛЫ</p><h2 id="upload-heading">Новый анализ</h2></div><span class="badge">Исходные фотографии</span></div>
+          <form id="analysis-form">
+            <fieldset id="upload-fields">
+              <label class="dropzone" for="media-files"><span class="upload-icon" aria-hidden="true">↥</span><strong>Выберите фотографии</strong><span>или перетащите файлы в эту область</span><input id="media-files" name="files" type="file" multiple accept=".jpg,.jpeg,.png"><small id="upload-limits">Размер и пределы анализа уточняются у сервера</small></label>
+              <ul id="file-list" class="file-list" aria-label="Выбранные файлы"></ul>
+              <div class="file-total"><span id="file-total">Файлы не выбраны</span><button id="clear-files" type="button" class="text-button" disabled>Очистить</button></div>
+              <div class="form-grid"><label>Порог оценки модели<input id="confidence" name="confidence" type="number" min="0.01" max="1" step="0.01" value="0.35" required><small>Меньше порог — больше находок и ложных срабатываний. Оценка не означает точность.</small></label></div>
+              <details class="geodata-settings"><summary>Координаты съёмки <span>необязательно</span></summary><p class="muted small">Укажите только известные координаты. Это положение камеры или дрона в момент съёмки, а не точное положение мусора или очага.</p><div class="form-grid"><label>Широта, WGS84<input id="latitude" type="number" min="-90" max="90" step="any" placeholder="−90 … 90"></label><label>Долгота, WGS84<input id="longitude" type="number" min="-180" max="180" step="any" placeholder="−180 … 180"></label></div><p class="small muted">Одна пара применяется ко всем выбранным фото. Для разных мест съёмки используйте JSON по именам файлов. Если поля и JSON пусты, сервер может использовать GPS из EXIF фото.</p><label>Геоданные по именам файлов (JSON)<textarea id="geodata" rows="5" maxlength="1048576" spellcheck="false" placeholder="Необязательно. Укажите реальные данные по каждому исходному имени файла."></textarea></label><details class="format-help"><summary>Формат JSON</summary><p class="small">Ключ — точное имя выбранного файла. Для фото укажите latitude, longitude, source: "operator_capture_position". Значения должны соответствовать реальной съёмке. Используйте JSON либо общие поля координат.</p></details></details>
+            </fieldset>
+            <div class="submit-row"><span id="start-hint" class="small muted">Проверяем готовность системы</span><button id="start-analysis" class="primary" type="submit" disabled>Начать анализ ↗</button></div>
+          </form>
+        </section>
+        <aside class="right-column">
+          <section class="panel scope-card"><p class="eyebrow">ЧТО ИЩЕМ</p><h2>Три типа наблюдений</h2><div class="class-row"><span class="class-icon trash" aria-hidden="true">▧</span><div><h3>Мусор</h3><p>Возможные скопления отходов</p></div></div><div class="class-row"><span class="class-icon fire" aria-hidden="true">♨</span><div><h3>Огонь</h3><p>Видимые признаки пламени</p></div></div><div class="class-row"><span class="class-icon smoke" aria-hidden="true">≋</span><div><h3>Дым</h3><p>Возможный дым, включая ложные срабатывания</p></div></div><p class="small muted">Качество на ваших полевых данных не подтверждено. Тени, пыль, облака, расстояние и освещение влияют на результат.</p></section>
+          <section class="panel history-panel"><div class="section-heading"><h2>История запусков</h2><button id="refresh-jobs" class="text-button" type="button">Обновить</button></div><p id="history-status" class="small muted" role="status">Загружаем историю…</p><ul id="job-list" class="job-list"></ul></section>
+        </aside>
+      </div>
+      <section id="results" aria-labelledby="results-heading">
+        <div class="section-heading results-heading"><div><p class="eyebrow">02 / НАХОДКИ И МАТЕРИАЛЫ</p><h2 id="results-heading">Результаты анализа</h2><p id="selected-job" class="muted">Выберите запуск из истории или загрузите материалы.</p></div><a id="download-geojson" class="secondary" hidden download>Скачать GeoJSON ↓</a></div>
+        <div id="job-progress" class="progress-box" role="status" hidden><span id="job-progress-text"></span><button id="resume-polling" class="secondary" type="button" hidden>Проверить результат</button></div>
+        <div class="metrics"><article><span>Мусор</span><strong id="count-trash">—</strong><small>предполагаемые обнаружения</small></article><article><span>Огонь</span><strong id="count-fire">—</strong><small>видимые признаки</small></article><article><span>Дым</span><strong id="count-smoke">—</strong><small>предполагаемые обнаружения</small></article><article><span>С координатами</span><strong id="count-located">—</strong><small>положение съёмки</small></article></div>
+        <div id="result-warnings" class="result-warnings" hidden></div>
+        <div class="results-grid"><article class="panel location-panel"><div class="section-heading"><h3>География наблюдений</h3><span class="badge">WGS84</span></div><p id="map-caption" class="small muted">Только реальные координаты съёмки из результатов. Без геоданных точки не отображаются.</p><div id="location-map" class="location-map"><div class="empty-state"><span aria-hidden="true">⌖</span><p>Пока нет координат</p><small>Точки появятся после анализа материалов с геопривязкой.</small></div></div><p class="small muted">Схема координат без картографической подложки. Совпадающие точки не раздвигаются. Положение объекта на местности не рассчитано.</p></article><article class="panel coverage-panel"><h3>Что было просмотрено</h3><ul id="media-coverage" class="media-coverage"><li class="muted">Данных пока нет.</li></ul><p class="small muted">Загружайте исходные фотографии DJI или другой камеры. Место съёмки может быть считано из EXIF GPS. Прямое подключение к дрону не используется.</p></article></div>
+        <article class="panel evidence-panel"><div class="section-heading"><div><h3>Материалы для проверки</h3><p class="small muted">Проверьте рамку, исходный кадр и контекст каждой находки.</p></div><label class="filter-label">Показать<select id="event-filter"><option value="all">Все типы</option><option value="trash">Мусор</option><option value="fire">Огонь</option><option value="smoke">Дым</option></select></label></div><p id="evidence-summary" class="small muted"></p><div id="evidence-list" class="evidence-list"><div class="empty-state"><span aria-hidden="true">▧</span><h3>Сначала исходные материалы</h3><p>Здесь появятся кадры с предполагаемыми находками.</p></div></div><button id="show-more" class="secondary" type="button" hidden>Показать ещё</button></article>
+      </section>
+      <footer><span>OLZHA AGRO / ЭКОЛОГИЯ ТЕРРИТОРИИ</span><span>Предварительные результаты · Проверка человеком обязательна</span></footer>
+    </main>
+  </div>
+  <dialog id="evidence-dialog" aria-labelledby="dialog-title"><div class="dialog-heading"><h2 id="dialog-title">Материал для проверки</h2><button id="close-dialog" class="secondary" type="button">Закрыть ✕</button></div><div id="dialog-evidence"></div><p id="dialog-details" class="small"></p><p class="small muted">Оценка модели не подтверждает наличие события. Координаты относятся к месту съёмки.</p>
+    <section class="assistant-panel" aria-labelledby="assistant-heading"><h3 id="assistant-heading">Спросить AgroMind об этой находке</h3><p id="assistant-status" class="small muted" role="status">Проверяем настройку помощника…</p><form id="assistant-form"><label>Ваш вопрос<textarea id="assistant-question" rows="3" maxlength="4000" required placeholder="Какие признаки стоит проверить на этом фото?"></textarea></label><label class="consent-label"><input id="assistant-consent" type="checkbox"><span id="assistant-consent-text">Разрешаю отправить мой вопрос, данные выбранной находки и координаты съёмки настроенному AgroMind.</span></label><label class="consent-label"><input id="assistant-image" type="checkbox"><span>Дополнительно отправить фото с рамками (может содержать людей и другие личные данные).</span></label><button id="assistant-send" type="submit" class="primary" disabled>Отправить вопрос ↗</button></form><p id="assistant-feedback" role="status" class="small"></p><div id="assistant-answer" class="assistant-answer" hidden></div><p class="small muted">Ответ — справочная подсказка. Помощник не подтверждает пожарную безопасность и не заменяет проверку человеком.</p></section>
+  </dialog>
+</body>
+</html>

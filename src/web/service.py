@@ -31,6 +31,8 @@ class Dashboard:
         self.check_process = None
         self.import_process = None
         self.check_log = self.jobs / "system-check.log"
+        from .environment import EnvironmentalDashboard
+        self.environment = EnvironmentalDashboard(self)
 
     def close(self):
         for process in [*self.processes.values(), *([self.import_process] if self.import_process else []), *([self.check_process] if self.check_process else [])]:

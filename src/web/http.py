@@ -49,6 +49,28 @@ def make_handler(app: Dashboard):
         def do_GET(self):
             path = urlparse(self.path).path
             try:
+                if path == '/api/environment/status':
+                    self.json(200, app.environment.status())
+                    return
+                if path == '/api/environment/assistant/status':
+                    from ..environment.assistant import status
+                    self.json(200, status())
+                    return
+                if path == '/api/environment/jobs':
+                    with app.lock:
+                        self.json(200, {'jobs': app.environment.history()})
+                    return
+                if re.fullmatch(r'/api/environment/jobs/[a-f0-9]{32}', path):
+                    with app.lock:
+                        self.json(200, app.environment.job(path.rsplit('/', 1)[1]))
+                    return
+                if path.startswith('/api/environment/files/'):
+                    parts = path.split('/', 5)
+                    if len(parts) != 6:
+                        raise ValueError('Файл не найден.')
+                    data, mime = app.environment.file(parts[4], parts[5])
+                    self.send(200, data, mime)
+                    return
                 if path in {'/api/training', '/api/training/weights'}:
                     from scripts.train_yolo import training_status, TRAINING
                     state = training_status()
@@ -129,6 +151,9 @@ def make_handler(app: Dashboard):
                         self.send(200, image.read_bytes(), 'image/png')
                         return
                 assets = {'/': ('index.html', 'text/html; charset=utf-8'),
+                          '/environment.html': ('environment.html', 'text/html; charset=utf-8'),
+                          '/environment.js': ('environment.js', 'text/javascript; charset=utf-8'),
+                          '/environment.css': ('environment.css', 'text/css; charset=utf-8'),
                           '/settings.js': ('settings.js', 'text/javascript; charset=utf-8'),
                           '/client.js': ('client.js', 'text/javascript; charset=utf-8'),
                           '/assistant.js': ('assistant.js', 'text/javascript; charset=utf-8'),
@@ -148,7 +173,7 @@ def make_handler(app: Dashboard):
             path = urlparse(self.path).path
             is_dataset = bool(re.fullmatch(r'/api/jobs/[a-f0-9]{32}/dataset', path))
             is_review = bool(re.fullmatch(r'/api/jobs/(?:[a-f0-9]{32}|cli)/(?:review|geometry)',path))
-            if not is_review and not is_dataset and path not in {'/api/analyze', '/api/references', '/api/check', '/api/training', '/api/training/full', '/api/crop-import', '/api/assistant'}:
+            if not is_review and not is_dataset and path not in {'/api/analyze', '/api/references', '/api/check', '/api/training', '/api/training/full', '/api/crop-import', '/api/assistant', '/api/environment/analyze', '/api/environment/assistant'}:
                 self.json(404, {'error': 'Не найдено'})
                 return
             # Only the local dashboard can submit work; reject cross-origin forms.
@@ -157,6 +182,13 @@ def make_handler(app: Dashboard):
                 self.json(403, {'error': 'Запрос с другого сайта запрещён'})
                 return
             try:
+                if path == '/api/environment/assistant':
+                    from ..environment.assistant import ask
+                    size = int(self.headers.get('Content-Length', '0'))
+                    if not 0 < size <= 20 * 1024 or not self.headers.get('Content-Type', '').startswith('application/json'):
+                        raise ValueError('Ожидается JSON-запрос до 20 КиБ.')
+                    self.json(200, ask(app.environment, json.loads(self.rfile.read(size))))
+                    return
                 if path == '/api/assistant':
                     size = int(self.headers.get('Content-Length', '0'))
                     if not 0 < size <= MAX_ASSISTANT_UPLOAD:
@@ -234,7 +266,9 @@ def make_handler(app: Dashboard):
                 fields = {part.get_param('name', header='content-disposition'):
                           part.get_payload(decode=True).decode('utf-8') for part in message.iter_parts()
                           if not part.get_filename() and part.get_param('name', header='content-disposition')}
-                if path == '/api/references':
+                if path == '/api/environment/analyze':
+                    self.json(202, {'id': app.environment.start(files, fields)})
+                elif path == '/api/references':
                     self.json(201, app.add_references(fields.get('species', ''), fields.get('stage', ''), files, fields.get('kind','weed')))
                 else:
                     self.json(202, {'id': app.start(files, fields)})
