@@ -8,7 +8,8 @@ from src.image_utils import image_paths
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Olzha Agro: weed candidates with DINOv2")
-    parser.add_argument("--crop", choices=("Пшеница", "Ячмень", "Подсолнечник"))
+    parser.add_argument("--crop", choices=("Пшеница", "Ячмень", "Подсолнечник"),
+                        help="Deprecated hint; crop is inferred automatically and never blocks weed search.")
     parser.add_argument("--references", type=Path, default=Path("data/Сорняки"))
     parser.add_argument("--input", type=Path, required=True)
     parser.add_argument("--output", type=Path, default=Path("outputs"))
@@ -28,7 +29,10 @@ def main() -> None:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
     config = load_config(args.config)
     config["gsd_cm"] = args.gsd_cm
-    config["crop"] = args.crop
+    # Manual crop selection is kept only for backward-compatible CLI/API calls.
+    # Inference chooses crop context automatically and never gates weed recognition on it.
+    config["crop_hint"] = args.crop
+    config["crop"] = None
     for key, value in [("tile_size", args.tile_size), ("overlap", args.overlap)]:
         if value is not None:
             config["tiling"][key] = value
@@ -40,25 +44,65 @@ def main() -> None:
         config["classification"]["similarity_threshold"] = args.similarity_threshold
     if not image_paths(args.input) or not image_paths(args.references):
         parser.error("Input images and species/stage reference images are required")
+
     from src.embeddings import DinoEmbeddingModel
     from src.reference_index import build_reference_index
-    from src.classifier import ReferenceClassifier
+    from src.classifier import (
+        ReferenceClassifier,
+        CropContextClassifier,
+        index_for_kind,
+    )
     from src.inference import run_inference
+
     m = config["model"]
     model = DinoEmbeddingModel(m["name"], args.device, m["batch_size"], offline=not args.online)
-    index = build_reference_index(args.references, Path("artifacts/reference_index.pt"),
-                                  m["name"], args.device, m["batch_size"], model=model, crop_references=Path("data/Культуры"))
+    index = build_reference_index(
+        args.references,
+        Path("artifacts/reference_index.pt"),
+        m["name"],
+        args.device,
+        m["batch_size"],
+        model=model,
+        crop_references=Path("data/Культуры"),
+    )
+
     # Cached indexes are intentionally loaded on CPU for portability. Matching is a
     # large matrix multiplication, so move it once instead of moving every query.
     index['embeddings'] = index['embeddings'].to(model.device, non_blocking=True)
-    classifier = ReferenceClassifier(index, config["classification"]["top_k"], config["classification"]["similarity_threshold"],
-                                     config['classification'].get('category_margin', 0.05))
-    if args.crop:
-        from src.recognition.autolearn import train_head
-        classifier = train_head(index, Path("artifacts/learned_classifier.pt"))
-        config['learning_report'] = classifier.report
-        logging.info("Автообучение: %s", classifier.report)
-    run_inference(args.input, args.output, config, model, classifier, args.debug)
+
+    # Restore the old useful behavior: weed labels are learned/matched only against
+    # weed references. Crop examples can no longer steal the best class or force all
+    # candidates to unknown.
+    weed_index = index_for_kind(index, 'weed')
+    classifier = ReferenceClassifier(
+        weed_index,
+        config["classification"]["top_k"],
+        config["classification"]["similarity_threshold"],
+        config['classification'].get('category_margin', 0.05),
+    )
+
+    crop_classifier = None
+    if any(row.get('kind') == 'crop' for row in index['metadata']['records']):
+        crop_classifier = CropContextClassifier(
+            index,
+            config["classification"]["similarity_threshold"],
+            config['classification'].get('category_margin', 0.05),
+        )
+        logging.info(
+            "Культура определяется автоматически как контекст; основной поиск использует только эталоны сорняков."
+        )
+    else:
+        logging.info("Эталонов культур нет; поиск сорняков всё равно выполняется.")
+
+    run_inference(
+        args.input,
+        args.output,
+        config,
+        model,
+        classifier,
+        args.debug,
+        crop_classifier=crop_classifier,
+    )
 
 
 if __name__ == "__main__":

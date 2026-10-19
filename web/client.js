@@ -9,7 +9,11 @@ async function api(url, options, format = 'json') {
 }
 
 // One definition shared by dashboard and review navigation.
-const isPending = detection => !detection.review || detection.review === 'unknown';
+const isPending = detection => {
+  if (detection.review && detection.review !== 'unknown') return false;
+  if (detection.review_required === false) return false;
+  return true;
+};
 function reviewMetrics(rows) {
   const detections = rows.flatMap(row => row.detections);
   const pending = detections.filter(isPending).length;

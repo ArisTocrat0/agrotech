@@ -47,7 +47,7 @@ class AutomaticLearningTests(unittest.TestCase):
             train_head(index, path)
             self.assertNotEqual(path.stat().st_mtime_ns, modified)
 
-    def test_field_without_crop_data_stays_unknown(self):
+    def test_field_without_crop_data_still_classifies_weeds(self):
         from unittest.mock import Mock, patch
         from PIL import Image
         from src.application.inference import run_inference
@@ -58,22 +58,23 @@ class AutomaticLearningTests(unittest.TestCase):
             root = Path(directory)
             Image.new('RGB', (128, 128), (20, 150, 20)).save(root / 'field.png')
             config = load_config()
-            config.update(crop='Пшеница', learning_report={'crop_species': []})
+            config.update(crop=None, crop_hint='Пшеница')
             detector = Mock()
             detector.candidates.return_value = [DetectionCandidate(10, 10, 30, 30)]
             model = Mock()
+            model.encode.return_value = torch.tensor([[1., 0., 0.]])
             classifier = Mock()
             classifier.species_kinds = {'Бодяк полевой': 'weed'}
             classifier.classify.return_value = [('Бодяк полевой', 'unknown', .8)]
             with patch('src.application.inference.VegetationDetector', return_value=detector), patch('src.application.inference.estimate_rows', return_value={}):
                 run_inference(root / 'field.png', root / 'result', config, model, classifier)
             row = load_results(root / 'result')[0]
-            model.encode.assert_not_called()
-            self.assertFalse(row['crop_supported'])
-            self.assertEqual(row['total_weeds'], 0)
-            self.assertEqual(row['unknown_count'], 1)
-            self.assertIsNone(row['detections'][0]['similarity_score'])
-            self.assertNotIn('review', row['detections'][0])
+            model.encode.assert_called_once()
+            self.assertEqual(row['mode'], 'weed_first')
+            self.assertEqual(row['total_weeds'], 1)
+            self.assertEqual(row['unknown_count'], 0)
+            self.assertEqual(row['detections'][0]['species'], 'Бодяк полевой')
+            self.assertEqual(row['detections'][0]['kind'], 'weed')
             self.assertTrue((root / 'result/annotated/field.png.png').exists())
 
     def test_uncalibrated_model_always_abstains(self):
