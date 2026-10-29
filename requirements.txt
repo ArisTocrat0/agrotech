@@ -6,3 +6,6 @@ Pillow>=10
 PyYAML>=6
 tqdm>=4.66
 ultralytics>=8.4.154,<9
+
+PyMySQL==1.1.2
+openvino>=2025,<2027

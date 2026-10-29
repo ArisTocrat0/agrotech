@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "map_checks": {
+    "interactive_layers": true,
+    "no_synthetic_coordinates_in_database": true,
+    "no_gps_list": true,
+    "demo_hidden_by_default": true,
+    "mission_class_review_date_filters": true,
+    "blocked_network_offline_fallback": true
+  },
+  "browser": "isolated headless Google Chrome, normal sandbox",
+  "screenshots": 7,
+  "real_photo_upload": true,
+  "duplicate_suppression": true,
+  "evidence_dialog": true,
+  "client_exceptions": [],
+  "mobile_horizontal_overflow": false,
+  "mission_counter_filter": true,
+  "visible_demo_origin": true,
+  "per_result_model_snapshot": true,
+  "mission": "browser-qa-real-photo",
+  "python_adapter_http_tests": 32,
+  "baseline_checkpoint": "ae7f5e9",
+  "disabled_trash_model": "trash-dronewaste500-v1-transfer-3e"
+}

@@ -14,3 +14,16 @@ data/**
 yolo_dataset/
 runs/
 artifacts/native/
+
+# Ecokineu generated weights and dataset image bytes (provenance manifests remain tracked)
+datasets/**/images/
+datasets/**/*.cache
+datasets/uavvaste-pilot-v1/annotations-original.json
+artifacts/fire-openvino/best.bin
+artifacts/fire-openvino/best.xml
+artifacts/weed-runs/**/*.pt
+artifacts/model-registry-history/
+
+artifacts/**/*.pt
+artifacts/**/*.bin
+artifacts/**/best.xml

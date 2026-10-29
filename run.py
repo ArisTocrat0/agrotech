@@ -7,7 +7,7 @@ from src.image_utils import image_paths
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Olzha Agro: weed candidates with DINOv2")
+    parser = argparse.ArgumentParser(description="Экокинеу: weed candidates with DINOv2")
     parser.add_argument("--crop", choices=("Пшеница", "Ячмень", "Подсолнечник"))
     parser.add_argument("--references", type=Path, default=Path("data/Сорняки"))
     parser.add_argument("--input", type=Path, required=True)

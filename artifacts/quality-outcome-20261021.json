@@ -1,0 +1,69 @@
+{
+  "recorded_unix": 1792563591.884042,
+  "trash": "rejected_not_activated",
+  "smoke": {
+    "verdict": "rejected_not_activated",
+    "run": "smoke-pyrosdis-yolo11n-cpu-20261020",
+    "reviewed_unix": 1792563591.5906818,
+    "threshold": 0.05,
+    "reason": "Test-development precision 0.40 < 0.50; negative-image alarms 4/15=0.2667 > 0.10; val alarms also 4/15. Appearance alarm gate failed (val fog 2 vs baseline 1, cloud 3 vs 1; test glare 2 vs 1). Higher recall/F1 does not satisfy predeclared precision/false-alarm criteria.",
+    "candidate_f1": 0.4528301886792453,
+    "baseline_val_locked_f1": 0.19780219780219782,
+    "baseline_deployed_f1": 0.14814814814814817,
+    "parity_passed": true,
+    "visual_review": "12 positive and 12 negative images; misses faint plumes, alarms on fog/cloud/horizon/glare. Both unlabelled operator photos have false smoke boxes on water litter and stony shoreline; not tuning evidence.",
+    "fire_preserved": true,
+    "fire_numerically_unchanged_on_public_controls": true,
+    "registry_unchanged": true,
+    "rollback": "No promotion performed; original registry and FireSmoke weights remain active. No rollback action required.",
+    "scope": "Source-val repartition; baseline prior source exposure unknown. Not independent geographic/event validation. No fire training."
+  },
+  "smoke_data_and_outputs_unique_logical_bytes": 210177228,
+  "smoke_data_and_outputs_allocated_bytes": 216350720,
+  "disk_count_scope": [
+    "/home/beka/Documents/Codex/2026-10-20/task-2/ecokineu_smoke_pyrosdis_v1",
+    "/home/beka/Projects/agrotech/datasets/smoke-pyrosdis-v1",
+    "/home/beka/Projects/agrotech/outputs/pilot-training/smoke-pyrosdis-yolo11n-cpu-20261020",
+    "/home/beka/Projects/agrotech/outputs/pilot-training/smoke-baseline-pyrosdis-v1"
+  ],
+  "photo_count": 22,
+  "photo_states": {
+    "done": 22
+  },
+  "model_loaded": true,
+  "active_registry_sha256": "41a5cdc82ed184eb4777bfff7551c157e9a216450145e742e11edd94e5ae7953",
+  "active_models": [
+    {
+      "id": "fire-v6-4a60bd37",
+      "sha256": "bb921d8d3f5aac395ea4f2e334840daf59b97b82d356634c670241d080d3ea79",
+      "classes": [
+        "fire",
+        null,
+        "smoke"
+      ],
+      "license": "Weights card CC BY 2.0; Ultralytics runtime/export AGPL-3.0",
+      "scope": "Сторонний экспериментальный baseline; person исключён; происхождение train и качество на воздушных фото не подтверждены",
+      "imgsz": 640,
+      "threshold": 0.35
+    },
+    {
+      "backend": "Existing DINOv2 reference baseline + C++ NMS",
+      "classes": [
+        "weed"
+      ],
+      "model_name": "facebook/dinov2-small",
+      "cached_revision": "ed25f3a31f01632728cabb09d1542f84ab7b0056",
+      "reference_index_sha256": "16eb9b6ae328bd3779461c9b0e715bf85f0d543dd02d9106ebc12944139acae8",
+      "scope": "Сходство с эталоном, не вероятность; качество детекции на поле не измерено. Общая очередь блокируется на время анализа.",
+      "id": "dinov2-reference-baseline",
+      "configured_similarity_threshold": 0.55,
+      "license": "Исходная кэшированная модель facebook/dinov2-small; см. её условия",
+      "loaded": false,
+      "last_processing_seconds": 55.6171
+    }
+  ],
+  "pilot_pid": 370583,
+  "no_downloads": true,
+  "no_images_duplicated": true,
+  "scope": "Both datasets have unproven geographic/event independence; source baseline exposure unknown for smoke; no water-positive trash acceptance test."
+}

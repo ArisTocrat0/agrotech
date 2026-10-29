@@ -1,9 +1,9 @@
 'use strict';
 // Russian source strings are the translation keys. User data and file paths stay intact.
 const translations = {
-  "Olzha Agro — мониторинг полей": {
-    "en": "Olzha Agro — field monitoring",
-    "kk": "Olzha Agro — егістік мониторингі"
+  "Экокинеу — мониторинг полей": {
+    "en": "Экокинеу — field monitoring",
+    "kk": "Экокинеу — егістік мониторингі"
   },
   "ЦИФРОВОЕ ЗЕМЛЕДЕЛИЕ": {
     "en": "DIGITAL AGRICULTURE",

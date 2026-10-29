@@ -1,0 +1,36 @@
+{
+  "scope": "Qualitative examples only, unlabelled, may overlap unknown model training; not accuracy metrics",
+  "results": [
+    {
+      "image": "fire-107639709.jpg",
+      "detections": []
+    },
+    {
+      "image": "fire-248462.jpg",
+      "detections": [
+        {
+          "class_name": "fire",
+          "confidence": 0.8481177687644958,
+          "bbox": [
+            193.57451877593994,
+            806.2647605895996,
+            1034.1133678436279,
+            1454.5736309051513
+          ],
+          "model_id": "fire-v6-candidate"
+        },
+        {
+          "class_name": "fire",
+          "confidence": 0.5380090475082397,
+          "bbox": [
+            144.94282007217407,
+            652.3137413978577,
+            369.77488260269166,
+            733.921534538269
+          ],
+          "model_id": "fire-v6-candidate"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "run": "litter-v3-land-yolo11n-full-cpu-20261020",
+  "dataset": "litter-v3-land",
+  "note": "Full unfreeze pretrained YOLO11n; land only; no geographic independence or water-positive test claim; 5.5h training planning budget plus evaluation reserve; no automatic activation"
+}

@@ -1,0 +1,68 @@
+{
+  "scope": "Known project roots only; no downloads or deletion; filenames/directories omitted from dependency trees",
+  "roots": [
+    "/home/beka/Projects/agrotech/datasets",
+    "/home/beka/Projects/agrotech/artifacts",
+    "/home/beka/Projects/agrotech/outputs/sources/AgroMindKZ",
+    "/home/beka/Projects/AgriFireShield"
+  ],
+  "metadata_files_scanned": 104,
+  "labelled_smoke_fire_dataset_candidates": [],
+  "model_metadata_not_training_data": [
+    {
+      "path": "/home/beka/Projects/agrotech/artifacts/fire-openvino/metadata.yaml",
+      "classes": [
+        "fire",
+        "smoke"
+      ]
+    },
+    {
+      "path": "/home/beka/Projects/agrotech/artifacts/fire-candidate-v6/best_openvino_model/metadata.yaml",
+      "classes": [
+        "fire",
+        "smoke"
+      ]
+    }
+  ],
+  "unlabelled_fire_candidates": {
+    "manifest": "/home/beka/Projects/agrotech/datasets/fire-candidates-v1/manifest.json",
+    "photos": 2,
+    "splits": [
+      "quarantine_unlabelled"
+    ],
+    "labelled_smoke_objects": 0,
+    "usable_for_supervised_smoke_training": false
+  },
+  "preserved_active_baseline": {
+    "id": "fire-v6-4a60bd37",
+    "classes": [
+      "fire",
+      null,
+      "smoke"
+    ],
+    "sha256": "bb921d8d3f5aac395ea4f2e334840daf59b97b82d356634c670241d080d3ea79",
+    "license": "Weights card CC BY 2.0; Ultralytics runtime/export AGPL-3.0"
+  },
+  "training_started_for_smoke": false,
+  "blocker": "Awaiting validated local Pyro-SDIS subset path from dataset task; no duplicate download and no parallel heavy training.",
+  "required_before_download": "A named permitted source with image licenses, smoke/fire boxes, scene/session split and exact selected byte count. Proposed pilot cap <=200MiB; planning target300-500 scene-varied frames incl verified negatives, not an accuracy guarantee. No download is authorized or started by this inventory.",
+  "proposed_next_stage": "Separate fire and smoke classes; preserve baseline and compare per-class P/R plus cloud/fog/dust/water false alarms. Run sequentially after trash, not concurrently.",
+  "additional_standard_data_roots_checked": [],
+  "additional_candidate_files": [],
+  "additional_localized_roots_checked": [
+    "/home/beka/Загрузки"
+  ],
+  "additional_localized_candidates": [],
+  "cached_smoke_fire_dataset_repositories": [],
+  "current_state": "awaiting_approved_pyro_sdis_subset_path",
+  "approved_data_budget_bytes": 1000000000,
+  "download_by_this_agent": false,
+  "sequential_after_trash": true,
+  "state": "approved_dataset_audited_ready_not_training",
+  "integrated_root": "datasets/smoke-pyrosdis-v1",
+  "source_allocated_bytes": 186650624,
+  "images": 500,
+  "boxes": 421,
+  "image_copies": 0,
+  "training_started": false
+}

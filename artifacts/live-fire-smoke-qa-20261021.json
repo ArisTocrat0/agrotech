@@ -1,0 +1,95 @@
+{
+  "checked_unix": 1792559015.163122,
+  "passed": true,
+  "scope": "Real live-server public qualitative smoke/fire inference; no accuracy claim",
+  "results": [
+    {
+      "photo_id": "b4610841e70b498aabf608945995dd0a",
+      "source_sha256": "30adccc9f6d91d58b21ec7e9936d4d39d425ffba99ce722c09465cf7139e3f23",
+      "model": {
+        "backend": "OpenVINO native CPU",
+        "runtime_version": "2026.4.1-22982-e213a147257-releases/2026/4",
+        "registry_sha256": "41a5cdc82ed184eb4777bfff7551c157e9a216450145e742e11edd94e5ae7953",
+        "adapter_sha256": "fbef4e83e81d3dc9abbdfd9734ca2ed4d3f0f3c116c39802c2b2c6bf9b217e89",
+        "preprocessing": "RGB float32 NCHW / letterbox114 / class NMS before clipping",
+        "models": [
+          {
+            "id": "fire-v6-4a60bd37",
+            "sha256": "bb921d8d3f5aac395ea4f2e334840daf59b97b82d356634c670241d080d3ea79",
+            "classes": [
+              "fire",
+              null,
+              "smoke"
+            ],
+            "license": "Weights card CC BY 2.0; Ultralytics runtime/export AGPL-3.0",
+            "scope": "Сторонний экспериментальный baseline; person исключён; происхождение train и качество на воздушных фото не подтверждены",
+            "imgsz": 640,
+            "threshold": 0.35
+          }
+        ]
+      },
+      "detections": [],
+      "seconds": 1.0425624950003112,
+      "persisted": false,
+      "scope": "Public qualitative QA only; not independent accuracy, holdout or a user flight."
+    },
+    {
+      "photo_id": "cac4e6aa471f405a88d505e47e7b85a9",
+      "source_sha256": "30643453a89b52d657ef7389439e2ce4c38c3185065b18d6263e836fff7a02fe",
+      "model": {
+        "backend": "OpenVINO native CPU",
+        "runtime_version": "2026.4.1-22982-e213a147257-releases/2026/4",
+        "registry_sha256": "41a5cdc82ed184eb4777bfff7551c157e9a216450145e742e11edd94e5ae7953",
+        "adapter_sha256": "fbef4e83e81d3dc9abbdfd9734ca2ed4d3f0f3c116c39802c2b2c6bf9b217e89",
+        "preprocessing": "RGB float32 NCHW / letterbox114 / class NMS before clipping",
+        "models": [
+          {
+            "id": "fire-v6-4a60bd37",
+            "sha256": "bb921d8d3f5aac395ea4f2e334840daf59b97b82d356634c670241d080d3ea79",
+            "classes": [
+              "fire",
+              null,
+              "smoke"
+            ],
+            "license": "Weights card CC BY 2.0; Ultralytics runtime/export AGPL-3.0",
+            "scope": "Сторонний экспериментальный baseline; person исключён; происхождение train и качество на воздушных фото не подтверждены",
+            "imgsz": 640,
+            "threshold": 0.35
+          }
+        ]
+      },
+      "detections": [
+        {
+          "class_name": "fire",
+          "confidence": 0.8481177687644958,
+          "bbox": [
+            193.57451877593994,
+            806.2647605895996,
+            1034.1133678436279,
+            1454.5736309051513
+          ],
+          "model_id": "fire-v6-4a60bd37"
+        },
+        {
+          "class_name": "fire",
+          "confidence": 0.5380090475082397,
+          "bbox": [
+            144.94282007217407,
+            652.3137413978577,
+            369.77488260269166,
+            733.921534538269
+          ],
+          "model_id": "fire-v6-4a60bd37"
+        }
+      ],
+      "seconds": 0.8964855059966794,
+      "persisted": false,
+      "scope": "Public qualitative QA only; not independent accuracy, holdout or a user flight."
+    }
+  ],
+  "active_registry_sha256": "41a5cdc82ed184eb4777bfff7551c157e9a216450145e742e11edd94e5ae7953",
+  "model_loaded": true,
+  "photo_count": 22,
+  "saved_evidence_unchanged": true,
+  "registry_unchanged": true
+}

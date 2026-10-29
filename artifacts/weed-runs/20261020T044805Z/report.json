@@ -1,0 +1,51 @@
+{
+  "accuracy": 0.9818181991577148,
+  "balanced_accuracy": 0.9844961166381836,
+  "count": 110,
+  "per_class": {
+    "Бодяк полевой": {
+      "count": 43,
+      "accuracy": 0.9534883499145508
+    },
+    "Вьюнок полевой": {
+      "count": 44,
+      "accuracy": 1.0
+    },
+    "Пырей ползучий": {
+      "count": 23,
+      "accuracy": 1.0
+    }
+  },
+  "scope": "reference_photo_species_classification",
+  "field_accuracy": null,
+  "target": 0.9,
+  "target_met": true,
+  "accepted_count": 110,
+  "coverage": 1.0,
+  "accepted_accuracy": 0.9818181991577148,
+  "train_count": 332,
+  "validation": {
+    "accuracy": 0.9727272987365723,
+    "balanced_accuracy": 0.9700033664703369,
+    "count": 110,
+    "per_class": {
+      "Бодяк полевой": {
+        "count": 43,
+        "accuracy": 0.9534883499145508
+      },
+      "Вьюнок полевой": {
+        "count": 44,
+        "accuracy": 1.0
+      },
+      "Пырей ползучий": {
+        "count": 23,
+        "accuracy": 0.95652174949646
+      }
+    }
+  },
+  "excluded_species": [],
+  "crop_species": [],
+  "split": "sha256_deduplicated_images_not_fields",
+  "alpha": 0.01,
+  "limitation": "Проверка вида на эталонных фото. Точность обнаружения на полях не измерена."
+}

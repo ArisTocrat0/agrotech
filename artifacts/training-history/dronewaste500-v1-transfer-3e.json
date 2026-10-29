@@ -1,0 +1,36 @@
+{
+  "scope": "Orthomosaic dump/material piles, not individual street litter; no GPS/time; site-disjoint 350/75/75 unchanged",
+  "run": "dronewaste500-v1-transfer-3e",
+  "imgsz": 320,
+  "freeze": 10,
+  "epochs_requested": 3,
+  "seconds": 717.8423914839996,
+  "dataset": "/home/beka/Projects/agrotech/datasets/dronewaste500-v1",
+  "initial_weights_sha256": "f0b462a4759932516f91d11f145380da5be2f274dfca8c8d0e9abb7bbac1c5aa",
+  "dataset_manifest_sha256": "ef0ce9953d2c5d92d4ab2210517694d75cffc0875a78dd35ea747db336cf2d7e",
+  "split_counts": {
+    "train": 350,
+    "val": 75,
+    "test": 75
+  },
+  "test_metrics": {
+    "metrics/precision(B)": 0.23809525180055827,
+    "metrics/recall(B)": 0.24279835390946503,
+    "metrics/mAP50(B)": 0.15858771378973596,
+    "metrics/mAP50-95(B)": 0.07254262537653569,
+    "fitness": 0.07254262537653569
+  },
+  "weights_sha256": "427d434a34f5c0a78604d4405165dd2d6c0ac5436a6b6e40d1496f70be893543",
+  "test_used_for_training": false,
+  "deployment": "Experimental; manual review required; not auto-activated",
+  "software_versions": {
+    "torch": "2.14.0",
+    "ultralytics": "8.4.154",
+    "openvino": "2026.4.1",
+    "numpy": "2.5.3",
+    "Pillow": "12.3.0"
+  },
+  "seed": 42,
+  "device": "cpu",
+  "batch": 4
+}

@@ -4,15 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
-  <title>Экологический мониторинг · Olzha Agro</title>
+  <title>Экологический мониторинг · Экокинеу</title>
   <link rel="stylesheet" href="/environment.css">
   <script src="/environment.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">К содержимому</a>
   <aside class="sidebar">
-    <a class="brand" href="/"><span class="brand-symbol" aria-hidden="true">✳</span><span>olzha<span class="brand-accent">agro</span><small>ЗАБОТА О ТЕРРИТОРИИ</small></span></a>
-    <div class="workspace"><span class="workspace-icon" aria-hidden="true">ОА</span><div>Рабочее пространство<small>Экологический мониторинг</small></div></div>
+    <a class="brand" href="/"><span class="brand-symbol" aria-hidden="true">✳</span><span>Экокинеу<small>ЗАБОТА О ТЕРРИТОРИИ</small></span></a>
+    <div class="workspace"><span class="workspace-icon" aria-hidden="true">ЭК</span><div>Рабочее пространство<small>Экологический мониторинг</small></div></div>
     <p class="nav-label">НАБЛЮДЕНИЕ</p>
     <nav aria-label="Главное меню">
       <a href="/">▦ <span>Мониторинг посевов</span></a>
@@ -56,11 +56,11 @@
         <div class="results-grid"><article class="panel location-panel"><div class="section-heading"><h3>География наблюдений</h3><span class="badge">WGS84</span></div><p id="map-caption" class="small muted">Только реальные координаты съёмки из результатов. Без геоданных точки не отображаются.</p><div id="location-map" class="location-map"><div class="empty-state"><span aria-hidden="true">⌖</span><p>Пока нет координат</p><small>Точки появятся после анализа материалов с геопривязкой.</small></div></div><p class="small muted">Схема координат без картографической подложки. Совпадающие точки не раздвигаются. Положение объекта на местности не рассчитано.</p></article><article class="panel coverage-panel"><h3>Что было просмотрено</h3><ul id="media-coverage" class="media-coverage"><li class="muted">Данных пока нет.</li></ul><p class="small muted">Загружайте исходные фотографии DJI или другой камеры. Место съёмки может быть считано из EXIF GPS. Прямое подключение к дрону не используется.</p></article></div>
         <article class="panel evidence-panel"><div class="section-heading"><div><h3>Материалы для проверки</h3><p class="small muted">Проверьте рамку, исходный кадр и контекст каждой находки.</p></div><label class="filter-label">Показать<select id="event-filter"><option value="all">Все типы</option><option value="trash">Мусор</option><option value="fire">Огонь</option><option value="smoke">Дым</option></select></label></div><p id="evidence-summary" class="small muted"></p><div id="evidence-list" class="evidence-list"><div class="empty-state"><span aria-hidden="true">▧</span><h3>Сначала исходные материалы</h3><p>Здесь появятся кадры с предполагаемыми находками.</p></div></div><button id="show-more" class="secondary" type="button" hidden>Показать ещё</button></article>
       </section>
-      <footer><span>OLZHA AGRO / ЭКОЛОГИЯ ТЕРРИТОРИИ</span><span>Предварительные результаты · Проверка человеком обязательна</span></footer>
+      <footer><span>ЭКОКИНЕУ / ЭКОЛОГИЯ ТЕРРИТОРИИ</span><span>Предварительные результаты · Проверка человеком обязательна</span></footer>
     </main>
   </div>
   <dialog id="evidence-dialog" aria-labelledby="dialog-title"><div class="dialog-heading"><h2 id="dialog-title">Материал для проверки</h2><button id="close-dialog" class="secondary" type="button">Закрыть ✕</button></div><div id="dialog-evidence"></div><p id="dialog-details" class="small"></p><p class="small muted">Оценка модели не подтверждает наличие события. Координаты относятся к месту съёмки.</p>
-    <section class="assistant-panel" aria-labelledby="assistant-heading"><h3 id="assistant-heading">Спросить AgroMind об этой находке</h3><p id="assistant-status" class="small muted" role="status">Проверяем настройку помощника…</p><form id="assistant-form"><label>Ваш вопрос<textarea id="assistant-question" rows="3" maxlength="4000" required placeholder="Какие признаки стоит проверить на этом фото?"></textarea></label><label class="consent-label"><input id="assistant-consent" type="checkbox"><span id="assistant-consent-text">Разрешаю отправить мой вопрос, данные выбранной находки и координаты съёмки настроенному AgroMind.</span></label><label class="consent-label"><input id="assistant-image" type="checkbox"><span>Дополнительно отправить фото с рамками (может содержать людей и другие личные данные).</span></label><button id="assistant-send" type="submit" class="primary" disabled>Отправить вопрос ↗</button></form><p id="assistant-feedback" role="status" class="small"></p><div id="assistant-answer" class="assistant-answer" hidden></div><p class="small muted">Ответ — справочная подсказка. Помощник не подтверждает пожарную безопасность и не заменяет проверку человеком.</p></section>
+    <section class="assistant-panel" aria-labelledby="assistant-heading"><h3 id="assistant-heading">Спросить Экокинеу об этой находке</h3><p id="assistant-status" class="small muted" role="status">Проверяем настройку помощника…</p><form id="assistant-form"><label>Ваш вопрос<textarea id="assistant-question" rows="3" maxlength="4000" required placeholder="Какие признаки стоит проверить на этом фото?"></textarea></label><label class="consent-label"><input id="assistant-consent" type="checkbox"><span id="assistant-consent-text">Разрешаю отправить мой вопрос, данные выбранной находки и координаты съёмки настроенному Экокинеу.</span></label><label class="consent-label"><input id="assistant-image" type="checkbox"><span>Дополнительно отправить фото с рамками (может содержать людей и другие личные данные).</span></label><button id="assistant-send" type="submit" class="primary" disabled>Отправить вопрос ↗</button></form><p id="assistant-feedback" role="status" class="small"></p><div id="assistant-answer" class="assistant-answer" hidden></div><p class="small muted">Ответ — справочная подсказка. Помощник не подтверждает пожарную безопасность и не заменяет проверку человеком.</p></section>
   </dialog>
 </body>
 </html>

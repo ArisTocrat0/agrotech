@@ -1,0 +1,3324 @@
+{
+  "scope": "Reference photo classification; no field detection metric",
+  "reference_index_sha256": "16eb9b6ae328bd3779461c9b0e715bf85f0d543dd02d9106ebc12944139acae8",
+  "split": {
+    "train": [
+      {
+        "sha256": "98a23acfde184ce80d9994e47ea7dcfa3df64780be468004aac82f83a6af6f2f",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "db901493d26cbc4deceac5b1fe09e98de089f7b50690ed08be7cbc904a08b251",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "31b7fb96b08c16f84fad94e977820f9c465e71435bae46740208636d33358ac7",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "28d699920b5921aba5d904bb8ac8bd8d42721b99966140d55bbbfb30fbdefe90",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "6d21c2e7edfbfaf7080b77a8b48b73d9f78917a8827e53c20f5c1dd480208fb1",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "9473527a77cde409bb08bf327c1e577db99570ec9bc34de917dc71689eb2830d",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "9b6bcb524cfd45576a21f294eae335add4865932230811dd879ac88ef484d5b9",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "05656d0e9a3cce4b5f5b4e073842fdd81af187ad4b6487c18b4967316c65945f",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "a20c11e332e94aed10aae1219fc0cf7ab4bac8da74e8bc53463a717406136545",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "00278dee5db487554c635a2fb7f51ae42dcf0ff3922f35674cbf527250d80fa2",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f8c28104d464a47cda4a097739d4763990549c3ec7c46e13871d9cacf4fc9544",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "59ad69db5f3510e31430f72dd1941c8b4ea66615a0e0ef6be2dc0922cb339248",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "4ccc4ed609fc1c99fcb1af9f6da06463b400a97c198472971c3c1d8bef992d07",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "93b36651af631e9da693ccc5c212e4b416343c5fbca3a7cda5f7086f2dc6ae05",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "4ade576ba11aea71da0e86213288641f36d77d9d2e7bb870becb4808b58b343d",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "5da84ad23aec52a21233cded02c7f02191d2b9d41329224adbbc3b3b020642b6",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "2d9fcbf0efd351aff133b0544f89c754e326809b04f2a88f02a184430e13f1f4",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "b841beb4e4def25427c9b193eea830f2d48d98ce0c508fbadf7a5be8e2cca317",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "e853fc2948b48b49e862917f41b855f278b231b0b3b49dea05d288ee144e3906",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "613801c94d6e5a811d95275fcd122fd45f3001e6d15ce4fe50fc9c2a34b99cf1",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "92acee6296809ca3dd699189bac44e97ad33f442e4583764d5b01285e3393b05",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "8740e852d3ba388dc1e7f994b78b90cc8f3932ddc9ea50ffbcef9f4acef22465",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "66e3c789ac9ff5867c3fc5a7eb01047d9c2b3760f6b1889d677818808fc3cee0",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "a9a4d012ac30b9d6babe640b2bf49fefea0ca2673e699fc74ce1e2dba4c46cf6",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "b8d3297848911b1528dc465af6713782595a6f3693eec296e67a5a4a08fd9fb2",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "95520f91e74fd11e9e9b6a73aaf9d185384ab22a4b2e4efd469215d23d3e73df",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "0cf147ff56113d096c06465d7a864f2e598d0324bf96950b5deb50d6055203c8",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "0cd15eb425ead145de4200e1cc0f9518697ebbef3664c7e8fe1580c7c5bf16db",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "02711934fb8a00d5ff6d1d4be5a03eb97053288c1bd8c7f28ee668f7a93026bf",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "58ff246d48f24b915d021979a52bdb6fdc8346a188f817fce9ad38faf9d14ac6",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "297892c9d69d3b5a79dee2c0ad618a3902d02b375f14271462af532c43141b86",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "3a1bde8f7acce5a4cbd9d4986c664f39f7e3718e065edd503fee86fa3e2fc80b",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "c8e290007dda4396f929d0da8217fb53a3b68651508e24f4a08eb779c5a501c5",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "e35a3eaed5b7334b1a62845407ac552fe6f88c147e2f6dd92d118ebb1eee53c2",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "5db70adde7674e67fd6326fae00281d2abdd9fa7776fd8ae897b6004064dd22b",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f881622a0453e6654593028374c9744e370208e3f3b3caf775f4289690cde3ee",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "cf7e4866755d7dfd8a3e07e367144c1bcb1201f3571837750ca6659e74026581",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "08b65cd2f2a6d20585b52368748b430318353895f4053d53ddb250db6e4ca5a4",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "584e7262423cb39b7b9e0b4d2b23dd4728b34e1d08b6207aa0dbd0f2f263a482",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "a6e6727de3069d9f4c963bd9fe277eb2f8a929e453fa9915911572c7f05539b5",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "8afbfae6221050518b07d838bcc946aa2aa8ccefdf073ac0364652ee3904f52e",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "df8612bdf6f4fc36e46fdc6ebd7562b0a4b3fa8c7698287325def3f6ee3f6aba",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "2a1c65aeb83303f0fe16e10ce8db4a76335942fe496182e6b115b2594d39e14b",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f54b351f00d2ecb1ae79df6769550ca85eafec0913b97f540ebc0c85c0826e97",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "0d2fd95328444e5ea5114c0ee7688c134db047a55b25d851b953671a4caa5dd6",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "5bd73421f8bc1040680cf19b7a69b53bda6bc0a65cac49bdda05da40c812c368",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "838b0d50a7fa61a8b9ec0374b0101aee2b7314225e6c5b2d17cca6c2ba9157ea",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "4ac83eff36c05559d28177929dee40c666689bf0d8e3c2042cec6200bdda34b0",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "55f0b4fa756c39da2e9e2c91f9eca19db7b95670ee708c35992d035b5a99b60e",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "61f7e026eed378e4bf4d548af1df6a02278bde992ec32eccb1cc60ffd57d9e40",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "4be6ea8ac0a13da03f254246f0d569c5d7a6acc6b6639cc37981ac6dda74fc61",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "1d8877838e4fab91785a85517459dd424983af984c134103068d71bd54efc9c8",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "0f6aa2cc578150e21f5055b6b7788439bb81d3d22c01023d78d7d970f40add87",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "992677999931854a1b49462d213f5d1825852586add7f7ad143b6f11d45a95ca",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "83237bc6bfb8763c081d9e9d6f6331c653ef3cee43e671fc07a6b0781266fd95",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "d39c23180f9b855b7684e5fe69889401e25d0172b56270221bf3e0ec19a249ab",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "269b0cc5d8250ff94dda19825dfe6c7f0572a648a6a9965485126965c71d9ac2",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "116ae7019a3b8befb8b9c46a392a192a96a69357c586fa046a9186b13b31e2fb",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "d61fcabdce7aa3f48c3bbe32ce8acd5af1addde1eb8f40629a6255c2a2934aee",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "bc5db4fc96dd78ee6064a2a7e1f71cdad24ba914af57105d4089a048ea33f658",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "e9019fb54a94397041df5e7cfb27d445dd61c1232640a9e806e7af27f5b13b5d",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "bd9f100769a2fc5689df0cfbcaf370efe00114f9206cd2c8563d528e4dd30bd4",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "7ecb7eaeb8349253fe08ed77efe7f83d5aaf8963a176f5cd6555704e7357f086",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "4af28bbb9d4465d304de451f649c858e8db6e5e82755709c614e80a58d72aa01",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f8b37bd360c7465e020e09d0130300b445aa4fde21ffcb54ac780d7a5fbe7ede",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "abde6513f02e1c80e0e8f34e81a68879706d4c20213496a7d302d4abb01acd1e",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "92d004b8e51405ba3b8b510831c0842e004191fba3fafb060a2924f65f49fd59",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "1b886ac599433645d0f390949c4b6133e84a142e9f140301a7cd009fbdfff862",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "eb9b09b80909d635359e29400c3fa71a6367094f6d99805a8e95ecd771a0e359",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "8d32662de4edb04d56e82a9f755f600b2a461e1f8ea16b5fc852d4553b36f214",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "2c28557e4ef93314a83d6f7f6f6d08d9257e90c5ce7481ef051f1af120472b6e",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f8e510c8abab1572ad35c620dbc963a8ddf4ebe52b1721e80e73ba38cc7bb865",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "4b6862ec986ecf2f4750cf1d2be489ba7df52eee392ae2cee814a2bb3ab6f2f9",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "fb8add13c3a4b67c378c7d34c2e59e1949a5d0990e5ace0c399fe63731e765a6",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "d4828c1e12cfc8a53f8231bcc95a9f0c61d5589a84ddc33b51a20a0bfe9f58d6",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "77574f28181ae6c0a75552a8a9af66772a0781dbe7b9429c65a0f530b39e7cd6",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "0d012cb62b2e4c67a3e6f77540d84b7cb3d31803a6a1a0e46d9f7c0a60c48677",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "7d6b84eac157aaac891949e6f43f4785e7c447e5cecc65da97d1f532688dbe0b",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "db46648f50ee0259123e4ae105b2a879d50c3236d52ccfd91b5fbb400109f804",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "258533a1ea6c14974513bf54356c918857ab97ff8e17f7535532aabcb30e9b3a",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "9c39c954ee07578f5dcc79d91c67a66102c9672a4b51412623f999be4fc566a0",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "47f723108e140b451433540e310496a62a0bea3b9f690968c8aa51ca65cdb1bb",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "60e3c87c922bdd4294974089d39e95067cc92a89f8d6ef0037be991fd3ca572f",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "956abd2569801c3deaaa95ef16bc7871b861207217d04338b9e388c87d4b1ce8",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "87dde356e08ad6f3a4922d95900269452c039dda9df63be100f2d9261aa73591",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "86387fbb5b9033b30e8ce8c44a739b3a194a2eb3c709360dc66d62567274cc33",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "e7c899aa5e964c48bce08c72c8634bb1d3cf9aef86d6efa95dfdd4f41949b593",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "7f8718a115b4c88226949106ddf4c00659f239b6930ff9b93aec4116cfccd959",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "3118c4f2e2460480d62d7be595ba153ab9eb99a5a37681841ece8b438b026ce2",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "fca62dcd35033e879695db5eb5c19f818805b52d2a60deb2394b2c7a9d1b6591",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "457e3b1215be602a91a1ef4c99fc400da4d1203381c50fb66f10d18556d63587",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "a804a724dccc0923fd165948919204b9df50264bcb9298fc11980e2a71f486a6",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "85975ee27be04cbbf4437c026efdcc30d93da4f6355a96adaebe05c857c1e8cd",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "039cd2eb18748025c17e3651bcbf9d1751d02cea5990815e9e7683c88befd7a1",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "db6817b97f786d8f8dfad72729ec4a00eba535d6025efadbca7edff2fd99069e",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "854e7189250bda076d53521d9c6ce9db623191aba229199c80f7d957d1e0e48a",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "7bb4abbc8428cac2d272e079871e0e1047f519198b9355d61a09d48362c37ab0",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "1faf603d035cba1cb4f19819f5119de64692a0563dd4251cf8a2ca633c959a2f",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "a57f68caecd4aaec8c240ee292ee79e89ecfd8c95952506031c41162dec8eb04",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "5d7636dbf9c0fed44483a62200573974bff5c766b041cf40a6087b086f324ac4",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "9d8977c7177b880f1dd3450aa7a627a4dbaca6248951c9cbc301534d39900fa7",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "83f29c2594395fe038521d8083405c903dba7a36ea30c257029f85b70d399642",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "fd842da472e9c132ab382da3a04436e59136dcb3709f21889af67d0b27122618",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "848b08292247c2c629c28f97baca9f5f0125e0a6b5d1846785c3a20e5030eac9",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "d3306b6c82bcf74fe83597ce6f9e125b51a16728a5c2684567d826e423b2eb4b",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "c9de8ae21f262898bbe8cad6f53c3a7107da560bd25b4a1a5c2b0cd17cb4a736",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "a983b83c52839807d45991ec1b313e04aa37ad3ff1977e4caaada80e38f83e58",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f801955068222a4837e142b4ce1aac95e3e5ef2b8e24a3709e652a20a082ef0d",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "971f84814c441d553b87731a7f0dfd0ada0e4d13401ae74ecd88e75c1a0e7dc2",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "3e378d4b35f04123ef7b41ddb198539e9e075a6913cd83a81d318ebc5d053b34",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "925d20d6cfcb4453b61ee92e8f110e0a94ea18f03bd7f63287d72f105794e300",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "46f57cd759bd49b217df98bab6f270be22113e43a0a3d051534dbb8bf5dada4c",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "97a2b304930bb9f194a816690ff2af7007cf424f45f0655873753046c4f1f40a",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "8320cc2f8c49709f86732659fcc8cca5b75da23650c6ed740ee6add007d28e49",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "492b42632413de70e6f9802308d783769e9682984caabe7103da7d61f6006d89",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f57bec0505544ef58f472d7a1a86e5a69d142e01bd2bb340c6821b4e0fae745e",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "fdaa37c9e2855e2e04d9f92fe0a35be45d399a470c374a8981a455e6a42d90ed",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "d7a565137ea4b2d8e81fc87b187bc1190de81cc18743ab87aab9cd9748203514",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "98c952102624ada5d87e268a8676a9dd7605aba004b3cba5f8eb6dd596da950a",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "da831e9b6d964624cbe7cbedffb2c82478d4c91b0ec280c4ac223978e7695074",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "e84a6aa9d38e6942ec7fde5da3dde77fad4a8b9b1661788b5dd592eec87e56c2",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "947eb51488a06252232335bcc72d23b0a632588b00b3fe61de906ad37f7b9aea",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "00e7278d1cc4be718d8fcc6715d5398ed94a887b44e045d018ddb357ba170460",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "5364a968c742816e89e97e885ace6b710ac35f431ab9b562cb9e203b3084dca5",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "e0ec8ce3e7685039a2faff0b3e4737b5ad2a538bdc3b6e7909ee1e5a813085eb",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "7c23fefa02f8ff0f6d59822329e9ee8e88301663a55e24a8303b46906967e626",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "27245c89db7d4abd629d0d25dc4f07d31b9158788ff74300e1f478eac1019e2a",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "111868acb6512156853ee761d8193f561050912fb6bfefd5a1bf01bd1490ec3a",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "473128e33bdbad2d5a271e8ab731b7a9cfdce683c5707faaea952e21114230c2",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "af6f1971c3f14259325921e3d15dee3396bc99674cd88b33eda52fa0816caf5f",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "0d975407c0ed8c2b26e10ddb2f6684a14febc3bd3e607ca7658f0081b2ff564b",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f2723c271148dba1cb25d320ceeca9827bf99fbb08613ccd4081d30add379442",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "1ea023961e10e31d1bbdfcb4143a53c014b5952d7759dc75da4be6c31e54c0e9",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "fa99547b9b11869163fb01a4ecb6bbebc934b3023e4bf61ad8fc575c35acd4df",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "63ed6b9d40387c59a82dd7edabe4adbb46ea53bddd6773143e49c18d2b01ca63",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "c8c51f5dfa6ab8a425ac80533132914a3eacfcf842e3864b474a131b52cda2cc",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "e8cfad819dca72e2ffa13146a3e7d6ded8a7a0ea871824d6335ad0e7f3dd0614",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "0f2ea3f091719aa8c36ebe31606f7ef1d292a73ac94705e00c34e9cfa1d16bc5",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "dfc89d693cb35cbbe0ff62bf40444fe219745d58791346fe51ea342605c5573d",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "21bb86e62237751c60220baee3ac4447e422a18883d3ee8b7e2ab5c923e30830",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "ecb1541b8449004cab7165d2c4a7620bcf478618e4434075be92ac5df7a735c4",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "125abb66456045b1cf6f364e0b51a8b45eea2deac7d1c924ab7d3e6baf1b8344",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "44d390abee7c0a68addfe151c3c31d9e56db5f49ccebce4568704974f691e24d",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "5094689fa77b4591aab797283ce18c1563a3fa9f2824bed3bdacd0d4163ac298",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "a2802e75502a03c43f5f0997085f83a820f6d40a3ebb55fa9c453e0f603d7539",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "d22d26343a9d4552d97a8725b278fa979dbd4e1137c4f8b12c1e2786e78f3d48",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "35f44ecab843b2e7796a746209256064462e2401d2a49c21ee5e8a7a9c852266",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "d3f0ce32b547b6023c749b705771a2ffcaf9a462b6bd9f84c09daa7b35d066ab",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "8fe90bf2305d09e2229a20c7625102b084c9303ed1bb9e2c41f71fe8f437e4be",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "5f44cdac0084210ff189b405bed6c6787fe96860b58a0fdb2d15ce449c56f781",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "4f02f15a4cee4dab678aa1a1a2fd80944e584d34aa47b77db67b0ee7f80ef4d9",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "ca106f8616fb9d05f4693b9e77cfefebd2846b0f121ee3e5ed9f9bfb40c96d4e",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "bbae103f337fc89e3bffefee0174c4c35450aec7b7bc0094803217aa79f1df99",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "60bb40abd159b61d2a94998588e728d93874f961067507032affadec9577b389",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "e8668a8bbd68c6996189cee13418ea7ffdd3974a9b98efa36a1abc1f46bb4433",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "5e14267ca602d0895d88c2d1a6dd66829221f3c25c14e9e0df1f81cad03d0b8d",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "00c57bdb5ca17fa32c2affa7d33b5d6a7a6959de2d7d5bdcc609665b90cb7a6d",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "0c665239b3a545f765d4663fee8ba4f2aec902fb80ec41ab61538e1fef4826c3",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "5542d556a1fcdf76bc4e9fb06161e5c4d0ddd7c56b4bef99e43483ed7fb3a909",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "906b9eabf78e265c7acc6eb1488461e39e1c53379afd1990df9956d31daf2d0c",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "24ccf85d78425aee7972d0f899b38f22c3e0d764f62fdd39303bc9907f19bfec",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "5fa7932dc7b674d2d1ebc6c0a7d65e561a26a827a3590d1f812087b907063e9e",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "b2d2100fd4fdcd28346e2e42b6cfeb3abcfeb0901b101316987a99341e40d693",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "b27bb635369e525e56f0a793cb4cdb5b389036a3b293100a1ed50a7065acf50d",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "d1d8d8f07e0c84ce9fe2dec5ee74dc6855a9f7b65df0782880cd1a50193c6582",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "094e1c4830fc18898d4ac28b50f91d8cc8a2d48775440834b4268751a5fa3924",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "58f2b7217b4f1e9b73a73274774cf0dd7648a4d3bab9f2e070bdc224849a251a",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "376b927cb05fe144e58fb8c7c458cd63d6db612930ad3ca970f50483165588ee",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f20f3d004b38453e34af8d49c794c40a33901e47fd1eaf3638bcb0e9b441a00f",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "4c2e95063305fb14e7339484e8c4638fc63f3a757e3439d27ebc6b808c318f47",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "5e81b506792c9006b17ea6d383f51b46d19e8ebb01040519c25199c33cbda29c",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "709bfe5a16e8ce3b54cc35db6f9255716e0348b76834ef50fecec63359d0cb81",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "48f09cef05d0f181bcecf7b0e543d57cbc5a74f76d92d395499220db96608645",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "a26a828640a233c142791297d00211ca3d9ae036601b8faa38122952ffee55c5",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f853b055d5f9b3fbdfc90014de753cb13ab7c703581bfa26cb369172001b6d36",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "736debe5979bd646a385dc2f53b2940da8cea1041141f2590a33707cb5267765",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "ad19f017aa9016e2bf9b5379173bc359c373e1ae284fb4e379bc7a88051a91d3",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "3b2a828391343b5462f7235264519795eef3b3bcfa8b02006239a076d3371152",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "0c66d075fa9eecf27d400003fa4a34dd057c0badfa151a4688bf320f1dd48273",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "e9bdeb1ce6ea9bd47566717eda8b9d2dc0b90db1c39bd7596964cd4b8f9b61b7",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "0c54d858d1f93a2d69becf32666d187b17b52d3cdec45bb4c17554a90c29846a",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "e6382c1697f24f5a5314347cfb32ea30e4e903d0d91ed064b992244cf3333172",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "1d1658d834b2e721db6ddba91ab54f85eb26a49dfce5786c81eaa40fb53be41a",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "2c0cdb6f345219897502b5554061401029ca3dcb0b70e364f395f07b99268d89",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f79981478eacee819f161341e051b2ad7f2e363bcbe1faee22928df606e64a4c",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "72f45d9d64393c918684eff6effcf54cfc6f613401d1c9d6e767358e347a976b",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "0ba58af6ae96aa7ce950e0d3b33f9d39f0b4e19e901fbe9f723b4f319fb1283c",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "631f156efe19c8719986a20cb301ba92f1f654a667992b69994ac92776f7af9a",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "2a856a16cb3ad46051d38df13eb29be85e46d703a523d4ccc240dc31f7de1121",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "8c3b5051ede90dd6152943c53422e8ccfe95d624f531135654e491b0a6b5cdce",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "c21f428a4ecf438bd6e50feb71d82f8494c56c36c1c1eed4bc79326c258893ac",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "7e645a8d472de4f5e29f6f6bb147e19e90cca23a7e651cb8b12098a7d0d246f2",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "abae8675151055c3b387e28d36304baa30f81be62e3867afea9d6ff573202065",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "849b6baf12c2be9b7c7b274f4d6be4a68d7bf32bb53f120a96b54308a3c5c01c",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "4425a6b9fdfe59c91e8de8608105f53f1cfd92261af3a291207460eef873b751",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "196a586bc6df4bee9c6d6ce9e8c90ec28c9cf9099e4178de4f9af2080c18d935",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f89dfb61880653ab1b7f54cba4d583df155319babb3fd9e470661847910134d5",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f3cde37f1f7ddd800e0a14544712a7b022f101a47791e5696283149802b93401",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "3a704bbdadbe42cc9efbe308da7e3d230b22331270c53d9099b0a45b6e6398ee",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "1f10668140c088f8bdc9369940376dc342aba6fe1c596d903593d9cdd6f92d09",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f7536b2275632f12e223d2bd342e46489370594137023b290b10fa651c6e2dbb",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "7d824bab70ff063a4a0a1b54405bcc3bee1793b08d4997110fe2ce18d58088f2",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "bf7b7a569ebe93ff039848fb5eafb56bcaf6566be51c4ce0f24fce8b44f1fa61",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "3e03ee14a327fde7e7b1966c4c91edc59c2bb30a2bad557240365c4a1bc71230",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "8b156afb51afbfb32e4c407d5c8671fc0003afa6da965795df6ce22300e1e68b",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "37d9520384f1de8a0bdb60facd9db7491a198f4891077631c173200c3eb20416",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "d187b6a3d83be282f918899edc6eb348a9bdbfeddc86ac64a2e5d672122fdc04",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "af8c8fda53f204b7b2091d0a94c6758bce184cc5d9fa0678a4df80b75d6dc495",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "8232644e60783cb2372cbb27bd0549ab9e46f32d99b1137a2cb172ffb2f510b4",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "7e19636833cf0b244156f678d139dd86ce0959f12e1e4e922e5b6d14d917838d",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "b2c739b318cdc5ce0fe381938ec6d025b21701648e70a2276f1183be68cf846f",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "1deaab41c94c863eaf19b8f44864ed68fc17c9160efecdc3e646118e0139f524",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "2f7d34759fe7efa7cc749fe28066d80b8ff6f9ed59e1b458fc6da7f822a18864",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "42ee47d4b01fe8408cbf3009275855a8f0cf7e0036f9df17dcafcff51761bfa8",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "66a9748cba9e5dcd942ba9b2a9334ce869e35ce5851634f01c19e99bcd9acb52",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "4f4549046d429fe5a68332731b6523612087fb8ed7cd1ea36167d58cda1b6ceb",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "31e2465bc76ccb4de47d504a8faa435256f17e4ba5c2989fa7b56b592e68d9a4",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "c5f6e52513a5a69275cc0521ea59748e09f60e5bdc6333ca984710a661c84711",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "81e6e986f91bd849392b456e3e76b543e45716471c4c05ed6a93a3dd7d2101f4",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "8523d72fff710025c58c6855d53116592e99ee1d5ef018c7c0a8a01c827578c5",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "b31657ff416c8625cf36214a466ef906f4d7fe5a2833551a7c31efc604563e16",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "725690e413f57762d431e3af77fb2472afb95b9169ef6ad983e44b8398c5a77e",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "a158efaea14eeea36e84025346bcc6acb60b0cb885c8971fc5d64ab08015cd41",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "771d519a900642ba7b8bfc50fc4708fa3bee3a24e8b52acb9c7b4268aff714b6",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "2a0bc5eb263725289cb5171fc94a41de0c2484589dc60eaa96246e9d9b7abfa9",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "5024322e619cd475b0f4cd17c9cb815f0b32eda556f600e3f504bdfcdfc321eb",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "a89651d3dabf943ac205082a4ac11c6dd8c50b8816525cf68579227b6055568e",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "328601b05b96f8bfeefc3a861dcf456a4e3e5eb05d07bab57d67c1b08b358ee4",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "c31b34ce379253dff2ba47fd66532280716d82e35b1ad8bb067ff3e78b9a89a0",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "925655e6f15524d60be7d807c1759fb60c7d3e6d07cac880ebd9de03df261b48",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "c2774fbe83cc03465b4abe4bf5d716d4af27c4944c763f11974eb9127c79c640",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "006ad3d7dd27e1f97980b9564902a1d0464d2325f5fd874567d7dda6bd5a788c",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "73f9e2b4c7996c164f70accda359e9ae6bad6b2e85aabe2c372d069d52073dff",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "393fd5c2240f350493b18d857010202e8eb535f208bb3b4c35de34bc5c3de489",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "4a7112c3eaab459c667c85046c869b1d8703d1c1be997a949d40d2d3cf9303c2",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "2a4472913a899a245c755495707a0f941d35e9db7a121be4ef8a4f2042925f9c",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "de6a7a67dfe428c64b696c4279ec90758867207ff632af95afee33dcd1c179fb",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "03d4d1585fd5c28bc350de52b409bae8b8d11db5daa7478fd4ec74c1980d7e8a",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "105f599859050133780c8f0c37cdd1fd901225efd3d7563f48cc5cf4e143c734",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "6cefc5a70b75025a0210989888e879270c4a8c396fab538fec6e96e6ac62c5d9",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "55d9f483951106c90b79dc0776622b65acf1699de810230d89952d6f18b65eeb",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "ac123e760d9b425689b68563dc66f1cea5af4e2af4fcfb3e1676778cc701fdd7",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "317f64d59bf561374cc8aa6d8aa04869b77cc98d112c63932c5735a233c8609f",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "35f6dc35b3c79ac4612b4e1596176a3b04a7721a7fa015726d7b040e0e915a37",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "2ba6d3dc6cd7614e5e7516a52274423e27a074ae07adda1c43cf8dfc7678ba13",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "5a5be30520a2a3fd5d60af59a036198f552a069923cc1dc7a8bd94ab72ef08d7",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "0ae21c39f110fc4a1e3c6a58303190c4928b24306332f66d90264a46b586b87b",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "ba9669351779e5cd9a4a069c1f53535d278f96516b0ac54eb1c45a828c65b4a8",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "7007c04860c8a309ebeb83cf3949c88cec0fe7c75a4cea07843f30b8191e684c",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "1e38a78c300814cc15fc1233366c094151138ac094bdc38c445c5773fa9ccd74",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "161a9563139f7a69b34986aec30f783321b4dbb0fb8dbe7fb6b477f28af24114",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "8d9254ee273fcb1e7540b65c1fd01b11e72f67d104b39299eed83fce0a5b9cbf",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "c00142a2a276b3846b12a287e524b304d3cd9a9999633aa4f19297dae02ed756",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "e1ef505153ad3200dec7768b22366302a0ca56b4dfdd592173846c9c1e2af73b",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "b3259c619e513495a3159233b7a3ae3e01b9544250323d063b619b5bc75ce28a",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "23776c70fb6f0ce23d51cb0b7d835c71ad8d8ebcfb4e4a361e144e86e6d11641",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "9e3e5c425c4ceff0a4bf34bd0b76496cfa5ec42a89debe4b04516bca42c0e3ab",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "a57fa860058b45e942204564b076ea3bb1b3100b5c5f242db13c63f17cf20846",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "753bd61151062f0b5de8a1c6e49396f3f13646f2dadbda6c64a1de7584a0cdcd",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "0f73b61e1b8c4e9042e5210dc373a5a164a96da9ea1c2cdc231fcd2c34573042",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "c0b5b1795170ed0e2b8a4737ea26cffc928cfd23dd168712630b68a664c0da47",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "1e8e86b8239834cf77a273b731769d9d4b1099023b179498354e0691054ffc06",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "e784a8b1a93568f5fdb15ec9f7c68e4bcd28863bc913bc9fcc0ce0a3f1d2156d",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "de2ca5de6a804ad16597ded3a37db4cca88c08cf1852554e5c5627b860d84bc7",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "fdbfa1c2b03abd0b760bc0700df791ed93d591d05c91cab4ee08ed2b1e3fc307",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "6cf095cee8138877bd381f0cb934d380be88ce63d899b3bc161f7ebeb87aae4b",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "577efb1c9097b997dd235273d03afe629d9b084e3d796d098bfac09c52723c47",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "4454d74235a81b627299ae07fb5f7e57f117633d5780b9cf95fe67eaf568fafe",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "cb112ee6f9fe043e5ab210f4d34fd95e04d5fb546f25902780233ddb9bcb8cad",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "019889c92da67373878d1ef7112a801abeaa10e978ce317f6ab4ce60fe5738d3",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "fea2cbae4a83088a0911e370fdd80c4ddeb3f5c07933edcba6ced53e96f7eb23",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "164bbd89c5e7822effd757ba45050118600a9716805fc89f20349521b8b35b5d",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "b6461b0f317d619da921695df7c747b2c5968aaf052d15570e1308abf2395f05",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "c1e36491bf9ac4520b3d6e6382a60e702504729d01d23087c18c663195de8c93",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "d18c34b56257fcc0417c336b91655dc310f9ffaea35870d939a99bc70441832d",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "9d18b5a5cda48d7610c641d457b4f50aefce7d8ac258fec49eba3e350bb5afea",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "5b70d88c09f895a76693c5fdd5ec5259696aa283ded9bc0c5c7d1986ca16e7a9",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "12a7907a20ce9344ee283bc5f85f32ca3237361090cd4c2097097d59d3611ec9",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "7ab138d30e42b5c2b59d172b5ca4ce405aaceda5b6c18b8e75b21bd8b6d477a9",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "3465fbb896825856e5b870ebd71d38bd5aeccee301ca06cfd23092e1bbf4973b",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "6050dc9a7ecba06ad6f87f75c251a46e437c044f1603cbb005551c5b488f0eeb",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "028ac0afa284813514592058c9f04864775df1eb066c71f54afd091504f473e7",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "ba3870ce5dbcfae7464c08697f0fba56381c6ef4d7eb2d49bb63ae208993ff59",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "4773620b7f9ec75e7688d8977337c0c93884ef159bdcf36f97d1f937bad5b64a",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "61fad6e528d6eac4de52f48da5390655a2ff41dd04c24651bec65abd5e766ec5",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "8c102d1008d759febea9458369726c4fd9c9548871a4ac86cef18ef4056237fd",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "44fc94cdc1bac1798912e7aeb2d929004d7199bed392ecca1dc8fd9250b50e4d",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "6929aadc552f57a5b33a4242d6e1029e6bb49d65cc5b4d606b846aa0f5451790",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "ce0ad5ec7668c0eea8e073cb6bb71b44ece684416369a55dfd2202942599cf30",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "fb61733824d49a4f71832ac8ffa8f8adb0f3181a281394d3c0ee91fbf167a5c2",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "257d16a279aa76ed16136681f93398c4d5e3139d812e99e41f3d7d50597e0f73",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "eb07aed4e32b2563b0f80752aa280a2bc77b03f70f51f35d0ddf01dce3acdfad",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "b7606e80a609e94323d6fbda068675cf7f8cb64c304eec86c018034413462a6f",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "75da237869c71d87e9d55ef505bd47a1ba673d86c7064b2dd23d97af6292e08d",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f9947e66c07455215f11ce8de2021354272156961250dae21a31e954b8bc0810",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "7a82913be001b5a814be0cfdcece93eb77a0b86e502dd67134a2f3480cdea649",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f81d9294adf0071f494e98da6fbd326f547ac5402acf477f39df0764aaa14338",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "11f00cd7f669e11a0607213389ccdedaca059d31720ac477af0d67c4536e0252",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "90f23eab4e257897aade7176ce6a3a733de029fbd3ab280ecb6f5c0dbc3b3724",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "984df2be4006c1b03d56797f176a44472be7336d9d7cc24aedecdfb8235abbb2",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "4202566f11a1a09725fcdd96a8876bd1776406e95603066001435c3186c0f442",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "6603aa1deafdc6c460c1b633238522a3b2f536ab23209fb69130df28593f5b37",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "66834673a1b683f02fbaae836d0e3d1c0e0a5a80069fe98b2abc979db8ad0486",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "147dcc885d2040eefa4d3b4b32b3d8c5685eb3eb27b7c46863e1c6b1350389dd",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "83763b0f9e3bf27c056fbb4b79e3b47ec1d86370e2322332ab055fe0ab0bc783",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "e5cabf4be1f540818a4650a3677dab4f3d507f8cb73d845f909553bcbc537b4d",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "607f0b3d7a7d47823a2682e83fc39742b3bdea08a253c16d2c9d0736eebd9858",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "e5c3a5880ef98ecc4a5a22df86c6e0762cfe0442555ca535cef64bc13c8b8873",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "d3bfa5c47d54fe00189dee090f034ca5eba6027d6ad83b5f248676e09bca9e12",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f3a84e46361d2c9e2d7dca5dc9d435b3d061b9687d1565ca725fbe5f68b03540",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "07a6e7e491e8ddf0c7c88698d6ba7269b9762e0f5432ad552a36ed8e175580a5",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "1c53b187dc339e019cf011fe4752f9e22f87f84c2116873beff4bcd9d1abc617",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "425ba7de77d5cfd52e9bbfcf681980f458599b4b27b9e2cb1643193ebbca3879",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "7bde00f5b9eeabb98587dde67398d602ed0e8516b446ed1fde2e0191f2a4f246",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "5f5379c220a918236190e9d15b5ea77f996abacbbbd2b06b0eecebb63eb78f59",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "6e714779e8104d83ee218704576022fffa858310a93da54720656ec95f559a89",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "231fb6f1778b455a1aa335aa5f25e1e1f2c4ef0504b2a691371c555bfba7d59f",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "34064c77fd9f5931a0fd22352ff73bc7598034083f2c9fb29acb0715e3fb3561",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "4fe88fb99886dd7d82da038e78ebf383f0211f5729ef965ece1f8833521b3d2c",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "69785679d1ad54ed5bac963701e96af69b7eb2206303ca25fb278a9b646deca4",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "6c6c493a88f9764fd9456c484da49161850dfbab2b95e972782d83bf4001ad81",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "ca28ef8ff725d327bbf2dfe602026a0914aed4c955e8f2bb00c24dd19a8b04ef",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "e2b150d27c8345b7c6f478da04ee2df1b6196883eacea636fcb1beebcea8d910",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "3e0f81bb3b08e1023071776d627f3e0772c83a1bf77e1b6d0d8ccf53fd2870e9",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "bfd07dd90ea5603f42e6bf142d946124414873c11a31c0b3fe3e2d5045e3f9af",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "914396849749693b826b8d98bfa22280d7061a12a63dc6d81be92c7c15e61434",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "0ecf6c4493d0cadfd37c84d316098dc25999ed8642957b64feae24d1de6c64be",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "66da58d9a2f989ba52f879b1bf71c4ab6f669d87fbbf799d30f1ae509a59fe24",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "fbbb2d784e03ac080f87fec14520dbb2c485927ceb91dd38c025890362b9224a",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "5f8b9661e170aea2a687dd5a13bf80c5bd77c8c7491a409b4450066060e01ab9",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "658e12af0844b6385a0982ed8f82bc67e50992a0be8cff526de9a71f706ca789",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "49b01668c37d23961e5d56166efaf91f23b3fde6c440474085f60de0dc5e86cf",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      }
+    ],
+    "validation": [
+      {
+        "sha256": "0f1016455a78ec55aa90ecedf1ad19b7ad3668030b65585e8eb48320be6aa03d",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "aa12c12cb1193c787e2c3e77bbeb43dec39ae35bdce48f3de81bfe08f451f131",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "66d4d931a26a1f8e204704e5c3c6a99d282fcc1f475889d4d0b401df19e8a9c6",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "765dac3bcba77ce918e3932ab04aff874c6e532d647690c4cea568a4bbe58729",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "27db13851e4d9a7ac605e6a22c36e5be7f857e45bea8df823a698a7e449e9310",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "c6c2fbd6c4c9a7922fe4d972a7cecdb7ebef61e5e3add8c12ce0e4c8b0cd272b",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "5ae54601362605b9963228f5d547482a1fd5edea62b9392547a925ac3012e5bb",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "67f40d5c233d3b1839520aa5d65df79efd1387ec538cff55e998324b9260c604",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "59954371449349d536eac5f01f8025f50308c8f4064c567eca6ece5e6e2be6f5",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "6c645d19f4a885eaa282728f7f71f69832834d4872ca482bc35c4667db76e88c",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "bc67d262d0e8fc77ff02e3a08bcb1860428089e7b618b1b956943151a238d983",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "b43c94446599a1453de1a0581fbf984dd895ab40798f170d6ec70205c1db643f",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f2d7743e3167b36744d81bacf1ec74b9852eaed47aade81e55bd5616051fe51c",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "ecfaabd676d0b4fdaa805e10a0fda67305660c34bad984a1bed5d22b2660ebf1",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "dedc5e2f468392f634e44c6d914c8f05536ab98a91406660598f3a78fa637956",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "ff0105aff768e7f5723691a664719f6f67b2007885c793c9d9577cd22784a9f4",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "31156ca66639a0a5b649f6b68df3eab2b8009e6a3fac0b5b1d4c45ee109d626a",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "3ab8601b55b2e88f8341976a4af1c9e33bd00f4ea42ed2117f914537631504c9",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f79618309410f64b26db517332075f6ee66dd597fc17a0be1a40400a4a14c4d6",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "91744ebc29ecd50d74bbfe29d54174046f43c1b9b026a78952c5976a098a4af7",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "a5406a5a5394c887f5774f528a82c5c17444822b2de0992fc770a81b11d983f8",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "580e1a341e39d7985bc55013de44e4a5d96b0651adeb201c04bf86d9f8a008d5",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "3135e48bb617692d796e60925d8b09d1a1053874f772e2f090cc1d453d7e3d62",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "3c577ae771eacd68daa8638bc1ff03c09020e56c646c5a7c7c52636e854c2456",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "c3c9e42b2cbc9b29567efb8f378f635d28f1bff2db73009dfdd32584645dec51",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "d9faf2a325772257565b5af7c9caaf764802e1dfad1c801c681be30c792a2b1f",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "c2aafc8dc0d31a035e7357efd84721766d3fa1bbc0c49483a6c182eaf6b30407",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "c941ef86154794fd401ea1b2355e9778a644d818cbc8a117b024d95ea5be7818",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "d61dc8c14afc4b3143f265d03ca38b3fdc8d8c104c1eb0aa464fb5de7a1b8124",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "7a30714505694249d120b868104470bf541fbcb91a3393ebcdc249b005158cb8",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "85b37b43e36d7e5a8c0c0d15c9432987b1fb8bf1c9cf33b7acea36259ca95aac",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "65f4ab94a1862b27fdde0fe389d544c82bebadabfa9239a7f3c94ebbce572f92",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f925566238559de273c13ed8fc6cfe4b624ec379785a61ae2394a651984df013",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "4b3274ca82bbe77af44ad28e02c45f1d69a301dbb2cacc92e920b480caf98daa",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "7730c6500c228948d23684a27ecc000f9f17a65e016926d1002ff997822d5423",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "ae94a8f2fd93e305307dd7c1d8379aecdea66dbd6e902b2f961730661fb35009",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "fa5009f4ef47b09ca37876b5e804a545e0b34577c37ca9d8520a15340a6664df",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "9d08e69a1c1bdc605075b138f76433dc049f3d513782d049ba5cc83cd9093a80",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "75668c88a8cebc08f1957fc9eb6241c9f2904918fbc796107347eeafdb009f57",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "646ad36090526430568d7914388de2e43b5a29263c1acb67245da54cf6da579d",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "2c34dcd22fb1b622936b1d33540509ef3bc9264f3c98fe747eb65ebd0caad3d7",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "d83d6b16af6d6ea35721571f33999f78089e46ebb06ace4daf46f37a92bbdb5a",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "1fbad44342740c7636fa18cfdca88f89864aed747ed370ee795edeb784348522",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "ad9e3cd2ed8123c80b91455b26ed30093774ce86bfcc2ce0ca1c8d2f483170de",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "298348eaff63d6fd34e291d30712cdd8fb9b2c369b18229da1d937c369917b4c",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "7501921a6a09489dc3e49609db0e1f27b85a94b3cc5d5cec43c064901447f611",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "4d6f59e0601047672c84f09043464a18e3d9a199d6c8aaca3449562db25fb31c",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "313ef031c22359246524658fdcaa84105f0cfde88fcf1062fe740c383e81a528",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "aad2bc4404b23aea880da8bd1b403cb908a353fa1ec360a786007826e368b029",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "75fd79234e874e9be8c8a4b334bbea1478c2604394af6d69f3bacfd8537c9120",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "ee601d75f68429e347a2809c279ece53e20a77c83ef278105d32a26f1aab8808",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "98550176664b3cc76d978810ab425d10fb9852ab033b4c382c1f0cccde6af2ae",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "49671c9a8d686639c26644f990707ab6cd5b76d8532de71d05c24863be484c14",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "fa86bf4e1c8429d7670fa65f0ab7dea7ea29f880049eed0265d2384077262bd2",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "6810b77f58a535a23f6d72e2919012e53a43f8c86ac904c6812e7b3c9637db44",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "0d8157f6d3e18d64b88eca2a14f09597ae6d53d1f3dc7cb1c8ba97e598e63375",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "cd3bb80c4dda936384ffac1f58594785c172dbd7c6705af5b0e89d1a6f680ad1",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "4f33df33e08afc8130448919ebb44e8f70d87d157c22464ea0893070cb86792a",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "e96b8c7ffac4d673f9ff0c1025b03595e215607ffa4249ade6f693b7fbfd30de",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "c7e4780e749501cea0209e1afde7d50aaacc5929922ed3f297dafecf22da58ae",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "15bd75778c2a76f2d0ec3eaa80dc577924e915ea1f500010e6eab72414185117",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "432ecf6ffe8f77a680e235c3b9c10a706677bc3baac5aaf7b750f64fe5149c73",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "1cd65880183ad71e99eacc511ac8e0416b33381f7b6bcc71a506dfcc0b20d591",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "bf2e95395b7de20bf0098c4f1a9706277002638c1773e5b996b6d27a86840b02",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f24ecc62ac0771be85224c44d53652d3e7f27069cfc80238cf830cf092c9313c",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "b7c01ac22786e38f27d141eef4d670d86211153be3dca8d0064c5fba36c549d9",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "feb399d4c06bb8897536534ad6f52085409463912efce976ff23a2f7f3d8eae4",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "92482f2dc8b12bd4dd71293a4aac918786deaf517837f5a941e803303bb43ef3",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "fa3c3dfa5ff13fac75053bb894edd66d5a12d2f96dd94b31f55d9ce21c76fa85",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "a419e047a709762803aed676942a6e881643be2028fb12bb8d5428e563fca55c",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "d92b1a050bf325976aaf707eff471962679c72f7795b7924c05920758f5906cf",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "9a1cca598bcba5fb952b42f486304ba34f4b4281c2cc96b296a67e3a6a05d9d3",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "2c595c3f54f3c48e0c93bd64ed9533f208f420b10bf7f15557ea64b9709998e5",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "8eaa6c98f756ecd55dee82df5901d5ab9e93aee50996513ecee7d196fd6e4a03",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "9bccd17d366a5f6b780e083783ed93a50e3a94840227091743b6f01aa0f43ddf",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "bcda6478e5843829a71223b905e5fcef59b8be1540bac8b08ccb23d9b60a40c9",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "4e40654f9ad271591ca5a0c5d286af3e7ccd4c92d150947c28377feba61a1451",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "bf4770e1a7904b5a368009b8495b964bb77319065fd2bee98011b3443f228980",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "a1c9fa4a33a9eeb32e9d9dd0ac5e68c987390279a84964d1e13e8d5f1da11acb",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "b24ab729eba56ef1645f33dac39b921c5f31eff0486fb8b77e5f46e27d7c8d8c",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "ecd6b94f96e5ba1b5ba48e2981de44cb1eb8c90db16417c6db66541544285a84",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f7319e4fa95de9df9a29f48aa51e6d942ce759181c962b7d1b77898664d866c1",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "0cdd8dd4322473d2563e4551ea0d11b71d3a6b035471a94da2f4076fd05a2518",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "49e572a441300372f7559f3254b1ad7e675ec2aaa48004f3800fc61f248a8739",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "857095c2ade88f4d7d493605a57f7cc197e1d35a07bf11a0e52ee5737ebeacbc",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "48ec5f77ad4b4f88b986f627516833d14719f769d7c602daabbe169e89fea551",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "2fa647797a41f113308af9676a8dccc602936d91d7238f59172d2d436ed2d3ae",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "da11974620ef399a36fd3ae872ce0fa65a44680edf8964114538a558898e70f4",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "0b78bdfba7bf2c6ea2d7f273d0fb296efa13ee1ac1e6c8cba62ff26f22d2786d",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "3da1e97a54989bd8931f4392c79fcf8870387ab5a3a9507f4d1696e9898a6880",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "3e5abc2de4f143eed3d8e787e6a34c10248c5631ca9fd95ee08ed8c7afd62185",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "949f183319435eff3b6fa7b0b4d823c6c1f775ac8e709870d02d5a42073f29a5",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "1d733f5ad158b4595c24ca0f423c226e561491b22da660a0af90e72cb008f37c",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "a07df072d14bcf7bf119b7d41773d555a285612d55ba9bcc2182406959dc0cff",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "b341242eb58abf356b6a3987365202526d4f8e07949c2809c18cfad8add17755",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "8f024a275b294c831a7ddf47cbf9024d4072a7b505c5aefb4ec85041e20def3e",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "cf3abd8a99c3d43510c276c6d0e8bf7c40cdcc4376940dbdd2483e20715ae714",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "a7e284202ca471f3c88e47d0454853ef627a70de0ee5e6df069fcddc0d935012",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "a6c42d2c1f9665a2cf20d6df125902f2c385826e65e97e4dae2d704af5f892e8",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "5a94e543f5497377b1737c7b7329c5191b561257a3cac52a27b0697c836ddf3c",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f9f2ecde955df5b81bf5be1f338ee0040f7d4833ccd5a410eb9757a38725d9d4",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "9c6574cdd3f80f00622cfd47e6ee0e57f5d121d65c3edf65390e29158ed3076a",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "6bbd3d728e9b150c89e52e4540b5acef523e61a0b74829cfd44cefe42116a80c",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "3e7e889cb5900cb3a4ea29f5f06055494d127d969f4b08ab31a921dd31d49faa",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "d677eb50b113119ba3fb30a3fd3e8320e3f2d71213f666519f502f5450bf0821",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "8f07ef313bb998e8e2ba29a70af859ca6fa8b71ed928f843d158b60272ba48a8",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f92d8c7100b53698dbacdc374d656d628c7431efe140b71913c52876e3cf19d1",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "68962f94a46525c0d1a988c36a4d654c72cd2f174b9b3f3db0d4bcd365e925ff",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "859ce3d1540739ee73b30a0652ab651623eab966fa69781e990d25c86d5f022f",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "2486f6be7531f9d9ad363158e2b7cf31a72d7f3469048a60bad3d2f1c47e8e37",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      }
+    ],
+    "test": [
+      {
+        "sha256": "1a1c1746e7fcfb6e6987c6f3619479fd1d70cd7b15a87cd43559d7cc7ae8e611",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "b5c09f8967932c827ffcd7373201f5b0fa78295463342f145eecfec17c3feee7",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "b401e6f951445a91a9d391aa60417d1c7e40bbf591b91cb67b8724e181fe006f",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "78c992d24b6fb8645c9fd1845c101c1b9f894d9e75811b789731082603601987",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "5e48d6c0132f7cda1ce640bdc577719a2862148e73dc2e5678597841e533d8c9",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "ab0d324671a207e061c1c08208a96d880979ac5638aefc6ebf7f06c0ffba2ad4",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "027ff7423034127f602932ee8b9b0361f8f7b5f59f396131e36dc637a2770bb4",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "7257e094913600c6fb842e0253f9d337eb47b1c083a40c3703eccd3674271806",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "c5738e01d8d76e5e74d53374f48e237448db001ff9bd8af4865b20f13e96e131",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "d7b5cf0ef24c4e64d4d838915a7b530c0d91f72b6a5b59e3f491c3778e34b0af",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "da4dc6d3b7e0c139894b2f46b568383281048d909b87e611258b01a85a664535",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "411ae83c4531f267eb74c8d84dfc1820950e58c8f7364f7a12b72804fcfd55fb",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "703a9d97bb8973b49b033fca0ad98fe3ab2ebaf3c2389afb8ec17c9debfbca22",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "5c997ea8d3aabc0f8fde933f345874e2b4c15f5921a523f554a404c1366b0c03",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "1ebfd78b2d792e4e0fa65d729e7a2cc3e771a2d8e8a4634b30d96061e4119292",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "03441b20e5e79b2b9a2e621e12d9fdd55eff7734ce057cd509e191f31904adb9",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "d5a5e441928c7c388e2142f3a4b80eb2b34f00606cbdcd865f296fd4c68ff848",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "cc2a390925f04a7170d80bda8041401fd07a070446e49d47551a5999826a9ac8",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f54fc9787b77acd7efb8e885421c4a93eebe09d9718857beeafbc7a293d0ab61",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "767ee75583e776dd08a6d4eeca0636601d59a43edaacabadf6fe1a3f1d593e9c",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "d327a72432ff0f31896e952c375124b16ead40486bbc3a0653a9b67de35e7f55",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "c9c61e19d56430e7df72827e0b793cb3024faf3b879dd901bd559684beefb5c1",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "ad334442e2c7b56f0da5384509d4496f27ec65ca88ac3fa41c8b5816b170e5b3",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "3fb44d52698b1ecd00cac55eed7b1d7a701206fba614a6ddc4af19195795f8dc",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "30b6237216feaa6eb8b293805cb8b4a0b3363cf99b76fdf69f069a72b89ea35b",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "7f55d120a4223c815773232d8c1a7358868118c8b49ab1b8d27718cdefac13cd",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "b3f16a220ad10bb915f2e254a35d32a70ff4962fecf037d944110477f1e2a8b0",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "3f1c1503362dab60bd688b25a0e225ebfc55288edb3af319c19cd4fd718d54ff",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "881a8a2c932495b826abe6a3e05af1c3f1732be024e7544cb71f1a66966d8f4a",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "bd9f5d47f0afebd3ec2ed12e54934c9324cdd7db8930e2ec2452f2eee26009b7",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "88c1fbb3784a3519c4ba525ee3a04d02dee3e0bc66c527a1def776165dd29d7f",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "8141b843fd441f9529490466421d6c5d30ef61f42574a903fad43ab43e254687",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "ece997e35577b7933151a14787b179f9100c19837263999249aa841c19d50016",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "0119e947a9b4f059ac66e51081e5fa218e3b3346e2c4ed7d0dd8d7267af50553",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "26a2976a4a152a0b7b3436a361cd5733f24c51e5914b08886c04aa478c6c20f2",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "bed59d91bd3a36a77dd67fb24ee8d9e4ae1470e26779ef8ffc39f49f0893f64d",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "4193cdc5e2b929f8cd0a964437fb70c7625c78c12cbb5fc68ba09a39c543fec0",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "0a833e41fb3776d69641fe073c329f1c936212240bf17524da0cd9a1042bc73f",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "b61b95cfbc40e3471889cb6bf7f33f83369da51c2b3ba6a14b97497633660307",
+        "species": "Бодяк полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "09692f5c3c28bcc9eaf29ee3260a3dd0fbdf380886d0ca1f2eeaf98203acfc52",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "2ed3b8a324e87ad6d717bd7262cda815f75e5d3a1b440eb27468d6da3e38b704",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "341305c8ee82e3b0b16c6d34a1f030d0a83558a8ba2b1b510018517a20ddad97",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "101cd7aedcead58f0d0a77e131632e0a5c6bb0a3a9b1e9d85d82d85800f5144e",
+        "species": "Бодяк полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "55b5735c46707fc5d859c849150b1e0d8935e9354b836cea0fbbe620d1ff7538",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "c70e56d4513fd0abd7118647ba553927b65dec9a03a8523b1673ca483290d1ce",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "1f1239f5602c87d47d09a1f0c31d55f14b3a4ec23902accde409141ca3407242",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "6068366efde8ce62c8fdb1005df2121ae8a35501b7fb77e1da46011cc204dd9e",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "cdc7f875b1addd8aab72762295b281b8def855b0f58c81f3e2af0441605ea666",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "4166020a7faa729c73cfe2be1a0611d348f1c4ee227b0c44a6688a16c4295ce2",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "efb7034ea910a1e7cd291642dd7ac8fe4f4d114bb92f2d17d1e43029443caf6b",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "6363e93409d3a5f34d9403e44ce1f0bb82f8413970ae6596e6c524a95a2ca623",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "34bc1e06171fba4a246cba78e815767ae57733a396ec11dc1239e7757972c11f",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "7de5380a0a09e8ee53ff4ba5796f430db7582e6816f5b9cdc1236641d4a116a6",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "0b5de4c27ee204f51db875eb4d085c5b98ff98d3f66bdbb859dc78e5968d58ee",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "1ceea5bd9689d7c807c9bd1e356cd2edb9d0ef03e0323caf425dbc8d77790406",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "3f981eb791bb558a2fd08b1239747ec641719ccf1666ce239385cec4ddb81f5a",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "10385a266f567418dab294e03bb4a9cc5531648d1eb5c5ca431e0bb9733afa0e",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "ecb27c15745cde25f2485f91de85fb6516ac97252bad45c68e4e81bffbe9afed",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "25de8dae5f15b7ba9e1688c91d0162f9b1a95ccf9b21c92065d31f51c786c98a",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "582b19c82263cde8e27263a1f5ff909eb7d5fd415e328ca9ea4db75b528bc3e5",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "945d666e34514bdf4a3b23e79c1ba9f367d60359e2b5986d8ea9055bdd1cfa23",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "a86de6c93370141b75cd4d3f6299a5c5afd6c76d920a692dde44b693489f699f",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "b78b66aeceda4fba5dcbad6edf4c5a1ec1aa395c47bed3b6f54738167d1a3441",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "b7d97b51c9606ee6d8ef66c0da5e0cf4f2cf32bda5d649d3cbbb9a3b495f3c69",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "fff3703dc0ea8a379e30ef103e0c1d4b6a9870afa9b2a9b1c89590c052097049",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "b1e4d30c2b315053440a8327a2ab87724f29c6ea6591ceb2b8164a0781143aea",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "032dc00384a327373b1a219b3fc42c3153585d3a34471d536c095f455fa3db05",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "c9cfde605ff499b62d0b1190b32508c3f24f662cd6aa8a725ef1e16f6ffc2a64",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "646f507c8af1dc5bf9fdbc97247287c4c66eda87b3cc1f984f85e9d5cc61c61b",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "08cf93a11f491d737ad7e3a6866e6de79d22abe417d7a24784aaecde73d9e840",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "dc89f2de5b02a6470bc3de63ae4a5f9fbcce9946e95af8cb2488945b8bfd770b",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "b39cd431bb3c43db73bd40fb5bae9119d1c5d2c3f59e4309618fbfa416a14fb3",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "a89a4953ca1ae607153ab740a53c4099a8edae2181b54d102a4103ddfeb61dfb",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "b869efe71abaf4b3dc6c92cb20b74907c132b43c47931c2970874f95a02482d5",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "fa6444cb37d45030b3730ed415eb5572ada917e19951b6fd1e18fdbe79aae02d",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "bee852358580fff34e5aedf59a5305c2886ce8b8b4ab4b5a570d09e8aa88803d",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "4e6377cbb8225b3691656377bce8c52f313349fed9085c3724e10756d5836ee0",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f9683f1b63c506d174f2ceac59d707fa3bf10ffb47b6d9683803a4ddaab4ffea",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "5d7bbaa972d8b5f27234f2cb5b61b89642ce73d6be41ed1cb4f5b1c1ebe1088f",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "85c72fe6823a6accbc08fbe7bb7d57e1cb25712f98d9441c019002134802bb8d",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "3b2488d50d2118852dd0a76a90b0771e79ea574dc790b5959f21c715631f3cbe",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "7b60c9dabcf642a1fd649b5313732c09ca5c1863d50037540e3e74aae5310c45",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "af5734e3be3970cc28af4d77bcb9b310041d7b11af717d73c379c6731a12f3d8",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "28147ffdd61d440b9ff849e62d5fc05617354a18a720edfaaf75d6d608f921a9",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "771500a2b0de576b1b193314ce38933da47a3f7d87fb7f7cc26caeffc1000941",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "9474a69fc7ae513a5b33f04e843f12e31cb6dbafedaf056fd3bd78b94b46e747",
+        "species": "Вьюнок полевой",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "d6a80c9101ea74e6c8d7a61bbab32499297eb200a6b8080c248507ac8ab03394",
+        "species": "Вьюнок полевой",
+        "stage": "Розетка",
+        "kind": "weed"
+      },
+      {
+        "sha256": "9c349853cd7177da4db9ebed098719c746a0004d89bc040f34283afe122c83f2",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "2860ea8d51f719beb21ae2098c12b4bf133d6d24925b1e54978de240698f02fa",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "55809f6cf4f82d77315a2f1bd5792127da4a7a655d6b493b8f9c02407ee42327",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "a06cd3b69d73e5aaf1f6d90179e162214cd7336244dd3f9b5c44de6421536ad5",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "543275f65f0c6df14643bf6c3ca8ac0255abcd0b849b1d5b95d919a16ccd28d3",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "6a33f58f263aaf97ba1e323a0773667f917e2c68524c451deb97eb8dafc15c95",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "07ecdb63744d9f39fb298ec40c20c90108114c06749014172105b1e356e8dcec",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "8b14b99b6d93907a9b1670ce1d81d959d5f258c927b5bcc7c6ba7a727bbfbbcc",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "a71c1c767875b38681dced09f494b91b4320a252aba60a3ac046fa12f865bcd8",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "b257b592a97fff5fcddf883eecc24da0a3aa14b0f15baf1adfc7f61e2e45e3a6",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "c16466a0a732451873b61378822b0591321347cb765b89fac9ddf4b6a52ebbb1",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "34b0bcd562e4d6b40b24c36aff333e6ec1ab20c36a0db48a993de6d3bf8a762a",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "7bf973e6a7b5db052bda6fd09b30a67302661c5305e23bbea11e24ed3b80d88c",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "e385b3829d8ff184ce43901cb32a9f0a502aa65ae2139b40d0653bb9089cf49f",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "8f32e25fe2509f6a7b90443a39941b47d79c5bda98838c219ab62567ba48288e",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "db799b161b6e8ee5d8bbeb41399eb4b00078bb4e44634a0b02364ab5ba15b4c4",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "1683766805227142fd3ccd77169d421914c1343bf9785b0ac5846bf2bfbbd028",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "60b806512d778492217730c5c9b0e1c1ba2df6db38b10eeee5a2f72941a3ae6f",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "9a746c6e50aa6f7cfca643a791e3e67b20ac65bef3213bff2775207059b6f185",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "f5f46895ab6c65bc98a6de79281b48c584ca0fc747ffe819afef3c5eeeea729c",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "4aa6a141d02ef0f23550ca392002d428ffee687134f4f8f8b0c8d8ead518f1ea",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "d4903e3faf9d085a4130faaaa23d60a0f61e44eb3a5035e68b3317dcbeae7e2a",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      },
+      {
+        "sha256": "e7dea0c7da71dd6961959ca20fcc94ca4231d9e9a26de99a1688f94a26fbf085",
+        "species": "Пырей ползучий",
+        "stage": "Стеблевание",
+        "kind": "weed"
+      }
+    ]
+  }
+}

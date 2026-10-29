@@ -1,0 +1,94 @@
+{
+  "integration_status": {
+    "status": "PASS",
+    "images": 1634,
+    "positive_images": 1450,
+    "reviewed_negative_images": 184,
+    "annotations": 5272,
+    "file_sha256_unique": 1634,
+    "pixel_sha256_unique": 1634,
+    "max_coco_yolo_roundtrip_error_pixels": 3.0720457289135084e-09,
+    "whole_source_groups_disjoint": true,
+    "taco_scene_components_disjoint": true,
+    "retained_near_duplicate_pairs": 0,
+    "historical_test_batches_not_in_train_or_val": true,
+    "holdout_previously_unseen_batch_or_collection_day_only": true,
+    "geographic_independence_proven": false,
+    "sealed_holdout_matches_export": true,
+    "private_user_photos_used": false,
+    "training_run": false,
+    "splits": {
+      "development_aerial_unresolved": {
+        "images": 50,
+        "positive_images": 50,
+        "reviewed_negative_images": 0,
+        "annotations": 459
+      },
+      "holdout_new_negative_media": {
+        "images": 5,
+        "positive_images": 0,
+        "reviewed_negative_images": 5,
+        "annotations": 0
+      },
+      "holdout_unseen_uav_batch": {
+        "images": 554,
+        "positive_images": 554,
+        "reviewed_negative_images": 0,
+        "annotations": 2544
+      },
+      "test_development_aerial": {
+        "images": 21,
+        "positive_images": 21,
+        "reviewed_negative_images": 0,
+        "annotations": 88
+      },
+      "test_development_old": {
+        "images": 31,
+        "positive_images": 0,
+        "reviewed_negative_images": 31,
+        "annotations": 0
+      },
+      "train": {
+        "images": 765,
+        "positive_images": 648,
+        "reviewed_negative_images": 117,
+        "annotations": 1761
+      },
+      "val": {
+        "images": 139,
+        "positive_images": 136,
+        "reviewed_negative_images": 3,
+        "annotations": 318
+      },
+      "val_development_aerial": {
+        "images": 41,
+        "positive_images": 41,
+        "reviewed_negative_images": 0,
+        "annotations": 102
+      },
+      "val_development_old": {
+        "images": 28,
+        "positive_images": 0,
+        "reviewed_negative_images": 28,
+        "annotations": 0
+      }
+    }
+  },
+  "snapshot_lock_sha256": "3257249f1dee4155e3db9dba141ebdfedb5ba006ed7aa585907cf6d7e8e98830",
+  "private_photos_excluded": 2,
+  "private_photo_dhash_minima_to_tuning": [
+    18,
+    13
+  ],
+  "image_btrfs_total_gib": 4.06,
+  "image_btrfs_exclusive_bytes": 0,
+  "new_downloads": false,
+  "new_water_package_used": false,
+  "deletion_performed": false,
+  "active_trash_enabled": false,
+  "training_run": "litter-v3-land-yolo11n-full-cpu-20261020",
+  "training_pid": 260666,
+  "supervisor_pid": 261427,
+  "state": "running_not_accepted",
+  "periodic_checkpoints": false
+}

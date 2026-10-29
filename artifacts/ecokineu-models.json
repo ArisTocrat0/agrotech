@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "models": [
+    {
+      "id": "fire-v6-4a60bd37",
+      "path": "artifacts/fire-candidate-v6/best_openvino_model/best.xml",
+      "sha256": "bb921d8d3f5aac395ea4f2e334840daf59b97b82d356634c670241d080d3ea79",
+      "assets": [
+        {
+          "path": "artifacts/fire-candidate-v6/best_openvino_model/best.bin",
+          "sha256": "483392f3abeec44452127dba59b49b5afd3be06d7304f87e1be3709f73f71321"
+        }
+      ],
+      "classes": [
+        "fire",
+        null,
+        "smoke"
+      ],
+      "imgsz": 640,
+      "threshold": 0.35,
+      "license": "Weights card CC BY 2.0; Ultralytics runtime/export AGPL-3.0",
+      "scope": "Сторонний экспериментальный baseline; person исключён; происхождение train и качество на воздушных фото не подтверждены"
+    },
+    {
+      "id": "trash-dronewaste500-v1-transfer-3e",
+      "path": "outputs/pilot-training/dronewaste500-v1-transfer-3e/weights/best_openvino_model/best.xml",
+      "sha256": "8caa56965502e637cbc3008ae219776dc28c881cb8d0af7e524c5c4912e2fac1",
+      "assets": [
+        {
+          "path": "outputs/pilot-training/dronewaste500-v1-transfer-3e/weights/best_openvino_model/best.bin",
+          "sha256": "68540b95c89d2a19b32c663409fa661fcccf95c2e5ab623e3f49ddbb552a3f21"
+        }
+      ],
+      "classes": [
+        "trash"
+      ],
+      "imgsz": 320,
+      "threshold": 0.14314314314314314,
+      "license": "Ultralytics AGPL-3.0 + UAVVaste data CC BY 4.0",
+      "scope": "Orthomosaic dump/material piles, not individual street litter; no GPS/time; site-disjoint 350/75/75 unchanged; split={'train': 350, 'val': 75, 'test': 75}; mAP50=0.15858771378973596; порог 0.143; проверка обязательна",
+      "enabled": false,
+      "disabled_reason": "Карантин: исходная таксономия ошибочно объединяла камни, грунт и строительные материалы с мусором. Требуется новая разметка и проверка ложных срабатываний; повышение порога не исправляет смысл класса."
+    }
+  ]
+}

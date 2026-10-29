@@ -1,0 +1,40 @@
+{
+  "tests": {
+    "pilot_adapter_http_queue": 32,
+    "reprocess_including_inherited_queue_cases": 17,
+    "class_analysis_coverage": 4,
+    "quality_metric_bookkeeping": 3
+  },
+  "headless": {
+    "passed": true,
+    "map_checks": {
+      "interactive_layers": true,
+      "no_synthetic_coordinates_in_database": true,
+      "no_gps_list": true,
+      "demo_hidden_by_default": true,
+      "mission_class_review_date_filters": true,
+      "blocked_network_offline_fallback": true
+    },
+    "browser": "isolated headless Google Chrome, normal sandbox",
+    "screenshots": 7,
+    "real_photo_upload": true,
+    "duplicate_suppression": true,
+    "evidence_dialog": true,
+    "client_exceptions": [],
+    "mobile_horizontal_overflow": false,
+    "mission_counter_filter": true,
+    "visible_demo_origin": true,
+    "per_result_model_snapshot": true,
+    "mission": "browser-qa-real-photo"
+  },
+  "training_state": "running, not quality-approved or activated",
+  "dataset": "dronewaste-v2-binary-strict",
+  "first_epoch_seconds": 359.78166675567627,
+  "training_max_epochs": 40,
+  "patience": 8,
+  "budget_hours": 4,
+  "independent_holdout": false,
+  "user_photos_preserved": 2,
+  "user_photos_uploaded_externally": false,
+  "user_photos_in_training": false
+}

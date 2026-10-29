@@ -1,0 +1,22 @@
+{
+  "scope": "Small UAVVaste subset, disjoint source batches; location independence not verified; no drone/user-image accuracy claim",
+  "run": "uavvaste-v1-cpu-8e",
+  "epochs_requested": 8,
+  "seconds": 166.911187164,
+  "dataset_manifest_sha256": "b650c34e465815855fbf79fcf02ba72fd792ffbf4c5064e01ffbd7618418f500",
+  "split_counts": {
+    "train": 48,
+    "val": 12,
+    "test": 12
+  },
+  "test_metrics": {
+    "metrics/precision(B)": 0.007020499859590003,
+    "metrics/recall(B)": 0.44642857142857145,
+    "metrics/mAP50(B)": 0.11493919711467962,
+    "metrics/mAP50-95(B)": 0.040859155660073886,
+    "fitness": 0.040859155660073886
+  },
+  "weights_sha256": "129434f6f4016ba58486aa1a9079854222421f7d46dd8d929a1d6742861f669a",
+  "test_used_for_training": false,
+  "deployment": "Experimental; manual review required; not auto-activated"
+}

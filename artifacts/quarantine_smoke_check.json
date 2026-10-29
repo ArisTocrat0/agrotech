@@ -1,0 +1,14 @@
+{
+  "active_ids": [
+    "fire-v6-4a60bd37"
+  ],
+  "registry_sha256": "41a5cdc82ed184eb4777bfff7551c157e9a216450145e742e11edd94e5ae7953",
+  "source": "datasets/fire-candidates-v1/images/fire-107639709.jpg",
+  "inference_preprocess_nms_seconds": [
+    0.9160208839984989,
+    0.6834191720008675,
+    0.8051042970000708
+  ],
+  "no_accuracy_claim": true,
+  "trash_disabled": true
+}

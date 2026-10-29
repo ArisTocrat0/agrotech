@@ -1,0 +1,26 @@
+description: Ultralytics best model trained on /kaggle/working/final-dataset-v4/data.yaml
+author: Ultralytics
+date: '2026-10-20T10:23:48.057174+05:00'
+version: 8.4.154
+license: AGPL-3.0 License (https://ultralytics.com/license)
+docs: https://docs.ultralytics.com
+stride: 32
+task: detect
+head: Detect
+batch: 1
+imgsz:
+- 640
+- 640
+names:
+  0: fire
+  1: person
+  2: smoke
+args:
+  data: null
+  batch: 1
+  fraction: 1.0
+  quantize: null
+  nms: null
+  dynamic: false
+channels: 3
+end2end: false

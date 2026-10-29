@@ -1,0 +1,18 @@
+{
+  "unit_and_http_tests": 86,
+  "unit_and_http_result": "OK",
+  "browser": {
+    "passed": true,
+    "browser": "isolated headless Google Chrome, normal sandbox",
+    "screenshots": 7,
+    "real_photo_upload": true,
+    "duplicate_suppression": true,
+    "evidence_dialog": true,
+    "client_exceptions": [],
+    "mobile_horizontal_overflow": false,
+    "mission": "browser-qa-active-v3"
+  },
+  "e2e_photos": 6,
+  "actual_registry_match": true,
+  "native_cpp_parity": true
+}

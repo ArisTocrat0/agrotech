@@ -1,0 +1,65 @@
+{
+  "checked_unix": 1792556638.329894,
+  "http_home": 200,
+  "photo_count": 22,
+  "photo_states": {
+    "done": 22
+  },
+  "configured_registry_sha256": "41a5cdc82ed184eb4777bfff7551c157e9a216450145e742e11edd94e5ae7953",
+  "active_registry_sha256": null,
+  "model_loaded": false,
+  "model_error": null,
+  "assets": [
+    {
+      "path": "artifacts/fire-candidate-v6/best_openvino_model/best.xml",
+      "sha256": "bb921d8d3f5aac395ea4f2e334840daf59b97b82d356634c670241d080d3ea79",
+      "expected": "bb921d8d3f5aac395ea4f2e334840daf59b97b82d356634c670241d080d3ea79",
+      "passed": true
+    },
+    {
+      "path": "artifacts/fire-candidate-v6/best_openvino_model/best.bin",
+      "sha256": "483392f3abeec44452127dba59b49b5afd3be06d7304f87e1be3709f73f71321",
+      "expected": "483392f3abeec44452127dba59b49b5afd3be06d7304f87e1be3709f73f71321",
+      "passed": true
+    },
+    {
+      "path": "outputs/pilot-training/dronewaste500-v1-transfer-3e/weights/best_openvino_model/best.xml",
+      "sha256": "8caa56965502e637cbc3008ae219776dc28c881cb8d0af7e524c5c4912e2fac1",
+      "expected": "8caa56965502e637cbc3008ae219776dc28c881cb8d0af7e524c5c4912e2fac1",
+      "passed": true
+    },
+    {
+      "path": "outputs/pilot-training/dronewaste500-v1-transfer-3e/weights/best_openvino_model/best.bin",
+      "sha256": "68540b95c89d2a19b32c663409fa661fcccf95c2e5ab623e3f49ddbb552a3f21",
+      "expected": "68540b95c89d2a19b32c663409fa661fcccf95c2e5ab623e3f49ddbb552a3f21",
+      "passed": true
+    }
+  ],
+  "history_examples": [
+    {
+      "id": "b4610841e70b498aabf608945995dd0a",
+      "state": "done",
+      "name": "fire-107639709.jpg",
+      "events": 0
+    },
+    {
+      "id": "cac4e6aa471f405a88d505e47e7b85a9",
+      "state": "done",
+      "name": "fire-248462.jpg",
+      "events": 0
+    },
+    {
+      "id": "0143c2ac17de450f9a62438f593261a9",
+      "state": "done",
+      "name": "batch_03_img_1560.jpg",
+      "events": 0
+    },
+    {
+      "id": "b58e49d0e90e4d8a8ee5ed0def50e386",
+      "state": "done",
+      "name": "batch_03_img_1740.jpg",
+      "events": 0
+    }
+  ],
+  "note": "Read-only check; existing history available. Runtime model is lazy and not currently loaded; do not claim active weight hash yet. Fresh inference reserved until smoke CPU training finishes."
+}

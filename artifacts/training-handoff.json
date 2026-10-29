@@ -1,0 +1,51 @@
+{
+  "recorded_utc": "2026-10-20T12:36:18.141036+00:00",
+  "repository": "/home/beka/Projects/agrotech",
+  "branch": "pilot/ecokineu-2026-10-21",
+  "commit": "a35d0ee8b623d5dde0d6c3c6514560b68a85407b",
+  "trash_run": "litter-v3-land-yolo11n-full-cpu-20261020",
+  "last_completed_epoch": {
+    "epoch": 7,
+    "epoch_seconds": 937.4905133247375,
+    "elapsed_seconds": 6811.0955312252045,
+    "metrics": {
+      "metrics/precision(B)": 0.7076,
+      "metrics/recall(B)": 0.32075,
+      "metrics/mAP50(B)": 0.38343,
+      "metrics/mAP50-95(B)": 0.25841,
+      "val/box_loss": 1.26631,
+      "val/cls_loss": 2.37773,
+      "val/dfl_loss": 1.19425
+    },
+    "best_fitness": 0.25841,
+    "phase": "training_validation"
+  },
+  "live_process": {
+    "training_alive": true,
+    "supervisor_alive": true,
+    "training_pid": 260666,
+    "rss_mib": 418.4,
+    "peak_rss_mib": 786.5,
+    "swap_mib": 435.0,
+    "supervisor_pid": 261427,
+    "current_epoch": 8,
+    "maximum_epochs": 30,
+    "batch": 121,
+    "batches": 765,
+    "log_updated_utc": "2026-10-20T12:36:17.724230+00:00"
+  },
+  "terminal_evaluation": false,
+  "trash_active": false,
+  "smoke_training_started": false,
+  "smoke_ready_root": "datasets/smoke-pyrosdis-v1",
+  "smoke_source_allocated_bytes": 186650624,
+  "server_pid": 316510,
+  "photo_count": 22,
+  "new_checks": {
+    "pilot_tests": 11,
+    "progress_parser_tests": 3,
+    "python_syntax": "passed",
+    "javascript_syntax": "passed"
+  },
+  "next": "Supervise existing trash process; inspect terminal eval, parity and visual review before any smoke baseline/train. No activation yet."
+}

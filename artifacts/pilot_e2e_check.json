@@ -1,0 +1,270 @@
+{
+  "scope": "Real local HTTP→MariaDB→native model→evidence; detections are unverified hypotheses, not recognition accuracy",
+  "server": "http://127.0.0.1:8010",
+  "database": "MariaDB / ecokineu_pilot / private Unix socket",
+  "active_registry_sha256": "d0a49d86d76c8c20b5c04455a50f8a4ce1f1493429953378b59c16a90f85af18",
+  "configured_and_loaded_match": true,
+  "photos": [
+    {
+      "id": "6894565c4a1c44b69efc392ed58f7028",
+      "mission": "public-piles-demo-active-2026-10-21",
+      "name": "fire-107639709.jpg",
+      "state": "done",
+      "processing_seconds": 2.237,
+      "events": 2,
+      "classes": [
+        "trash",
+        "trash"
+      ],
+      "location": null,
+      "model": {
+        "backend": "OpenVINO native CPU",
+        "runtime_version": "2026.4.1-22982-e213a147257-releases/2026/4",
+        "registry_sha256": "d0a49d86d76c8c20b5c04455a50f8a4ce1f1493429953378b59c16a90f85af18",
+        "adapter_sha256": "c6b16ecc3bb712c613348963fb3cb5ea27c2f9515fb0e8b69750b140455b316a",
+        "preprocessing": "RGB float32 NCHW / letterbox114 / class NMS before clipping",
+        "models": [
+          {
+            "id": "fire-v6-4a60bd37",
+            "sha256": "bb921d8d3f5aac395ea4f2e334840daf59b97b82d356634c670241d080d3ea79",
+            "classes": [
+              "fire",
+              null,
+              "smoke"
+            ],
+            "license": "Weights card CC BY 2.0; Ultralytics runtime/export AGPL-3.0",
+            "scope": "Сторонний экспериментальный baseline; person исключён; происхождение train и качество на воздушных фото не подтверждены",
+            "imgsz": 640,
+            "threshold": 0.35
+          },
+          {
+            "id": "trash-dronewaste500-v1-transfer-3e",
+            "sha256": "8caa56965502e637cbc3008ae219776dc28c881cb8d0af7e524c5c4912e2fac1",
+            "classes": [
+              "trash"
+            ],
+            "license": "Ultralytics AGPL-3.0 + UAVVaste data CC BY 4.0",
+            "scope": "Orthomosaic dump/material piles, not individual street litter; no GPS/time; site-disjoint 350/75/75 unchanged; split={'train': 350, 'val': 75, 'test': 75}; mAP50=0.15858771378973596; порог 0.143; проверка обязательна",
+            "imgsz": 320,
+            "threshold": 0.14314314314314314
+          }
+        ]
+      }
+    },
+    {
+      "id": "2f5f79403776468e8e0d6b85d9325f7c",
+      "mission": "public-piles-demo-active-2026-10-21",
+      "name": "fire-248462.jpg",
+      "state": "done",
+      "processing_seconds": 0.6905,
+      "events": 4,
+      "classes": [
+        "fire",
+        "fire",
+        "trash",
+        "trash"
+      ],
+      "location": null,
+      "model": {
+        "backend": "OpenVINO native CPU",
+        "runtime_version": "2026.4.1-22982-e213a147257-releases/2026/4",
+        "registry_sha256": "d0a49d86d76c8c20b5c04455a50f8a4ce1f1493429953378b59c16a90f85af18",
+        "adapter_sha256": "c6b16ecc3bb712c613348963fb3cb5ea27c2f9515fb0e8b69750b140455b316a",
+        "preprocessing": "RGB float32 NCHW / letterbox114 / class NMS before clipping",
+        "models": [
+          {
+            "id": "fire-v6-4a60bd37",
+            "sha256": "bb921d8d3f5aac395ea4f2e334840daf59b97b82d356634c670241d080d3ea79",
+            "classes": [
+              "fire",
+              null,
+              "smoke"
+            ],
+            "license": "Weights card CC BY 2.0; Ultralytics runtime/export AGPL-3.0",
+            "scope": "Сторонний экспериментальный baseline; person исключён; происхождение train и качество на воздушных фото не подтверждены",
+            "imgsz": 640,
+            "threshold": 0.35
+          },
+          {
+            "id": "trash-dronewaste500-v1-transfer-3e",
+            "sha256": "8caa56965502e637cbc3008ae219776dc28c881cb8d0af7e524c5c4912e2fac1",
+            "classes": [
+              "trash"
+            ],
+            "license": "Ultralytics AGPL-3.0 + UAVVaste data CC BY 4.0",
+            "scope": "Orthomosaic dump/material piles, not individual street litter; no GPS/time; site-disjoint 350/75/75 unchanged; split={'train': 350, 'val': 75, 'test': 75}; mAP50=0.15858771378973596; порог 0.143; проверка обязательна",
+            "imgsz": 320,
+            "threshold": 0.14314314314314314
+          }
+        ]
+      }
+    },
+    {
+      "id": "b31ff8e3b9f84d72a38910ca3545af97",
+      "mission": "public-piles-demo-active-2026-10-21",
+      "name": "site3_112.png",
+      "state": "done",
+      "processing_seconds": 1.0188,
+      "events": 1,
+      "classes": [
+        "trash"
+      ],
+      "location": null,
+      "model": {
+        "backend": "OpenVINO native CPU",
+        "runtime_version": "2026.4.1-22982-e213a147257-releases/2026/4",
+        "registry_sha256": "d0a49d86d76c8c20b5c04455a50f8a4ce1f1493429953378b59c16a90f85af18",
+        "adapter_sha256": "c6b16ecc3bb712c613348963fb3cb5ea27c2f9515fb0e8b69750b140455b316a",
+        "preprocessing": "RGB float32 NCHW / letterbox114 / class NMS before clipping",
+        "models": [
+          {
+            "id": "fire-v6-4a60bd37",
+            "sha256": "bb921d8d3f5aac395ea4f2e334840daf59b97b82d356634c670241d080d3ea79",
+            "classes": [
+              "fire",
+              null,
+              "smoke"
+            ],
+            "license": "Weights card CC BY 2.0; Ultralytics runtime/export AGPL-3.0",
+            "scope": "Сторонний экспериментальный baseline; person исключён; происхождение train и качество на воздушных фото не подтверждены",
+            "imgsz": 640,
+            "threshold": 0.35
+          },
+          {
+            "id": "trash-dronewaste500-v1-transfer-3e",
+            "sha256": "8caa56965502e637cbc3008ae219776dc28c881cb8d0af7e524c5c4912e2fac1",
+            "classes": [
+              "trash"
+            ],
+            "license": "Ultralytics AGPL-3.0 + UAVVaste data CC BY 4.0",
+            "scope": "Orthomosaic dump/material piles, not individual street litter; no GPS/time; site-disjoint 350/75/75 unchanged; split={'train': 350, 'val': 75, 'test': 75}; mAP50=0.15858771378973596; порог 0.143; проверка обязательна",
+            "imgsz": 320,
+            "threshold": 0.14314314314314314
+          }
+        ]
+      }
+    },
+    {
+      "id": "fadcb905e1384f7cad5cd94340f97d5a",
+      "mission": "public-piles-demo-active-2026-10-21",
+      "name": "site3_206.png",
+      "state": "done",
+      "processing_seconds": 0.7988,
+      "events": 3,
+      "classes": [
+        "trash",
+        "trash",
+        "trash"
+      ],
+      "location": null,
+      "model": {
+        "backend": "OpenVINO native CPU",
+        "runtime_version": "2026.4.1-22982-e213a147257-releases/2026/4",
+        "registry_sha256": "d0a49d86d76c8c20b5c04455a50f8a4ce1f1493429953378b59c16a90f85af18",
+        "adapter_sha256": "c6b16ecc3bb712c613348963fb3cb5ea27c2f9515fb0e8b69750b140455b316a",
+        "preprocessing": "RGB float32 NCHW / letterbox114 / class NMS before clipping",
+        "models": [
+          {
+            "id": "fire-v6-4a60bd37",
+            "sha256": "bb921d8d3f5aac395ea4f2e334840daf59b97b82d356634c670241d080d3ea79",
+            "classes": [
+              "fire",
+              null,
+              "smoke"
+            ],
+            "license": "Weights card CC BY 2.0; Ultralytics runtime/export AGPL-3.0",
+            "scope": "Сторонний экспериментальный baseline; person исключён; происхождение train и качество на воздушных фото не подтверждены",
+            "imgsz": 640,
+            "threshold": 0.35
+          },
+          {
+            "id": "trash-dronewaste500-v1-transfer-3e",
+            "sha256": "8caa56965502e637cbc3008ae219776dc28c881cb8d0af7e524c5c4912e2fac1",
+            "classes": [
+              "trash"
+            ],
+            "license": "Ultralytics AGPL-3.0 + UAVVaste data CC BY 4.0",
+            "scope": "Orthomosaic dump/material piles, not individual street litter; no GPS/time; site-disjoint 350/75/75 unchanged; split={'train': 350, 'val': 75, 'test': 75}; mAP50=0.15858771378973596; порог 0.143; проверка обязательна",
+            "imgsz": 320,
+            "threshold": 0.14314314314314314
+          }
+        ]
+      }
+    },
+    {
+      "id": "5de20ed1014344a3900e49e3c76900f8",
+      "mission": "public-piles-demo-active-2026-10-21",
+      "name": "site3_26.png",
+      "state": "done",
+      "processing_seconds": 0.8146,
+      "events": 9,
+      "classes": [
+        "trash",
+        "trash",
+        "trash",
+        "trash",
+        "trash",
+        "trash",
+        "trash",
+        "trash",
+        "trash"
+      ],
+      "location": null,
+      "model": {
+        "backend": "OpenVINO native CPU",
+        "runtime_version": "2026.4.1-22982-e213a147257-releases/2026/4",
+        "registry_sha256": "d0a49d86d76c8c20b5c04455a50f8a4ce1f1493429953378b59c16a90f85af18",
+        "adapter_sha256": "c6b16ecc3bb712c613348963fb3cb5ea27c2f9515fb0e8b69750b140455b316a",
+        "preprocessing": "RGB float32 NCHW / letterbox114 / class NMS before clipping",
+        "models": [
+          {
+            "id": "fire-v6-4a60bd37",
+            "sha256": "bb921d8d3f5aac395ea4f2e334840daf59b97b82d356634c670241d080d3ea79",
+            "classes": [
+              "fire",
+              null,
+              "smoke"
+            ],
+            "license": "Weights card CC BY 2.0; Ultralytics runtime/export AGPL-3.0",
+            "scope": "Сторонний экспериментальный baseline; person исключён; происхождение train и качество на воздушных фото не подтверждены",
+            "imgsz": 640,
+            "threshold": 0.35
+          },
+          {
+            "id": "trash-dronewaste500-v1-transfer-3e",
+            "sha256": "8caa56965502e637cbc3008ae219776dc28c881cb8d0af7e524c5c4912e2fac1",
+            "classes": [
+              "trash"
+            ],
+            "license": "Ultralytics AGPL-3.0 + UAVVaste data CC BY 4.0",
+            "scope": "Orthomosaic dump/material piles, not individual street litter; no GPS/time; site-disjoint 350/75/75 unchanged; split={'train': 350, 'val': 75, 'test': 75}; mAP50=0.15858771378973596; порог 0.143; проверка обязательна",
+            "imgsz": 320,
+            "threshold": 0.14314314314314314
+          }
+        ]
+      }
+    },
+    {
+      "id": "bd99890336d645ac82ba1454b651b0ad",
+      "mission": "local-reference-demo-active-2026-10-21",
+      "name": "006889_a4053894-a62a-41b6-bc5d-0a50024e833f.jpg",
+      "state": "done",
+      "processing_seconds": 55.6171,
+      "events": 1,
+      "classes": [
+        "weed"
+      ],
+      "location": null,
+      "model": {
+        "backend": "Existing DINOv2 reference baseline + C++ NMS",
+        "classes": [
+          "weed"
+        ],
+        "model_name": "facebook/dinov2-small",
+        "cached_revision": "ed25f3a31f01632728cabb09d1542f84ab7b0056",
+        "reference_index_sha256": "16eb9b6ae328bd3779461c9b0e715bf85f0d543dd02d9106ebc12944139acae8",
+        "scope": "Candidate vegetation and reference similarity; field detection quality unmeasured; similarity is not probability"
+      }
+    }
+  ]
+}

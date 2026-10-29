@@ -1,0 +1,6 @@
+{
+  "run": "smoke-pyrosdis-yolo11n-cpu-20261020",
+  "hours_max": 2,
+  "reason": "07:30 UTC demonstration deadline; reserve export/evaluation time",
+  "training_pid": 351968
+}

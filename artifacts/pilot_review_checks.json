@@ -1,0 +1,20 @@
+{
+  "tests": 89,
+  "result": "OK",
+  "headless": {
+    "passed": true,
+    "browser": "isolated headless Google Chrome, normal sandbox",
+    "screenshots": 7,
+    "real_photo_upload": true,
+    "duplicate_suppression": true,
+    "evidence_dialog": true,
+    "client_exceptions": [],
+    "mobile_horizontal_overflow": false,
+    "mission_counter_filter": true,
+    "visible_demo_origin": true,
+    "per_result_model_snapshot": true,
+    "mission": "browser-qa-review-p1"
+  },
+  "base_checkpoint": "e533c10",
+  "scope": "P1 demo provenance/counters/result versions; P2 DINO status and queue warning"
+}

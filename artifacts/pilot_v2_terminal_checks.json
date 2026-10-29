@@ -1,0 +1,66 @@
+{
+  "state": "completed_candidate_rejected_not_activated",
+  "run": "dronewaste-v2-strict-cpu40e-20261020",
+  "epochs_completed": 25,
+  "best_training_epoch": 17,
+  "training_seconds": 7687.521124839783,
+  "independent_holdout": false,
+  "threshold": 0.2,
+  "val_development": {
+    "threshold": 0.2,
+    "tp": 9,
+    "fp": 13,
+    "fn": 37,
+    "precision": 0.4090909090909091,
+    "recall": 0.1956521739130435,
+    "negative_images": 28,
+    "negative_images_with_alarm": 2,
+    "negative_image_alarm_rate": 0.07142857142857142
+  },
+  "test_development": {
+    "threshold": 0.2,
+    "tp": 155,
+    "fp": 168,
+    "fn": 435,
+    "precision": 0.47987616099071206,
+    "recall": 0.2627118644067797,
+    "negative_images": 31,
+    "negative_images_with_alarm": 0,
+    "negative_image_alarm_rate": 0.0
+  },
+  "user_photos_preserved": 2,
+  "user_photos_external_upload": false,
+  "user_photos_training_use": false,
+  "live_trash_enabled": false,
+  "supervisor_state": "evaluation_complete_not_activated",
+  "headless": {
+    "passed": true,
+    "map_checks": {
+      "interactive_layers": true,
+      "no_synthetic_coordinates_in_database": true,
+      "no_gps_list": true,
+      "demo_hidden_by_default": true,
+      "mission_class_review_date_filters": true,
+      "blocked_network_offline_fallback": true
+    },
+    "browser": "isolated headless Google Chrome, normal sandbox",
+    "screenshots": 7,
+    "real_photo_upload": true,
+    "duplicate_suppression": true,
+    "evidence_dialog": true,
+    "client_exceptions": [],
+    "mobile_horizontal_overflow": false,
+    "mission_counter_filter": true,
+    "visible_demo_origin": true,
+    "per_result_model_snapshot": true,
+    "mission": "browser-qa-real-photo"
+  },
+  "training_csv_rows_verified": 25,
+  "terminal_tests": {
+    "analysis_coverage": 4,
+    "metric_bookkeeping": 3,
+    "reprocessing_including_inherited_queue_cases": 17
+  },
+  "report": "docs/V2_TRAINING_RESULT_RU.md",
+  "manual_review_verdict": "rejected_not_activated"
+}

@@ -1,0 +1,351 @@
+{
+  "scope": "Actual local CPU model timing. Does not include drone/network. No recognition quality claim.",
+  "models": {
+    "backend": "OpenVINO native CPU",
+    "runtime_version": "2026.4.1-22982-e213a147257-releases/2026/4",
+    "registry_sha256": "d0a49d86d76c8c20b5c04455a50f8a4ce1f1493429953378b59c16a90f85af18",
+    "adapter_sha256": "c6b16ecc3bb712c613348963fb3cb5ea27c2f9515fb0e8b69750b140455b316a",
+    "preprocessing": "RGB float32 NCHW / letterbox114 / class NMS before clipping",
+    "models": [
+      {
+        "id": "fire-v6-4a60bd37",
+        "sha256": "bb921d8d3f5aac395ea4f2e334840daf59b97b82d356634c670241d080d3ea79",
+        "classes": [
+          "fire",
+          null,
+          "smoke"
+        ],
+        "license": "Weights card CC BY 2.0; Ultralytics runtime/export AGPL-3.0",
+        "scope": "Сторонний экспериментальный baseline; person исключён; происхождение train и качество на воздушных фото не подтверждены",
+        "imgsz": 640,
+        "threshold": 0.35
+      },
+      {
+        "id": "trash-dronewaste500-v1-transfer-3e",
+        "sha256": "8caa56965502e637cbc3008ae219776dc28c881cb8d0af7e524c5c4912e2fac1",
+        "classes": [
+          "trash"
+        ],
+        "license": "Ultralytics AGPL-3.0 + UAVVaste data CC BY 4.0",
+        "scope": "Orthomosaic dump/material piles, not individual street litter; no GPS/time; site-disjoint 350/75/75 unchanged; split={'train': 350, 'val': 75, 'test': 75}; mAP50=0.15858771378973596; порог 0.143; проверка обязательна",
+        "imgsz": 320,
+        "threshold": 0.14314314314314314
+      }
+    ]
+  },
+  "images": [
+    {
+      "image": "datasets/fire-candidates-v1/images/fire-107639709.jpg",
+      "width": 1280,
+      "height": 960,
+      "median_decode_excluded_seconds": 0.6566009269999995,
+      "detections": [
+        {
+          "class_name": "trash",
+          "confidence": 0.33946797251701355,
+          "bbox": [
+            803.5013427734375,
+            87.608154296875,
+            923.9693603515625,
+            472.30328369140625
+          ],
+          "model_id": "trash-dronewaste500-v1-transfer-3e"
+        },
+        {
+          "class_name": "trash",
+          "confidence": 0.14640440046787262,
+          "bbox": [
+            624.7635498046875,
+            333.4385986328125,
+            759.5662841796875,
+            687.68115234375
+          ],
+          "model_id": "trash-dronewaste500-v1-transfer-3e"
+        }
+      ],
+      "scope": "Real inference, not manually labelled quality evaluation"
+    },
+    {
+      "image": "datasets/fire-candidates-v1/images/fire-248462.jpg",
+      "width": 1280,
+      "height": 1914,
+      "median_decode_excluded_seconds": 0.683443917000659,
+      "detections": [
+        {
+          "class_name": "fire",
+          "confidence": 0.8481177687644958,
+          "bbox": [
+            193.57451877593994,
+            806.2647605895996,
+            1034.1133678436279,
+            1454.5736309051513
+          ],
+          "model_id": "fire-v6-4a60bd37"
+        },
+        {
+          "class_name": "fire",
+          "confidence": 0.5380090475082397,
+          "bbox": [
+            144.94282007217407,
+            652.3137413978577,
+            369.77488260269166,
+            733.921534538269
+          ],
+          "model_id": "fire-v6-4a60bd37"
+        },
+        {
+          "class_name": "trash",
+          "confidence": 0.18621006608009338,
+          "bbox": [
+            14.072858333587646,
+            1441.7110593795776,
+            955.1165305137635,
+            1914.0
+          ],
+          "model_id": "trash-dronewaste500-v1-transfer-3e"
+        },
+        {
+          "class_name": "trash",
+          "confidence": 0.18443633615970612,
+          "bbox": [
+            336.1946943283081,
+            961.8604957580566,
+            835.3558170318603,
+            1427.9872959136962
+          ],
+          "model_id": "trash-dronewaste500-v1-transfer-3e"
+        }
+      ],
+      "scope": "Real inference, not manually labelled quality evaluation"
+    },
+    {
+      "image": "datasets/uavvaste-pilot-v1/images/test/batch_03_img_1560.jpg",
+      "width": 1280,
+      "height": 720,
+      "median_decode_excluded_seconds": 0.7048094540004968,
+      "detections": [
+        {
+          "class_name": "trash",
+          "confidence": 0.15122006833553314,
+          "bbox": [
+            0.0,
+            9.52764892578125,
+            911.5498657226562,
+            684.2590942382812
+          ],
+          "model_id": "trash-dronewaste500-v1-transfer-3e"
+        }
+      ],
+      "scope": "Real inference, not manually labelled quality evaluation"
+    },
+    {
+      "image": "datasets/uavvaste-pilot-v1/images/test/batch_03_img_1740.jpg",
+      "width": 1280,
+      "height": 720,
+      "median_decode_excluded_seconds": 0.6753063790001761,
+      "detections": [],
+      "scope": "Real inference, not manually labelled quality evaluation"
+    },
+    {
+      "image": "datasets/uavvaste-pilot-v1/images/test/batch_03_img_1920.jpg",
+      "width": 1280,
+      "height": 720,
+      "median_decode_excluded_seconds": 0.6811345520000032,
+      "detections": [
+        {
+          "class_name": "trash",
+          "confidence": 0.21152177453041077,
+          "bbox": [
+            246.35186767578125,
+            109.65863037109375,
+            311.82958984375,
+            177.86663818359375
+          ],
+          "model_id": "trash-dronewaste500-v1-transfer-3e"
+        }
+      ],
+      "scope": "Real inference, not manually labelled quality evaluation"
+    },
+    {
+      "image": "datasets/dronewaste500-v1/images/test/site3_112.png",
+      "width": 640,
+      "height": 640,
+      "median_decode_excluded_seconds": 0.6714652680002473,
+      "detections": [
+        {
+          "class_name": "trash",
+          "confidence": 0.2156849205493927,
+          "bbox": [
+            33.13066101074219,
+            461.0714111328125,
+            87.8587875366211,
+            520.4395141601562
+          ],
+          "model_id": "trash-dronewaste500-v1-transfer-3e"
+        }
+      ],
+      "scope": "Real inference, not manually labelled quality evaluation"
+    },
+    {
+      "image": "datasets/dronewaste500-v1/images/test/site3_206.png",
+      "width": 640,
+      "height": 640,
+      "median_decode_excluded_seconds": 0.7122544450003261,
+      "detections": [
+        {
+          "class_name": "trash",
+          "confidence": 0.5892143845558167,
+          "bbox": [
+            379.41790771484375,
+            482.92864990234375,
+            474.454345703125,
+            556.5116577148438
+          ],
+          "model_id": "trash-dronewaste500-v1-transfer-3e"
+        },
+        {
+          "class_name": "trash",
+          "confidence": 0.24244648218154907,
+          "bbox": [
+            243.71884155273438,
+            300.827392578125,
+            353.8534851074219,
+            479.71551513671875
+          ],
+          "model_id": "trash-dronewaste500-v1-transfer-3e"
+        },
+        {
+          "class_name": "trash",
+          "confidence": 0.15428577363491058,
+          "bbox": [
+            437.1904296875,
+            605.7868041992188,
+            478.7052001953125,
+            640.0
+          ],
+          "model_id": "trash-dronewaste500-v1-transfer-3e"
+        }
+      ],
+      "scope": "Real inference, not manually labelled quality evaluation"
+    },
+    {
+      "image": "datasets/dronewaste500-v1/images/test/site3_26.png",
+      "width": 640,
+      "height": 640,
+      "median_decode_excluded_seconds": 0.7659459200003766,
+      "detections": [
+        {
+          "class_name": "trash",
+          "confidence": 0.7635349035263062,
+          "bbox": [
+            0.0,
+            381.07769775390625,
+            107.14569091796875,
+            546.0486450195312
+          ],
+          "model_id": "trash-dronewaste500-v1-transfer-3e"
+        },
+        {
+          "class_name": "trash",
+          "confidence": 0.488187700510025,
+          "bbox": [
+            350.6466064453125,
+            345.08648681640625,
+            409.5400390625,
+            378.2293701171875
+          ],
+          "model_id": "trash-dronewaste500-v1-transfer-3e"
+        },
+        {
+          "class_name": "trash",
+          "confidence": 0.44078224897384644,
+          "bbox": [
+            398.51104736328125,
+            166.84178161621094,
+            436.02825927734375,
+            210.08009338378906
+          ],
+          "model_id": "trash-dronewaste500-v1-transfer-3e"
+        },
+        {
+          "class_name": "trash",
+          "confidence": 0.33945509791374207,
+          "bbox": [
+            183.31826782226562,
+            98.772705078125,
+            327.1412658691406,
+            245.50039672851562
+          ],
+          "model_id": "trash-dronewaste500-v1-transfer-3e"
+        },
+        {
+          "class_name": "trash",
+          "confidence": 0.3241523504257202,
+          "bbox": [
+            232.4194793701172,
+            357.81817626953125,
+            306.88739013671875,
+            402.9283447265625
+          ],
+          "model_id": "trash-dronewaste500-v1-transfer-3e"
+        },
+        {
+          "class_name": "trash",
+          "confidence": 0.26607996225357056,
+          "bbox": [
+            3.7671661376953125,
+            471.25177001953125,
+            184.91378784179688,
+            640.0
+          ],
+          "model_id": "trash-dronewaste500-v1-transfer-3e"
+        },
+        {
+          "class_name": "trash",
+          "confidence": 0.2151516228914261,
+          "bbox": [
+            596.74072265625,
+            222.6648406982422,
+            639.146240234375,
+            396.96051025390625
+          ],
+          "model_id": "trash-dronewaste500-v1-transfer-3e"
+        },
+        {
+          "class_name": "trash",
+          "confidence": 0.19181959331035614,
+          "bbox": [
+            602.3629150390625,
+            394.36456298828125,
+            638.4962158203125,
+            640.0
+          ],
+          "model_id": "trash-dronewaste500-v1-transfer-3e"
+        },
+        {
+          "class_name": "trash",
+          "confidence": 0.14884895086288452,
+          "bbox": [
+            0.39044189453125,
+            433.23681640625,
+            66.01531982421875,
+            534.8181762695312
+          ],
+          "model_id": "trash-dronewaste500-v1-transfer-3e"
+        }
+      ],
+      "scope": "Real inference, not manually labelled quality evaluation"
+    }
+  ],
+  "cpp": {
+    "backend": "standalone C++ OpenVINO CPU",
+    "repeats": 5,
+    "median_inference_ms": 629.741,
+    "output_floats": 58800
+  },
+  "python_cpp_max_abs_error": 0.0,
+  "cpp_parity_passed": true,
+  "cpu_threads": 2,
+  "python_api_same_tensor_median_inference_ms": 734.1815199997654,
+  "timing_note": "C++ vs Python API use the same first model/tensor/threads; full image rows include all models and preprocessing/NMS"
+}

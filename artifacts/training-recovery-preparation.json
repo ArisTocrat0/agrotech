@@ -1,0 +1,192 @@
+{
+  "recorded_unix": 1792501543.1326866,
+  "run": "litter-v3-land-yolo11n-full-cpu-20261020",
+  "supervision": {
+    "state": "waiting_for_training_and_export",
+    "run": "litter-v3-land-yolo11n-full-cpu-20261020",
+    "updated_unix": 1792492908.587885
+  },
+  "supervision_sha256": "af71f0abfc82a422a6409ccff812af982da48868df7342f05e9956a5c64b9aba",
+  "progress": {
+    "run": "litter-v3-land-yolo11n-full-cpu-20261020",
+    "started_unix": 1792492842.7471755,
+    "training_budget_deadline_unix": 1792512642.7471755,
+    "dataset_manifest_sha256": "1381d91c177869e443732cb1121f9ac9bc705eb485eb4bf427f15ff8a971066f",
+    "initial_weights_sha256": "0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1",
+    "epochs_max": 30,
+    "patience": 6,
+    "hours_max": 5.5,
+    "imgsz": 640,
+    "batch": 1,
+    "freeze": 0,
+    "optimizer": "AdamW",
+    "lr0": 0.0003,
+    "mosaic": 0.0,
+    "scale": 0.25,
+    "dataset_snapshot_lock_sha256": "3257249f1dee4155e3db9dba141ebdfedb5ba006ed7aa585907cf6d7e8e98830",
+    "holdout_manifest_sha256": "0c40af1436fad59c88aa53369010b9dd44dc561634362d5341a18e18e740f604",
+    "threads": 2,
+    "geographic_independence_proven": false,
+    "holdout_type": "Previously unseen aerial batches and new negative author groups; no proved geographic independence",
+    "evaluation_scope": "Threshold on calibration-development; sealed new batch holdout evaluated only afterward; no water-positive test",
+    "activation": "manual after false-positive and positive-quality review",
+    "source_license": "Per-image licenses; see frozen V3 manifest and README; Commons individually attributed",
+    "state": "running",
+    "history": [
+      {
+        "epoch": 1,
+        "epoch_seconds": 978.6574892997742,
+        "elapsed_seconds": 991.6392180919647,
+        "metrics": {
+          "metrics/precision(B)": 0.58206,
+          "metrics/recall(B)": 0.35474,
+          "metrics/mAP50(B)": 0.34274,
+          "metrics/mAP50-95(B)": 0.22441,
+          "val/box_loss": 1.16111,
+          "val/cls_loss": 3.06696,
+          "val/dfl_loss": 1.08204
+        },
+        "best_fitness": 0.22441,
+        "phase": "training_validation"
+      },
+      {
+        "epoch": 2,
+        "epoch_seconds": 966.1857023239136,
+        "elapsed_seconds": 1957.8250410556793,
+        "metrics": {
+          "metrics/precision(B)": 0.64539,
+          "metrics/recall(B)": 0.35484,
+          "metrics/mAP50(B)": 0.3759,
+          "metrics/mAP50-95(B)": 0.25572,
+          "val/box_loss": 1.21333,
+          "val/cls_loss": 2.80598,
+          "val/dfl_loss": 1.13088
+        },
+        "best_fitness": 0.25572,
+        "phase": "training_validation"
+      },
+      {
+        "epoch": 3,
+        "epoch_seconds": 970.1313087940216,
+        "elapsed_seconds": 2927.956223964691,
+        "metrics": {
+          "metrics/precision(B)": 0.53612,
+          "metrics/recall(B)": 0.3522,
+          "metrics/mAP50(B)": 0.33337,
+          "metrics/mAP50-95(B)": 0.22656,
+          "val/box_loss": 1.23627,
+          "val/cls_loss": 2.76796,
+          "val/dfl_loss": 1.16095
+        },
+        "best_fitness": 0.25572,
+        "phase": "training_validation"
+      },
+      {
+        "epoch": 4,
+        "epoch_seconds": 981.309458732605,
+        "elapsed_seconds": 3909.265805244446,
+        "metrics": {
+          "metrics/precision(B)": 0.58029,
+          "metrics/recall(B)": 0.33019,
+          "metrics/mAP50(B)": 0.32454,
+          "metrics/mAP50-95(B)": 0.22491,
+          "val/box_loss": 1.24817,
+          "val/cls_loss": 2.72318,
+          "val/dfl_loss": 1.17919
+        },
+        "best_fitness": 0.25572,
+        "phase": "training_validation"
+      },
+      {
+        "epoch": 5,
+        "epoch_seconds": 1009.4764337539673,
+        "elapsed_seconds": 4918.742126464844,
+        "metrics": {
+          "metrics/precision(B)": 0.59164,
+          "metrics/recall(B)": 0.32075,
+          "metrics/mAP50(B)": 0.32506,
+          "metrics/mAP50-95(B)": 0.22283,
+          "val/box_loss": 1.18648,
+          "val/cls_loss": 2.67741,
+          "val/dfl_loss": 1.14927
+        },
+        "best_fitness": 0.25572,
+        "phase": "training_validation"
+      },
+      {
+        "epoch": 6,
+        "epoch_seconds": 954.8628890514374,
+        "elapsed_seconds": 5873.605005025864,
+        "metrics": {
+          "metrics/precision(B)": 0.43597,
+          "metrics/recall(B)": 0.38994,
+          "metrics/mAP50(B)": 0.29057,
+          "metrics/mAP50-95(B)": 0.20499,
+          "val/box_loss": 1.24314,
+          "val/cls_loss": 3.00367,
+          "val/dfl_loss": 1.16967
+        },
+        "best_fitness": 0.25572,
+        "phase": "training_validation"
+      },
+      {
+        "epoch": 7,
+        "epoch_seconds": 937.4905133247375,
+        "elapsed_seconds": 6811.0955312252045,
+        "metrics": {
+          "metrics/precision(B)": 0.7076,
+          "metrics/recall(B)": 0.32075,
+          "metrics/mAP50(B)": 0.38343,
+          "metrics/mAP50-95(B)": 0.25841,
+          "val/box_loss": 1.26631,
+          "val/cls_loss": 2.37773,
+          "val/dfl_loss": 1.19425
+        },
+        "best_fitness": 0.25841,
+        "phase": "training_validation"
+      },
+      {
+        "epoch": 8,
+        "epoch_seconds": 760.8158354759216,
+        "elapsed_seconds": 7571.911379575729,
+        "metrics": {
+          "metrics/precision(B)": 0.44133,
+          "metrics/recall(B)": 0.35535,
+          "metrics/mAP50(B)": 0.24143,
+          "metrics/mAP50-95(B)": 0.16285,
+          "val/box_loss": 1.25398,
+          "val/cls_loss": 3.78597,
+          "val/dfl_loss": 1.19882
+        },
+        "best_fitness": 0.25841,
+        "phase": "training_validation"
+      },
+      {
+        "epoch": 9,
+        "epoch_seconds": 763.0289621353149,
+        "elapsed_seconds": 8334.940358638763,
+        "metrics": {
+          "metrics/precision(B)": 0.60714,
+          "metrics/recall(B)": 0.35535,
+          "metrics/mAP50(B)": 0.37143,
+          "metrics/mAP50-95(B)": 0.25162,
+          "val/box_loss": 1.20486,
+          "val/cls_loss": 2.40294,
+          "val/dfl_loss": 1.14243
+        },
+        "best_fitness": 0.25841,
+        "phase": "training_validation"
+      }
+    ],
+    "elapsed_seconds": 8334.940358638763,
+    "estimated_max_total_seconds": 27783.13452879588,
+    "memory_threads_actual": 2,
+    "peak_process_rss_mib": 786.53125
+  },
+  "training_pid": 260666,
+  "supervisor_pid": 261427,
+  "recovery_executed": false,
+  "live_guard_execute_test": "no_op_live_workers",
+  "tests": 4,
+  "startup_installed": false
+}

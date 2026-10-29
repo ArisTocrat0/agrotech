@@ -1,0 +1,21 @@
+{
+  "url": "https://huggingface.co/zell-dev/fire-smoke-detection",
+  "revision": "389086f90a0588f5b97e14f56d569c140430730f",
+  "card_license": "Apache-2.0",
+  "embedded_metadata_license": "AGPL-3.0",
+  "effective_pilot_notice": "Treat as AGPL-3.0; local research baseline; dataset provenance not established, no aerial quality claim",
+  "assets": [
+    {
+      "path": "artifacts/fire-openvino/best.xml",
+      "sha256": "0b552d8da32f025437014dc3f2dd6593bb7edc41339b49ac77efbec327fd9ac5"
+    },
+    {
+      "path": "artifacts/fire-openvino/best.bin",
+      "sha256": "648909ca3b1c6c85af378c4254060812e550898226c11ffa7d35668a289a38d7"
+    },
+    {
+      "path": "artifacts/fire-openvino/metadata.yaml",
+      "sha256": "abe49fdbb16f8d9a6ccfec8145fee97e2acfd981d0f3395378d09c9b0c48dbae"
+    }
+  ]
+}

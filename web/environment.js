@@ -448,11 +448,11 @@
     }
     function showAssistantStatus(status) {
       state.assistantStatus = status;
-      $('assistant-status').textContent = status && typeof status.message === 'string' ? status.message : 'Настройка AgroMind недоступна.';
+      $('assistant-status').textContent = status && typeof status.message === 'string' ? status.message : 'Настройка Экокинеу недоступна.';
       const host = status && status.status === 'configured' && typeof status.endpoint_host === 'string' ? status.endpoint_host : null;
       $('assistant-consent-text').textContent = host
-        ? `Разрешаю отправить в AgroMind на ${host} мой вопрос, данные выбранной находки (тип, оценку, рамку, статус проверки) и реальные координаты съёмки, если они есть, для ответа на вопрос.`
-        : 'Для отправки данных нужен настроенный получатель AgroMind.';
+        ? `Разрешаю отправить в Экокинеу на ${host} мой вопрос, данные выбранной находки (тип, оценку, рамку, статус проверки) и реальные координаты съёмки, если они есть, для ответа на вопрос.`
+        : 'Для отправки данных нужен настроенный получатель Экокинеу.';
       updateAssistantControls();
     }
     async function prepareAssistant(event) {
@@ -466,7 +466,7 @@
         const status = await api('/api/environment/assistant/status');
         if (version === state.assistantVersion && !state.disposed) showAssistantStatus(status);
       } catch (error) {
-        if (version === state.assistantVersion && !state.disposed) showAssistantStatus({status: 'not_configured', message: 'Не удалось получить настройку AgroMind. Откройте материал снова, чтобы повторить проверку.'});
+        if (version === state.assistantVersion && !state.disposed) showAssistantStatus({status: 'not_configured', message: 'Не удалось получить настройку Экокинеу. Откройте материал снова, чтобы повторить проверку.'});
       }
     }
     async function askAssistant(event) {
@@ -493,10 +493,10 @@
         $('assistant-feedback').textContent = 'Вопрос отправляется. Автоматического повтора не будет.';
         const answer = await api('/api/environment/assistant', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(request)}, 55000);
         if (version !== state.assistantVersion || state.disposed) return;
-        if (!answer || typeof answer.response !== 'string' || !answer.response.trim()) throw Error('AgroMind вернул пустой ответ.');
+        if (!answer || typeof answer.response !== 'string' || !answer.response.trim()) throw Error('Экокинеу вернул пустой ответ.');
         $('assistant-answer').textContent = answer.response;
         $('assistant-answer').hidden = false;
-        $('assistant-feedback').textContent = 'Ответ AgroMind на выбранную находку. Проверьте его выводы.';
+        $('assistant-feedback').textContent = 'Ответ Экокинеу на выбранную находку. Проверьте его выводы.';
       } catch (error) {
         if (version === state.assistantVersion && !state.disposed) $('assistant-feedback').textContent = `Ответ не получен: ${error.name === 'AbortError' ? 'истекло время ожидания' : error.message}. Отправка могла состояться; автоматического повтора нет.`;
       } finally {

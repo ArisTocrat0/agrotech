@@ -21,8 +21,8 @@ def write_json(path, value):
     temporary.replace(path)
 
 
-def validated_detection(row, width, height, threshold):
-    if not isinstance(row, dict) or row.get('class_name') not in CLASSES:
+def validated_detection(row, width, height, threshold, allowed_classes=CLASSES):
+    if not isinstance(row, dict) or row.get('class_name') not in allowed_classes:
         raise ValueError('Неизвестный класс результата модели.')
     confidence, bbox = row.get('confidence'), row.get('bbox')
     if (isinstance(confidence, bool) or not isinstance(confidence, (int, float)) or

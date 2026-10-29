@@ -1,0 +1,34 @@
+{
+  "model": "Mahadih534/person-smoke-fire",
+  "revision": "4a60bd37bdd2941459191c1e7caab85e17dcdc0a",
+  "url": "https://huggingface.co/Mahadih534/person-smoke-fire/resolve/4a60bd37bdd2941459191c1e7caab85e17dcdc0a/train-v6/train-v6/weights/best.pt",
+  "sha256": "ecff51b7319cdb145bad0f9bc123839187c38e9e692aa2a9e6043f5a2c7194a7",
+  "card_license": "cc-by-2.0",
+  "scope": "Experimental external checkpoint; dataset provenance unknown; no field-quality claim; must load weights_only with trusted class allowlist",
+  "conversion": {
+    "loader": "torch weights_only=True; explicit trusted nn.Module classes only",
+    "globals": [
+      "ultralytics.nn.tasks.DetectionModel",
+      "ultralytics.nn.modules.conv.Conv",
+      "torch.nn.modules.container.Sequential",
+      "torch.nn.modules.upsampling.Upsample",
+      "torch.nn.modules.activation.SiLU",
+      "torch.nn.modules.batchnorm.BatchNorm2d",
+      "ultralytics.nn.modules.block.SPPF",
+      "torch.nn.modules.pooling.MaxPool2d",
+      "ultralytics.nn.modules.block.DFL",
+      "ultralytics.nn.modules.block.C2f",
+      "torch.nn.modules.conv.Conv2d",
+      "ultralytics.nn.modules.conv.Concat",
+      "ultralytics.nn.modules.head.Detect",
+      "torch.nn.modules.container.ModuleList",
+      "ultralytics.nn.modules.block.Bottleneck"
+    ],
+    "classes": {
+      "0": "fire",
+      "1": "person",
+      "2": "smoke"
+    },
+    "runtime": "Exported OpenVINO IR only"
+  }
+}

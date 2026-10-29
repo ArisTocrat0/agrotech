@@ -1,0 +1,169 @@
+{
+  "scope": "Development error diagnosis only; no independent holdout; no user photos used; no model activation",
+  "conversion": {
+    "splits": [
+      {
+        "split": "train",
+        "images_checked": 449,
+        "annotations": 1743
+      },
+      {
+        "split": "val_development",
+        "images_checked": 52,
+        "annotations": 46
+      },
+      {
+        "split": "test_development",
+        "images_checked": 133,
+        "annotations": 590
+      }
+    ],
+    "max_roundtrip_pixel_error": 3.200000264769187e-07,
+    "class_mapping": "COCO category1 -> YOLO index0 -> model name trash; only policy whitelist",
+    "source_gt_pairs_iou_above_nms_045": 16,
+    "images_with_gt_overlap_above_045": 13,
+    "gt_annotations": 2379,
+    "note": "Overlapping legitimate targets can compete after binary merging; overlap counts alone do not prove actual NMS losses."
+  },
+  "parity": {
+    "samples": 9,
+    "actual_torch_threads": 2,
+    "input_tensor_max_error": 0,
+    "detections_compared": 33,
+    "raw_coordinate_max_error_px": 0.003692626953125,
+    "raw_score_max_error": 1.6987323760986328e-06,
+    "post_nms_bbox_max_error_px": 0.000244140625,
+    "passed": true
+  },
+  "object_sizes": {
+    "val_development": {
+      "small_<32px": {
+        "targets": 3,
+        "matched": 0,
+        "recall": 0.0,
+        "miss_reasons": {
+          "below_fixed_confidence": 2,
+          "no_overlapping_detection_at_fixed_threshold": 1
+        }
+      },
+      "medium_32to96px": {
+        "targets": 21,
+        "matched": 1,
+        "recall": 0.047619047619047616,
+        "miss_reasons": {
+          "below_fixed_confidence": 11,
+          "no_overlapping_detection_at_fixed_threshold": 8,
+          "localization_or_merge": 1
+        }
+      },
+      "large_>=96px": {
+        "targets": 22,
+        "matched": 8,
+        "recall": 0.36363636363636365,
+        "miss_reasons": {
+          "below_fixed_confidence": 8,
+          "no_overlapping_detection_at_fixed_threshold": 4,
+          "localization_or_merge": 2
+        }
+      }
+    },
+    "test_development": {
+      "small_<32px": {
+        "targets": 58,
+        "matched": 3,
+        "recall": 0.05172413793103448,
+        "miss_reasons": {
+          "below_fixed_confidence": 21,
+          "no_overlapping_detection_at_fixed_threshold": 34
+        }
+      },
+      "medium_32to96px": {
+        "targets": 414,
+        "matched": 105,
+        "recall": 0.2536231884057971,
+        "miss_reasons": {
+          "below_fixed_confidence": 210,
+          "localization_or_merge": 12,
+          "no_overlapping_detection_at_fixed_threshold": 87
+        }
+      },
+      "large_>=96px": {
+        "targets": 118,
+        "matched": 47,
+        "recall": 0.3983050847457627,
+        "miss_reasons": {
+          "below_fixed_confidence": 40,
+          "no_overlapping_detection_at_fixed_threshold": 22,
+          "localization_or_merge": 9
+        }
+      }
+    }
+  },
+  "tiled": {
+    "images": 4,
+    "ground_truth_objects": 8,
+    "full_tp": 0,
+    "tiled_tp": 0,
+    "tiled_unmatched_predictions": 46,
+    "full_mean_seconds": 0.22081726750093367,
+    "tiled_mean_seconds": 1.349068749750586,
+    "not_activated": true
+  },
+  "unfreeze_microbenchmark": {
+    "scope": "In-memory 4 steps/mode; first warmup excluded; batch2 fixed public train images, no augmentation/dataloader/validation/export; no weights saved or activated. Not a training run or accuracy evaluation.",
+    "modes": [
+      {
+        "freeze": 10,
+        "batch": 2,
+        "imgsz": 640,
+        "torch_threads": 2,
+        "optimizer": "AdamW",
+        "samples_seconds": [
+          1.587064562998421,
+          1.1412169369978074,
+          1.1898399389974657,
+          1.2651114509972103
+        ],
+        "median_step_seconds": 1.1898399389974657,
+        "peak_process_rss_mib": 946.1875,
+        "trainable_parameters": 1474275,
+        "source_public_train_photos": [
+          "images/train/site5_63.png",
+          "images/train/site14_231.png"
+        ],
+        "weights_discarded": true
+      },
+      {
+        "freeze": 0,
+        "batch": 2,
+        "imgsz": 640,
+        "torch_threads": 2,
+        "optimizer": "AdamW",
+        "samples_seconds": [
+          2.3561128319997806,
+          2.289889661002235,
+          2.4566259410021303,
+          2.3613054329980514
+        ],
+        "median_step_seconds": 2.3613054329980514,
+        "peak_process_rss_mib": 1169.80078125,
+        "trainable_parameters": 2590019,
+        "source_public_train_photos": [
+          "images/train/site5_63.png",
+          "images/train/site14_231.png"
+        ],
+        "weights_discarded": true
+      }
+    ],
+    "step_time_ratio_unfrozen_to_frozen": 1.9845572127858124
+  },
+  "active_registry_unchanged": true,
+  "candidate_weights_unchanged": true,
+  "tests": {
+    "detector_adapter": 5,
+    "tile_geometry": 2
+  },
+  "user_photos_used": false,
+  "new_long_training_run": false,
+  "source_file_hashes_verified": 634
+}

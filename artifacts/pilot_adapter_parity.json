@@ -1,0 +1,19 @@
+{
+  "scope": "Adapter parity only, not recognition quality",
+  "results": [
+    {
+      "model": "fire-v6-4a60bd37",
+      "objects_compared": 2,
+      "threshold_for_contract_check_only": 0.05,
+      "max_bbox_pixel_error": 3.5476684615787235e-05,
+      "passed": true
+    },
+    {
+      "model": "trash-dronewaste500-v1-transfer-3e",
+      "objects_compared": 97,
+      "threshold_for_contract_check_only": 0.001,
+      "max_bbox_pixel_error": 0.0,
+      "passed": true
+    }
+  ]
+}
