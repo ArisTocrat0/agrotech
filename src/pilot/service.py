@@ -20,7 +20,8 @@ def validate_photo(payload):
         if dt.tzinfo is None: raise ValueError('Время съёмки должно содержать часовой пояс.')
         captured=dt.isoformat()
     mode=payload.get('analysis_mode','environment')
-    if mode not in ('environment','weeds'): raise ValueError('Неизвестный режим анализа.')
+    if mode not in ('environment','weeds','trash','fire_smoke','common'): raise ValueError('Неизвестный режим анализа.')
+    if mode!='environment' and len(mission)>64:raise ValueError('Для отдельных направлений ID миссии: до 64 символов.')
     name=payload.get('name','photo.jpg')
     if not isinstance(name,str) or len(name)>240: raise ValueError('Некорректное имя.')
     name=Path(name.replace('\\','/')).name
@@ -56,12 +57,13 @@ def analysis_coverage(row):
     quarantined=any(m.get('id')=='trash-dronewaste500-v1-transfer-3e' for m in models)
     coverage={}
     for kind in ('trash','fire','smoke','weed'):
-        requested=(kind=='weed') if mode=='weeds' else kind in ('trash','fire','smoke')
+        requested=kind in {'weeds':('weed',),'trash':('trash',),'fire_smoke':('fire','smoke'),'common':('weed','trash','fire','smoke'),'environment':('trash','fire','smoke')}[mode]
         if not requested:status='not_analyzed';reason='Эта задача не запрашивалась.'
         elif row.get('state')=='error':status='error';reason='Ошибка обработки; отсутствие объектов не установлено.'
         elif row.get('state')!='done':status='not_analyzed';reason='Анализ ещё не завершён.'
         elif kind=='trash' and (quarantined or kind not in classes):status='disabled';reason='Распознавание мусора временно недоступно: модель обновляется. Этот снимок не проверен на мусор.'
-        elif kind not in classes:status='not_analyzed';reason='В результате нет подтверждения запуска модели этого класса.'
+        elif ('weeds' if kind=='weed' else 'environment') in model.get('errors',{}):status='error';reason='Ошибка детектора: '+model['errors']['weeds' if kind=='weed' else 'environment']
+        elif kind not in classes:status='disabled';reason='Детектор этого класса недоступен; отсутствие объектов не установлено.'
         else:
             found=any(e['class_name']==kind for e in result.get('events',[]))
             status='analyzed_detections' if found else 'analyzed_no_detections';reason='Есть гипотезы модели.' if found else 'Модель выполнена; гипотез выше порога нет. Это не доказательство отсутствия объекта.'
@@ -71,10 +73,10 @@ def analysis_coverage(row):
 class Pilot:
     def __init__(self,root,detector_factory=None):
         self.root=Path(root);self.base=self.root/'outputs/pilot';self.base.mkdir(parents=True,exist_ok=True)
-        self.ingest_lock=threading.Lock();self.stop=threading.Event();self.wake=threading.Event()
+        self.compute_lock=threading.RLock();self.ingest_lock=threading.Lock();self.stop=threading.Event();self.wake=threading.Event()
         self.detector_factory=detector_factory
         self.registry=self.root/'artifacts/ecokineu-models.json'
-        self.detector=None;self.weed_detector=None;self.model_error=None
+        self.detector=None;self.weed_detector=None;self.model_error=None;self.direction_detectors={};self.compiled_models={}
         # Advisory process lock prevents two servers consuming the same queue.
         import fcntl
         self.lockfile=(self.base/'worker.lock').open('a')
@@ -83,12 +85,16 @@ class Pilot:
             self.lockfile.close()
             raise RuntimeError('Другой сервер уже обрабатывает эту очередь.')
         self.store=Store(self.root/'outputs/pilot-db/client.json')
+        from .workspaces import Workspaces
+        self.workspaces=Workspaces(self)
         self.worker=threading.Thread(target=self.run,name='photo-queue',daemon=True);self.worker.start()
 
     def ingest(self,payload):
         data,fields=validate_photo(payload)
         with self.ingest_lock:
-            old=self.store.duplicate(fields['mission'],fields['sha256'])
+            # Preserve the legacy unique key while allowing the same photo in distinct workspaces.
+            dedup_mission=fields['mission'] if fields['analysis_mode']=='environment' else fields['mission']+'::'+fields['analysis_mode']
+            old=self.store.duplicate(dedup_mission,fields['sha256'])
             if old:
                 for key in ('captured_at','location','metadata','analysis_mode'):
                     if old.get(key)!=fields[key]: raise ValueError('Снимок уже принят с другими метаданными. Проверьте ID миссии и GPS.')
@@ -96,7 +102,7 @@ class Pilot:
             if sum(r['state']=='queued' for r in self.store.list())>=500: raise ValueError('Очередь заполнена: дождитесь обработки.')
             key=uuid.uuid4().hex;folder=self.base/key;folder.mkdir()
             (folder/'original').write_bytes(data)
-            row={'id':key,**fields,'state':'queued','created':datetime.now(timezone.utc).isoformat(),
+            row={'id':key,**fields,'dedup_mission':dedup_mission,'state':'queued','created':datetime.now(timezone.utc).isoformat(),
                  'result':None,'error':None,'attempts':0,'acquisition':'uploaded_photo_sequence'}
             self.store.add(row); self.wake.set()
             return {'duplicate':False,'photo':row}
@@ -251,7 +257,11 @@ class Pilot:
         last_weed=weed_rows[-1] if weed_rows else None
         index=self.root/'artifacts/reference_index.pt'
         weed_meta=dict(getattr(self.weed_detector,'metadata',{}) or ((last_weed or {}).get('result') or {}).get('model',{}))
-        if index.exists():
+        weed_state=json.loads((self.workspaces.base/'weeds/models.json').read_text())
+        selected_weed=next((v for v in weed_state['versions'] if v['id'] in weed_state['active'] and v['accepted'] and v.get('spec')),None)
+        if selected_weed:
+            weed_meta=dict(selected_weed['spec']);weed_meta['loaded']=self.weed_detector is not None;active_models.append(weed_meta)
+        elif index.exists():
             from ..config import load_config
             cfg=load_config(self.root/'config.yaml')
             weed_meta.update(id='dinov2-reference-baseline',classes=['weed'],model_name=cfg['model']['name'],
@@ -269,29 +279,65 @@ class Pilot:
                 'database':'MariaDB / ecokineu_pilot / private Unix socket','models':active_models,
                 'model_error':self.model_error,'model_loaded':self.detector is not None}
 
+    def load_weed_detector(self):
+        state=json.loads((self.workspaces.base/'weeds/models.json').read_text())
+        selected=next((v for v in state['versions'] if v['id'] in state['active'] and v['accepted'] and v.get('spec')),None)
+        if selected:
+            from .detector import Detector
+            spec=json.loads(json.dumps(selected['spec']))
+            for obj in [spec,*spec.get('assets',[])]:
+                if not Path(obj['path']).is_absolute():obj['path']=str(self.root/obj['path'])
+            registry=self.workspaces.base/'weeds/effective-models.json';write_json(registry,{'models':[spec]})
+            self.weed_detector=Detector(registry,allowed_classes=['weed'],compiled_cache=self.compiled_models)
+        else:
+            from .weeds import WeedDetector
+            self.weed_detector=WeedDetector(self.root)
+        return self.weed_detector
+
     def run(self):
         while not self.stop.is_set():
             try:
                 rows=[r for r in self.store.list() if r['state']=='queued']
                 if not rows:
                     self.wake.wait(1);self.wake.clear();continue
+                if self.workspaces.orphan_busy():
+                    self.stop.wait(1);continue
+                # Respect legacy training scripts sharing the same advisory lock.
+                import fcntl
+                training_lock=self.root/'outputs/pilot-training/training.lock'
+                if training_lock.exists():
+                    with training_lock.open('r') as lock:
+                        try:fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+                        except BlockingIOError:
+                            self.stop.wait(1);continue
                 row=rows[0];key=row['id'];self.store.update(key,state='running',attempts=row['attempts']+1,error=None)
                 started=time.perf_counter()
                 try:
-                    if row.get('analysis_mode')=='weeds':
-                        if self.weed_detector is None:
-                            from .weeds import WeedDetector
-                            self.weed_detector=WeedDetector(self.root)
-                        active=self.weed_detector
-                    elif self.detector is None:
-                        if self.detector_factory: self.detector=self.detector_factory()
+                    with self.compute_lock:
+                        if row.get('analysis_mode')=='weeds':
+                            if self.weed_detector is None:
+                                self.load_weed_detector()
+                            active=self.weed_detector
                         else:
-                            from .detector import Detector
-                            self.detector=Detector(self.registry)
-                        self.model_error=None
-                    if row.get('analysis_mode')!='weeds': active=self.detector
-                    if row.get('requested_registry_sha256') and getattr(active,'registry_sha256',None)!=row['requested_registry_sha256']:raise ValueError('Версия модели изменилась до обработки; повторите новой версией явно.')
-                    result=self.analyze(row,active)
+                            mode=row.get('analysis_mode','environment');cache_key='environment' if mode in ('common','environment') else mode
+                            active=self.detector if cache_key=='environment' else self.direction_detectors.get(cache_key)
+                            if active is None:
+                                try:
+                                    if self.detector_factory:active=self.detector_factory()
+                                    else:
+                                        from .detector import Detector
+                                        from .directions import DIRECTIONS
+                                        allowed=None if cache_key=='environment' else DIRECTIONS[cache_key]['classes']
+                                        active=Detector(self.registry,allowed_classes=allowed,compiled_cache=self.compiled_models)
+                                    if cache_key=='environment':self.detector=active
+                                    else:self.direction_detectors[cache_key]=active
+                                    self.model_error=None
+                                except Exception as exc:
+                                    if mode!='common':raise
+                                    from .directions import UnavailableDetector
+                                    active=UnavailableDetector(str(exc))
+                        if row.get('requested_registry_sha256') and getattr(active,'registry_sha256',None)!=row['requested_registry_sha256']:raise ValueError('Версия модели изменилась до обработки; повторите новой версией явно.')
+                        result=self.analyze(row,active)
                     elapsed=time.perf_counter()-started
                     result['processing_seconds']=round(elapsed,4)
                     self.store.update(key,state='done',result=result,completed=datetime.now(timezone.utc).isoformat(),error=None)
@@ -308,7 +354,9 @@ class Pilot:
         image.save(folder/'source.jpg',quality=92)
         draw=ImageDraw.Draw(image);events=[]
         palette={'trash':'#ffd21f','fire':'#ff5533','smoke':'#b4c4dc','weed':'#58e08d'}
-        for raw in detector.detect(image):
+        from .directions import detect_direction
+        raw_rows,metadata=detect_direction(self,row.get('analysis_mode','environment'),image,detector)
+        for raw in raw_rows:
             valid=validated_detection(raw,*image.size,0,allowed_classes=('trash','fire','smoke','weed'))
             if not valid: continue
             event={'id':uuid.uuid4().hex,**valid,'model_id':raw.get('model_id'),'score_type':raw.get('score_type','model_confidence_not_calibrated'),'species':raw.get('species'),'stage':raw.get('stage'),
@@ -318,7 +366,7 @@ class Pilot:
             draw.text((event['bbox'][0],event['bbox'][1]),f"{event['class_name']} {event['confidence']:.2f}",fill='white',stroke_width=1,stroke_fill='black')
             events.append(event)
         image.save(folder/'annotated.jpg',quality=92)
-        result={'model':detector.metadata,'events':events,'width':image.width,'height':image.height,
+        result={'model':metadata,'events':events,'width':image.width,'height':image.height,
                 'source_sha256':row['sha256'],'note':'Гипотезы модели. Совпадения на соседних фото могут относиться к одному объекту.'}
         result['analysis_status']=analysis_coverage({**row,'state':'done','result':result})
         write_json(folder/'result.json',result)
@@ -337,6 +385,7 @@ class Pilot:
         return {'type':'FeatureCollection','features':features}
 
     def close(self):
+        self.workspaces.close()
         self.stop.set();self.wake.set();self.worker.join(timeout=30)
         if not self.worker.is_alive():
             self.store.db.close();self.lockfile.close()

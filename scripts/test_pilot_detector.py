@@ -38,6 +38,11 @@ class AdapterTests(unittest.TestCase):
         d=Detector.__new__(Detector);d.models=[({'id':'TEST ONLY','imgsz':100,'classes':['fire',None,'smoke'],'threshold':.35},net)]
         self.assertEqual([r['class_name'] for r in d.detect(Image.new('RGB',(100,100),'white'))],['smoke'])
 
+    def test_unrequested_network_is_not_executed(self):
+        d,net=self.detector([[50,50,30,30,.9]])
+        self.assertEqual(d.detect(Image.new('RGB',(100,100)),allowed_classes=['fire','smoke']),[])
+        self.assertFalse(hasattr(net,'tensor'))
+
     def test_nonfinite_native_output_is_error(self):
         d,_=self.detector([[50,50,30,30,float('nan')]])
         with self.assertRaises(ValueError):d.detect(Image.new('RGB',(100,100),'white'))

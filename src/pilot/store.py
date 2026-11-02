@@ -41,7 +41,7 @@ class Store:
 
     def add(self, row):
         self.execute('INSERT INTO photos (id,mission,sha256,state,created,body) VALUES (%s,%s,%s,%s,%s,%s)',
-                     (row['id'],row['mission'],row['sha256'],row['state'],row['created'],json.dumps(row,ensure_ascii=False,allow_nan=False)))
+                     (row['id'],row.get('dedup_mission',row['mission']),row['sha256'],row['state'],row['created'],json.dumps(row,ensure_ascii=False,allow_nan=False)))
 
     def update(self, key, **fields):
         with self.lock:

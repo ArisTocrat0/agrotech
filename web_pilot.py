@@ -19,6 +19,14 @@ def make_handler(app):
                 return self.send(403,{'error':'Только локальный доступ.'})
             path=urlparse(self.path).path
             try:
+                m=re.fullmatch(r'/api/pilot/directions/(weeds|trash|fire_smoke)/runs/([a-f0-9]{32})/log',path)
+                if m:return self.send(200,app.workspaces.log(m[1],m[2]))
+                m=re.fullmatch(r'/api/pilot/directions/(weeds|trash|fire_smoke)/source/([a-z0-9-]+)/([0-9]+)/(image|labels)',path)
+                if m:return self.send(200,app.workspaces.source_sample(m[1],m[2],int(m[3]),m[4]),'image/jpeg' if m[4]=='image' else 'application/json; charset=utf-8')
+                m=re.fullmatch(r'/api/pilot/directions/(weeds|trash|fire_smoke)/dataset/([a-f0-9]{64})/(image|labels)',path)
+                if m:return self.send(200,app.workspaces.sample(m[1],m[2],m[3]),'image/jpeg' if m[3]=='image' else 'application/json; charset=utf-8')
+                m=re.fullmatch(r'/api/pilot/directions/(weeds|trash|fire_smoke|common)',path)
+                if m:return self.send(200,app.workspaces.status(m[1]))
                 if path=='/api/pilot/status':return self.send(200,app.status())
                 if path=='/api/pilot/photos':return self.send(200,{'photos':app.photos()})
                 if path=='/api/pilot/events.geojson':return self.send(200,app.geojson())
@@ -47,6 +55,10 @@ def make_handler(app):
                 payload=json.loads(self.rfile.read(size))
                 if not isinstance(payload,dict):raise ValueError('Нужен JSON объект.')
                 path=urlparse(self.path).path
+                m=re.fullmatch(r'/api/pilot/directions/(weeds|trash|fire_smoke)/(train|cancel|select|dataset|register)',path)
+                if m:
+                    action={'train':lambda:app.workspaces.enqueue(m[1],payload),'cancel':lambda:app.workspaces.cancel(m[1],payload.get('id')),'select':lambda:app.workspaces.select(m[1],payload.get('id')),'dataset':lambda:app.workspaces.add_sample(m[1],payload),'register':lambda:app.workspaces.register_reviewed(m[1],payload.get('id'))}
+                    return self.send(200,action[m[2]]())
                 if path=='/api/pilot/photos':return self.send(200,app.ingest(payload))
                 m=re.fullmatch(r'/api/pilot/photos/([a-f0-9]{32})/diagnose-public',path)
                 if m:return self.send(200,app.diagnose_public_photo(m[1]))
