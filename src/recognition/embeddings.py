@@ -1,4 +1,5 @@
 from PIL import Image, ImageOps
+from time import perf_counter
 
 
 class DinoEmbeddingModel:
@@ -13,20 +14,29 @@ class DinoEmbeddingModel:
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu") if device == "auto" else torch.device(device)
         self.processor = AutoImageProcessor.from_pretrained(name, local_files_only=offline)
         self.model = AutoModel.from_pretrained(name, local_files_only=offline).to(self.device).eval()
+        self.last_profile = {}
 
     def encode(self, images: list[Image.Image]):
         import torch
         import torch.nn.functional as F
         chunks = []
+        preprocessing_seconds = model_seconds = 0.
         with torch.inference_mode():
             for start in range(0, len(images), self.batch_size):
+                stage_started = perf_counter()
                 # Square padding retains the entire crop and its aspect ratio.
                 batch = [ImageOps.pad(im.convert("RGB"), (224, 224), color=(127, 127, 127))
                          for im in images[start:start+self.batch_size]]
                 inputs = self.processor(images=batch, return_tensors="pt", do_resize=False, do_center_crop=False).to(self.device)
+                preprocessing_seconds += perf_counter() - stage_started
+                stage_started = perf_counter()
                 vectors = self.model(**inputs).last_hidden_state[:, 0]
-                # Keep embeddings on the accelerator. Moving every batch to CPU made
-                # reference matching the dominant cost for large reference libraries.
                 chunks.append(F.normalize(vectors, dim=1))
+                model_seconds += perf_counter() - stage_started
+        self.last_profile = {
+            'images': len(images),
+            'preprocessing_seconds': preprocessing_seconds,
+            'model_seconds': model_seconds,
+        }
         return (torch.cat(chunks) if chunks else
                 torch.empty((0, self.model.config.hidden_size), device=self.device))
